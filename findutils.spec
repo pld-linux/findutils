@@ -88,6 +88,8 @@ arayabilirsiniz.
 %{?with_selinux:%patch2 -p1}
 # patch3 is applied in install stage
 
+rm -f po/stamp-po
+
 %{__perl} -pi -e 's/_jy_FIND LIBOBJS_NORMALIZE/_jy_FINDLIBOBJS_NORMALIZE/' m4/findlib.m4
 
 %build

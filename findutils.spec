@@ -14,10 +14,9 @@ Source1:	updatedb.cron
 Source2:	xargs.1.pl
 Patch0:		findutils-info.patch
 Patch1:		findutils-basename.patch
-Patch2:		findutils-getshort.patch
-Patch3:		findutils-glibc.patch
-patch4:		findutils-glibc21.patch
-Patch5:		findutils-xargsoverflow.patch
+Patch2:		findutils-glibc.patch
+patch3:		findutils-glibc21.patch
+Patch4:		findutils-xargsoverflow.patch
 Prereq:		/sbin/install-info
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -56,7 +55,6 @@ yazýlýmý bir dizin hiyerarþisi altýnda arayabilirsiniz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 autoconf

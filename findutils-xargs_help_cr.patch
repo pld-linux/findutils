@@ -6,6 +6,6 @@ diff -urN findutils-4.1.7.orig/xargs/xargs.c findutils-4.1.7/xargs/xargs.c
         [command [initial-arguments]]\n"),
  	   program_name);
 -  fputs (_("\nReport bugs to <bug-findutils@gnu.org>."), stream);
-+  fputs (_("\nReport bugs to <bug-findutils@gnu.org>.\n"), stream);
++  fprintf (stream, "%s\n", _("\nReport bugs to <bug-findutils@gnu.org>."));
    exit (status);
  }

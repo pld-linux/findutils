@@ -2,25 +2,28 @@ Summary:	GNU Find Utilities (find, xargs)
 Summary(de):	GNU-Suchprogramme (find, xargs)
 Summary(es):	Utilitarios de búsqueda de la GNU
 Summary(fr):	Utilitaires de recherche de GNU (find, xargs)
-Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
+Summary(pl):	Narzêdzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.1.7
-Release:	5
+Version:	4.1.20
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
-Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
 # Source0-md5: 582d9b35006065f81f71d681c165fa1e
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5: 5be69c8cb9c2025421197c449b3b0cf2
 Patch0:		%{name}-info.patch
-Patch2:		%{name}-mktemp.patch
-Patch3:		%{name}-getshort.patch
-Patch4:		%{name}-DESTDIR.patch
-Patch5:		%{name}-am-workaround.patch
-Patch6:		%{name}-xargs_help_cr.patch
+Patch1:		%{name}-mktemp.patch
+Patch2:		%{name}-getshort.patch
+Patch3:		%{name}-DESTDIR.patch
+Patch4:		%{name}-pl.po-update.patch
+Patch5:		%{name}-xargs_help_cr.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -74,16 +77,19 @@ bulabilmeniz için hazýrlanmýþlardýr. find programý ile belirli
 arayabilirsiniz.
 
 %prep
-%setup  -q
+%setup -q
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
-touch lib/{stat,lstat}.c
+%{__aclocal} -I gnulib/m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 
 %{__make}
@@ -98,14 +104,14 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 %find_lang %{name}
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)

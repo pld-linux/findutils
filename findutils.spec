@@ -1,16 +1,22 @@
 Summary:	GNU Find Utilities (find, xargs)
 Summary(de):	GNU-Suchprogramme (find, xargs)
+Summary(es):	Utilitarios de búsqueda de la GNU
 Summary(fr):	Utilitaires de recherche de GNU (find, xargs)
 Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
+Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.7
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Group(de):	Applikationen/Datei
+Group(es):	Aplicaciones/Archivos
+Group(fr):	Applications/Fichiers
 Group(pl):	Aplikacje/Pliki
+Group(pt):	Aplicações/Ficheiros
+Group(pt_BR):	Aplicações/Arquivos
 Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-info.patch
@@ -41,6 +47,12 @@ Dateiname) passen. Das locate-Utility durchsucht eine Datenbank
 xargs konstruiert Kommandozeilen von der Standardeingabe (z.B.
 Dateilisten, die von find erzeugt werden), und führt sie aus.
 
+%description -l es
+Este paquete contiene programas para ayúdalo a localizar archivos en
+tu sistema. El programa find puede pesquisar, a través de una
+jerarquía de directorios, buscando por archivos que obedezcan a un
+cierto conjunto de criterios (como nombre de archivo modelo).
+
 %description -l fr
 Ce package contient des programmes pour vous aider à localiser des
 fichiers sur votre système. Le programme find peut rechercher à
@@ -52,6 +64,12 @@ W pakiecie znajduj± siê narzêdzia pozwalaj±ce na poszukiwanie
 okre¶lonych plików. Program find s³u¿y do poszukiwania w drzewie
 katalogów plików o okre¶lonych parametrach, jak nazwa, uprawnienia,
 typ czy data ostatniej modyfikacji.
+
+%description -l pt_BR
+Esse pacote contém programas para ajudá-lo a localizar arquivos em seu
+sistema. O programa find pode procurar através de uma hierarquia de
+diretórios procurando por arquivos que obedeçam um certo conjunto de
+critérios (como nome de arquivo modelo).
 
 %description -l tr
 Bu pakette yer alan yazýlýmlar sisteminizde yer alan dosyalarý

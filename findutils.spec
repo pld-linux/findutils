@@ -11,12 +11,6 @@ Release:	5
 Epoch:		1
 License:	GPL
 Group:		Applications/File
-Group(de):	Applikationen/Datei
-Group(es):	Aplicaciones/Archivos
-Group(fr):	Applications/Fichiers
-Group(pl):	Aplikacje/Pliki
-Group(pt):	Aplicações/Ficheiros
-Group(pt_BR):	Aplicações/Arquivos
 Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-info.patch

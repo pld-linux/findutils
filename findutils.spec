@@ -6,25 +6,23 @@ Summary(pl):	Narzêdzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.1.20
-Release:	6
+Version:	4.2.4
+Release:	0.1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	e90ce7222daadeb8616b8db461e17cbc
+# Source0-md5:	88284e4ddd122f59840088d54941a7de
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-mktemp.patch
-Patch2:		%{name}-getshort.patch
-Patch3:		%{name}-DESTDIR.patch
-Patch4:		%{name}-pl.po-update.patch
-Patch5:		%{name}-xargs_help_cr.patch
-Patch6:		%{name}-selinux.patch
-Patch7:		%{name}-man-selinux.patch
-Patch8:		%{name}-am.patch
+Patch2:		%{name}-DESTDIR.patch
+Patch3:		%{name}-pl.po-update.patch
+# UPDATEME
+Patch4:		%{name}-selinux.patch
+Patch5:		%{name}-man-selinux.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -90,8 +88,6 @@ arayabilirsiniz.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch8 -p1
 
 %build
 %{__aclocal} -I gnulib/m4

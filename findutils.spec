@@ -4,21 +4,17 @@ Summary(fr):	Utilitaires de recherche de GNU (find, xargs)
 Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.1
-Release:	33
+Version:	4.1.5
+Release:	1
 License:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/findutils/%{name}-%{version}.tar.gz
+Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
 Patch0:		findutils-info.patch
-Patch1:		findutils-basename.patch
-Patch2:		findutils-glibc.patch
-patch3:		findutils-glibc21.patch
-Patch4:		findutils-xargsoverflow.patch
-Patch5:		findutils-pl_manpages.patch
-Patch6:		findutils-mktemp.patch
-Patch7:		findutils-numblks.patch
-Patch8:		findutils-getshort.patch
+Patch1:		findutils-pl_manpages.patch
+Patch2:		findutils-mktemp.patch
+Patch3:		findutils-getshort.patch
+Patch4:		findutils-DESTDIR.patch
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -63,16 +59,14 @@ arayabilirsiniz.
 %setup  -q
 %patch0 -p1 
 %patch1 -p1
-%patch2 -p1
+%patch2 -p1 
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %build
-autoconf
+#autoconf
+touch lib/{stat,lstat}.c
+automake
 LDFLAGS="-s"; export LDFLAGS
 %configure 
 
@@ -83,10 +77,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 make install \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	exec_prefix=$RPM_BUILD_ROOT%{_prefix} \
-	mandir=$RPM_BUILD_ROOT%{_mandir} \
-	infodir=$RPM_BUILD_ROOT%{_infodir}
+	DESTDIR=$RPM_BUILD_ROOT
 	
 install pl/*.1  $RPM_BUILD_ROOT%{_mandir}/pl/man1
 

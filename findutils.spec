@@ -5,15 +5,18 @@ Summary(pl): GNU narzêdzia do odnajdywania plików (find, xargs i locate)
 Summary(tr): GNU dosya arama araçlarý
 Name:        findutils
 Version:     4.1
-Release:     26
+Release:     28
 Copyright:   GPL
 Group:       Utilities/File
+Group(pl):   Narzêdzia/Pliki
 Source0:     ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
 Source1:     updatedb.cron
-Patch:       %{name}.patch
+Source2:     xargs.1.pl
+Patch0:      findutils.patch
+Patch1:      findutils-info.patch
 Prereq:      /sbin/install-info
 Requires:    mktemp
-Buildroot:   /tmp/%{name}-%{version}-%{release}-root
+Buildroot:   /tmp/%{name}-%{version}-root
 
 %description
 This package contains programs to help you locate files on your system. The
@@ -34,7 +37,8 @@ Suchmuster entspricht, zu finden.
 Ce package contient des programmes pour vous aider à localiser
 des fichiers sur votre système. Le programme find peut rechercher
 à travers une hiérarchie de répertoires des fichiers conformes à
-certains critères (comme un type de nom). Le programme locatecherche une base de données (crée par updatedb) pour trouver rapidement
+certains critères (comme un type de nom). Le programme locatecherche 
+une base de données (crée par updatedb) pour trouver rapidement
 un fichier correspondant au type demandé.
 
 %description -l pl
@@ -53,45 +57,70 @@ dosyalarý arar.
 
 %prep
 %setup -q
-%patch -p1 
+%patch0 -p1 
+%patch1 -p1
 
 %build
-rm -rf $RPM_BUILD_ROOT
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" ./configure \
-	--prefix=/usr --exec-prefix=/usr
+CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
+./configure \
+	--prefix=/usr \
+	--exec-prefix=/usr
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/lib/findutils
+install -d $RPM_BUILD_ROOT/usr/{lib/findutils,man/{man[15],pl/man1}} \
+	$RPM_BUILD_ROOT/etc/cron.daily
 
-rm -f $RPM_BUILD_ROOT/usr/info/find.info*
-make prefix=$RPM_BUILD_ROOT/usr exec_prefix=$RPM_BUILD_ROOT/usr install
-gzip -9fn $RPM_BUILD_ROOT/usr/info/find.info*
-install -d $RPM_BUILD_ROOT/etc/cron.daily
+make 	prefix=$RPM_BUILD_ROOT/usr \
+	exec_prefix=$RPM_BUILD_ROOT/usr \
+	install
+	
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.daily
+install %{SOURCE2} $RPM_BUILD_ROOT/usr/man/pl/man1/xargs.1
+
+gzip -9fn $RPM_BUILD_ROOT/usr/info/find.info* \
+	$RPM_BUILD_ROOT/usr/man/{man[15]/*,pl/man1/*} \
+	NEWS README TODO ChangeLog
 
 %post
-/sbin/install-info /usr/info/find.info.gz /usr/info/dir
+/sbin/install-info /usr/info/find.info.gz /etc/info-dir
 
 %preun
-if [ $1 = 0 ]; then
-    /sbin/install-info --delete /usr/info/find.info.gz /usr/info/dir
+if [ "$1" = "0" ]; then
+    /sbin/install-info --delete /usr/info/find.info.gz /etc/info-dir
 fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644, root, root, 755)
-%doc NEWS README
-%attr(750, root, root) %config /etc/cron.daily/updatedb.cron
-%attr(755, root, root) /usr/bin/*
-%attr(644, root,  man) /usr/man/man[51]/*
-%attr(755, root, root, 755) /usr/lib/findutils
+%defattr(644,root,root,755)
+%doc {NEWS,README,TODO,ChangeLog}.gz
+%attr(750,root,root) %config /etc/cron.daily/updatedb.cron
+%attr(755,root,root) /usr/bin/*
+
+%dir /usr/lib/findutils
+%attr(755,root,root) /usr/lib/findutils/*
+
 /usr/info/find.info*
+/usr/man/man[15]/*
+
+%lang(pl) /usr/man/pl/man1/*
 
 %changelog
+* Tue Apr  5 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [4.1-28]
+- revision up to 28,
+- added Group(pl),
+- changed BuildRoot to /tmp/%%{name}-%%{version}-root,
+- removed 'rm -rf $RPM_BUILD_ROOT' from %build,
+- simplifications in %install,
+- standarized {un}registering info pages (added findutils-info.patch),
+- added more documentation,
+- added pl man page for xargs(1L),
+- added gzipping documentation and man pages.
+
 * Sun Oct  4 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.1.26]
 - changed way passing $RPM_OPT_FLAGS.

@@ -7,23 +7,27 @@ Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.20
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
 # Source0-md5:	e90ce7222daadeb8616b8db461e17cbc
-Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source1-md5:	5be69c8cb9c2025421197c449b3b0cf2
+#Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-mktemp.patch
 Patch2:		%{name}-getshort.patch
 Patch3:		%{name}-DESTDIR.patch
 Patch4:		%{name}-pl.po-update.patch
 Patch5:		%{name}-xargs_help_cr.patch
+Patch6:		%{name}-selinux.patch
+Patch7:		%{name}-man-selinux.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	libselinux-devel
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -84,6 +88,7 @@ arayabilirsiniz.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__aclocal} -I gnulib/m4
@@ -101,6 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH7}
 
 %find_lang %{name}
 
@@ -129,4 +135,5 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/[fx]*
 %lang(nl) %{_mandir}/nl/man1/[fx]*
 %lang(pl) %{_mandir}/pl/man1/[fx]*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/[fx]*
 %{_infodir}/find.info*

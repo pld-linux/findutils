@@ -16,7 +16,8 @@ Patch1:		%{name}-pl_manpages.patch
 Patch2:		%{name}-mktemp.patch
 Patch3:		%{name}-getshort.patch
 Patch4:		%{name}-DESTDIR.patch
-BuildRequires:	automake
+Patch5:		%{name}-am-workaround.patch
+#BuildRequires:	automake
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,11 +65,12 @@ arayabilirsiniz.
 %patch2 -p1 
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 #autoconf
 touch lib/{stat,lstat}.c
-automake -a -c
+#automake -a -c
 %configure 
 
 %{__make}

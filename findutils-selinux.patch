@@ -341,8 +341,8 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.4/po/pl.po.orig	2004-11-09 00:39:40.614757048 +0100
-+++ findutils-4.2.4/po/pl.po	2004-11-09 00:44:33.436241416 +0100
+--- findutils-4.2.7/po/pl.po.orig	2004-11-09 00:39:40.614757048 +0100
++++ findutils-4.2.7/po/pl.po	2004-11-09 00:44:33.436241416 +0100
 @@ -216,6 +216,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
@@ -363,6 +363,6 @@
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:723
+ #: find/parser.c:724
  msgid ""
  "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"

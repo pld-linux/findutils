@@ -73,8 +73,8 @@ arayabilirsiniz.
 
 %prep
 %setup  -q
-%patch0 -p1 
-%patch2 -p1 
+%patch0 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -82,7 +82,7 @@ arayabilirsiniz.
 
 %build
 touch lib/{stat,lstat}.c
-%configure 
+%configure
 
 %{__make}
 
@@ -91,11 +91,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-	
+
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 gzip -9nf NEWS README TODO ChangeLog
-	
+
 %find_lang %{name}
 
 %post

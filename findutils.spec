@@ -17,6 +17,7 @@ Patch1:		findutils-basename.patch
 Patch2:		findutils-glibc.patch
 patch3:		findutils-glibc21.patch
 Patch4:		findutils-xargsoverflow.patch
+BuildPrereq:	texinfo
 Prereq:		/sbin/install-info
 Buildroot:	/tmp/%{name}-%{version}-root
 

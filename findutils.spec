@@ -102,10 +102,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %dir /usr/lib/findutils
 %attr(755,root,root) /usr/lib/findutils/*
 
-/usr/info/find.info*
 /usr/man/man[15]/*
-
 %lang(pl) /usr/man/pl/man1/*
+
+/usr/info/find.info*
 
 %changelog
 * Tue Apr  5 1999 Piotr Czerwiñski <pius@pld.org.pl>

@@ -11,8 +11,8 @@
  man_MANS = find.1
  SUBDIRS = testsuite
  
---- findutils-4.2.8/find/defs.h.orig	2004-11-24 15:05:12.000000000 +0100
-+++ findutils-4.2.8/find/defs.h	2004-11-26 01:02:09.010688680 +0100
+--- findutils-4.2.11/find/defs.h.orig	2005-01-03 01:06:10.000000000 +0100
++++ findutils-4.2.11/find/defs.h	2005-01-09 18:10:03.183117288 +0100
 @@ -126,6 +126,10 @@
  #define MODE_RWX	(S_IXUSR | S_IXGRP | S_IXOTH | MODE_RW)
  #define MODE_ALL	(S_ISUID | S_ISGID | S_ISVTX | MODE_RWX)
@@ -24,8 +24,8 @@
  #if 1
  #include <stdbool.h>
  typedef bool boolean;
-@@ -278,6 +282,9 @@
-     struct perm_val perm;	/* perm */
+@@ -290,6 +294,9 @@
+     struct dir_id   fileid;	/* samefile */
      mode_t type;		/* type */
      FILE *stream;		/* fprint fprint0 */
 +#ifdef WITH_SELINUX
@@ -34,9 +34,20 @@
      struct format_val printf_vec; /* printf fprintf */
    } args;
  
-@@ -445,4 +452,9 @@
- extern boolean dereference;
- extern boolean warnings;
+@@ -477,6 +484,10 @@
+   
+   /* Pointer to the function used to stat files. */
+   int (*xstat) (const char *name, struct stat *statbuf);
++
++#ifdef WITH_SELINUX
++  int (*x_getfilecon) ();
++#endif /* WITH_SELINUX */
+ };
+ extern struct options options;
+ 
+@@ -511,4 +522,9 @@
+ # define fchdir(fd) (-1)
+ #endif
  
 +#ifdef WITH_SELINUX
 +boolean pred_scontext PARAMS((char *pathname, struct stat *stat_buf, struct predicate *pred_ptr));
@@ -65,47 +76,37 @@
  .PP
  A `%' character followed by any other character is discarded (but the
  other character is printed).
---- findutils-4.2.6/find/find.c.orig	2004-11-21 13:18:59.000000000 +0100
-+++ findutils-4.2.6/find/find.c	2004-11-21 23:04:25.185305784 +0100
-@@ -147,6 +147,9 @@
- 
- /* Pointer to the function used to stat files. */
- int (*xstat) ();
-+#ifdef WITH_SELINUX
-+int (*x_getfilecon) ();
-+#endif /* WITH_SELINUX */
- 
- /* Status value to return to system. */
- int exit_status;
-@@ -257,11 +260,17 @@
+--- findutils-4.2.11/find/find.c.orig	2005-01-03 01:10:13.000000000 +0100
++++ findutils-4.2.11/find/find.c	2005-01-09 18:11:42.808971856 +0100
+@@ -238,11 +238,17 @@
      {
      case SYMLINK_ALWAYS_DEREF:  /* -L */
-       xstat = optionl_stat;
+       options.xstat = optionl_stat;
 +#ifdef WITH_SELINUX
-+      x_getfilecon = getfilecon;
++      options.x_getfilecon = getfilecon;
 +#endif /* WITH_SELINUX */
-       no_leaf_check = false;
+       options.no_leaf_check = true;
        break;
        
      case SYMLINK_NEVER_DEREF:	/* -P (default) */
-       xstat = optionp_stat;
+       options.xstat = optionp_stat;
 +#ifdef WITH_SELINUX
-+      x_getfilecon = lgetfilecon;
++      options.x_getfilecon = lgetfilecon;
 +#endif /* WITH_SELINUX */
-       /* Can't turn on no_leaf_check because the user might have specified 
+       /* Can't turn no_leaf_check off because the user might have specified 
         * -noleaf anyway
         */
-@@ -269,6 +278,9 @@
+@@ -250,6 +256,9 @@
        
      case SYMLINK_DEREF_ARGSONLY: /* -H */
-       xstat = optionh_stat;
+       options.xstat = optionh_stat;
 +#ifdef WITH_SELINUX
-+      x_getfilecon = getfilecon;
++      options.x_getfilecon = getfilecon;
 +#endif /* WITH_SELINUX */
-       no_leaf_check = true;
+       options.no_leaf_check = true;
      }
-   
-@@ -289,6 +301,9 @@
+ 
+@@ -272,6 +281,9 @@
    struct predicate *cur_pred;
    char *predicate_name;		/* Name of predicate being parsed. */
    int end_of_leading_options = 0; /* First arg after any -H/-L etc. */
@@ -115,17 +116,17 @@
    program_name = argv[0];
  
  #ifdef HAVE_SETLOCALE
-@@ -318,6 +333,9 @@
-   stay_on_filesystem = false;
-   ignore_readdir_race = false;
-   exit_status = 0;
+@@ -301,6 +313,9 @@
+   options.ignore_readdir_race = false;
+ 
+   state.exit_status = 0;
 +#ifdef WITH_SELINUX
 +  is_selinux_enabled_flag = (is_selinux_enabled() > 0);
 +#endif /* WITH_SELINUX */
  
  #if defined(DEBUG_STAT)
-   xstat = debug_stat;
-@@ -403,6 +421,14 @@
+   options.xstat = debug_stat;
+@@ -382,6 +397,14 @@
        if (strchr ("-!(),", argv[i][0]) == NULL)
  	usage (_("paths must precede expression"));
        predicate_name = argv[i];
@@ -140,10 +141,10 @@
        parse_function = find_parser (predicate_name);
        if (parse_function == NULL)
  	/* Command line option not recognized */
---- findutils-4.2.6/find/parser.c.orig	2004-11-15 01:22:30.000000000 +0100
-+++ findutils-4.2.6/find/parser.c	2004-11-21 23:00:45.121760528 +0100
-@@ -27,6 +27,10 @@
- #include "../gnulib/lib/xstrtol.h"
+--- findutils-4.2.11/find/parser.c.orig	2005-01-03 01:10:27.000000000 +0100
++++ findutils-4.2.11/find/parser.c	2005-01-09 18:12:19.498394216 +0100
+@@ -28,6 +28,10 @@
+ #include "../gnulib/lib/xalloc.h"
  
  
 +#ifdef WITH_SELINUX
@@ -153,7 +154,7 @@
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -127,6 +131,9 @@
+@@ -129,6 +133,9 @@
  static boolean parse_warn PARAMS((char *argv[], int *arg_ptr));
  static boolean parse_xtype PARAMS((char *argv[], int *arg_ptr));
  static boolean parse_quit PARAMS((char *argv[], int *arg_ptr));
@@ -163,9 +164,9 @@
  
  static boolean insert_regex PARAMS((char *argv[], int *arg_ptr, boolean ignore_case));
  static boolean insert_type PARAMS((char *argv[], int *arg_ptr, boolean (*which_pred )()));
-@@ -251,6 +258,10 @@
+@@ -254,6 +261,10 @@
    {ARG_TEST,               "wholename",             parse_wholename},   /* GNU, replaces -path */
-   {ARG_TEST,               "xdev",                  parse_xdev},
+   {ARG_OPTION,             "xdev",                  parse_xdev},
    {ARG_TEST,               "xtype",                 parse_xtype},	/* GNU */
 +#ifdef WITH_SELINUX
 +  {ARG_TEST,               "context",               parse_scontext},    /* SELINUX */
@@ -174,10 +175,10 @@
    {0, 0, 0}
  };
  
-@@ -720,6 +731,10 @@
+@@ -726,6 +737,10 @@
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
        -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
-       -used N -user NAME -xtype [bcdpfls]"));
+       -used N -user NAME -xtype [bcdpfls]\n"));
 +#ifdef WITH_SELINUX
 +  puts (_("\
 +      -context CONTEXT\n"));
@@ -185,7 +186,7 @@
    puts (_("\
  actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n\
        -fls FILE -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls -delete\n\
-@@ -1515,6 +1530,32 @@
+@@ -1542,6 +1557,32 @@
    return true;
  }
  
@@ -218,7 +219,7 @@
  static boolean
  parse_xtype (char **argv, int *arg_ptr)
  {
-@@ -1675,7 +1716,11 @@
+@@ -1702,7 +1743,11 @@
  	  if (*scan2 == '.')
  	    for (scan2++; ISDIGIT (*scan2); scan2++)
  	      /* Do nothing. */ ;
@@ -230,10 +231,10 @@
  	    {
  	      segmentp = make_segment (segmentp, format, scan2 - format,
  				       (int) *scan2);
---- findutils-4.1.7/find/pred.c.selinux	2001-05-20 16:39:37.000000000 -0400
-+++ findutils-4.1.7/find/pred.c	2003-10-10 13:15:13.752422594 -0400
-@@ -27,6 +27,14 @@
- #include "modetype.h"
+--- findutils-4.2.11/find/pred.c.orig	2005-01-03 01:15:48.000000000 +0100
++++ findutils-4.2.11/find/pred.c	2005-01-09 18:22:25.204312920 +0100
+@@ -30,6 +30,14 @@
+ #include "filemode.h"
  #include "wait.h"
  
 +#ifdef WITH_SELINUX
@@ -247,7 +248,7 @@
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -69,7 +77,6 @@
+@@ -73,7 +81,6 @@
  
  extern int yesno ();
  
@@ -255,7 +256,7 @@
  /* Get or fake the disk device blocksize.
     Usually defined by sys/param.h (if at all).  */
  #ifndef DEV_BSIZE
-@@ -196,6 +203,9 @@
+@@ -202,6 +209,9 @@
    {pred_used, "used    "},
    {pred_user, "user    "},
    {pred_xtype, "xtype   "},
@@ -265,16 +266,16 @@
    {0, "none    "}
  };
  
-@@ -719,6 +729,26 @@
- 	  fprintf (fp, segment->text,
- 		   human_readable ((uintmax_t) stat_buf->st_uid, hbuf, 1, 1));
+@@ -813,6 +823,26 @@
+ 
+ 	  }
  	  break;
 +#ifdef WITH_SELINUX
 +      case 'Z':               /* SELinux security context */
 +        {
 +          security_context_t scontext;
 +          int rv;
-+          rv = (*x_getfilecon)(rel_pathname, &scontext);
++          rv = (*options.x_getfilecon)(state.rel_pathname, &scontext);
 +
 +          if ( rv < 0 ) {
 +            (void) fprintf(stderr, "getfileconf(%s): %s",
@@ -292,8 +293,8 @@
  	}
      }
    return (true);
-@@ -1220,6 +1250,34 @@
-     }
+@@ -1366,6 +1396,31 @@
+    */
    return (pred_type (pathname, &sbuf, pred_ptr));
  }
 +  
@@ -301,15 +302,12 @@
 +#ifdef WITH_SELINUX
 +
 +boolean
-+pred_scontext ( pathname, stat_buf, pred_ptr )
-+     char *pathname;
-+     struct stat *stat_buf;
-+     struct predicate *pred_ptr;
++pred_scontext (char *pathname, struct stat *stat_buf, struct predicate *pred_ptr)
 +{
 +  int rv;
 +  security_context_t scontext;
 +
-+  rv = (* x_getfilecon)(rel_pathname, &scontext);
++  rv = (*options.x_getfilecon)(state.rel_pathname, &scontext);
 +
 +  if ( rv < 0 ) {
 +    (void) fprintf(stderr, "getfilecon(%s): %s\n", pathname, strerror(errno));
@@ -317,7 +315,7 @@
 +    return ( false );
 +  }
 +
-+  rv= (strcmp( scontext,pred_ptr->args.scontext) == 0 );
++  rv= (strcmp(scontext, pred_ptr->args.scontext) == 0);
 +  freecon(scontext);
 +  return rv;
 +}

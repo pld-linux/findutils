@@ -4,8 +4,9 @@ Summary(fr):	Utilitaires de recherche de GNU (find, xargs)
 Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.1.6
-Release:	3
+Version:	4.1.7
+Release:	1
+Epoch:		1
 License:	GPL
 Group:		Applications/File
 Group(de):	Applikationen/Datei
@@ -17,8 +18,6 @@ Patch2:		%{name}-mktemp.patch
 Patch3:		%{name}-getshort.patch
 Patch4:		%{name}-DESTDIR.patch
 Patch5:		%{name}-am-workaround.patch
-Patch6:		%{name}-nolibrt.patch
-#BuildRequires:	automake
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -67,12 +66,9 @@ arayabilirsiniz.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
-#autoconf
 touch lib/{stat,lstat}.c
-#automake -a -c
 %configure 
 
 %{__make}

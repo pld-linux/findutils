@@ -337,8 +337,8 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.16/po/pl.po.orig	2005-02-06 03:05:08.115379168 +0100
-+++ findutils-4.2.16/po/pl.po	2005-02-06 03:09:46.432068600 +0100
+--- findutils-4.2.20/po/pl.po.orig	2005-03-08 00:20:30.000000000 +0100
++++ findutils-4.2.20/po/pl.po	2005-03-27 23:37:43.592682032 +0200
 @@ -204,6 +204,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
@@ -348,10 +348,10 @@
 +msgid "Error: invalid predicate %s: the kernel is not SELinux-enabled.\n"
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
- #: find/find.c:515
+ #: find/find.c:518
  #, c-format
  msgid "invalid predicate `%s'"
-@@ -399,6 +404,10 @@
+@@ -400,6 +405,10 @@
  "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
  "      -used N -user NAZWA -xtype [bcdpfls]\n"
  

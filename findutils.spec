@@ -5,7 +5,7 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs i locate)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1
-Release:	30
+Release:	31
 Copyright:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
@@ -62,23 +62,26 @@ dosyalarý arar.
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-./configure %{_target} \
-	--prefix=/usr \
-	--exec-prefix=/usr
+    ./configure \
+	--prefix=%{_prefix} \
+	--exec-prefix=%{_prefix} \
+	%{_target_platform}
 
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/usr/{lib/findutils,share/man/{man{1,5},pl/man1}} \
-	$RPM_BUILD_ROOT/etc/cron.daily
+	$RPM_BUILD_ROOT/{etc/cron.daily,var/state}
 
-make 	prefix=$RPM_BUILD_ROOT/usr \
-	exec_prefix=$RPM_BUILD_ROOT/usr \
+make 	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	exec_prefix=$RPM_BUILD_ROOT%{_prefix} \
 	install
 	
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.daily
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/xargs.1
+
+:> $RPM_BUILD_ROOT/var/state/locatedb
 
 gzip -9fn $RPM_BUILD_ROOT%{_infodir}/find.info* \
 	$RPM_BUILD_ROOT%{_mandir}/{man[15]/*,pl/man1/*} \
@@ -98,6 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {NEWS,README,TODO,ChangeLog}.gz
+
 %attr(750,root,root) %config /etc/cron.daily/updatedb.cron
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %dir %{_libdir}/findutils
@@ -107,8 +111,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_mandir}/pl/man1/*
 
 %{_infodir}/find.info*
+%ghost /var/state/*
 
 %changelog
+* Sat May 29 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+- FHS 2.0 
+
 * Wed May 12 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [4.1-30]
 - package is now FHS 2.0 compliant.
@@ -139,45 +147,4 @@ rm -rf $RPM_BUILD_ROOT
 - added pl translation (made by Piotr Dembiñski <hektor@kki.net.pl>),
 - macro %%{name}-%%{version} in Source,
 - minor modifications of spec file.
-
-* Wed Jun 10 1998 Erik Troan <ewt@redhat.com>
-- updated updatedb cron script to not look for $TMPNAME.n (which was
-  a relic anyway)
-- added -b parameters to all of the patches
-
-* Fri Apr 24 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Mon Mar 09 1998 Michael K. Johnson <johnsonm@redhat.com>
-- make updatedb.cron use mktemp correctly
-- make updatedb use mktemp
-
-* Sun Nov 09 1997 Michael K. Johnson <johnsonm@redhat.com>
-- nobody should own tmpfile
-- ignore /net
-
-* Wed Nov 05 1997 Michael K. Johnson <johnsonm@redhat.com>
-- made updatedb.cron do a better job of cleaning up after itself.
-
-* Tue Oct 28 1997 Donald Barnes <djb@redhat.com>
-- fixed 64 bit-ism in getline.c, patch tacked on to end of glibc one
-
-* Thu Oct 23 1997 Erik Troan <ewt@redhat.com>
-- added patch for glibc 2.1
-
-* Fri Oct 17 1997 Donnie Barnes <djb@redhat.com>
-- added BuildRoot support
-
-* Tue Oct 14 1997 Michael K. Johnson <johnsonm@redhat.com>
-- made updatedb.cron work even if "nobody" can't read /root
-- use mktemp in updatedb.cron
-
-* Sun Sep 14 1997 Erik Troan <ewt@redhat.com>
-- added missing info pages
-- uses install-info
-
-* Mon Jun 02 1997 Erik Troan <ewt@redhat.com>
-- built with glibc
-
-* Mon Apr 21 1997 Michael K. Johnson <johnsonm@redhat.com>
-- fixed updatedb.cron
+- build against GNU libc-2.1.

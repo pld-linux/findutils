@@ -1,7 +1,7 @@
---- findutils-4.1/locate/updatedb.sh.mktemp	Mon Mar  2 18:02:21 1998
-+++ findutils-4.1/locate/updatedb.sh	Mon Mar  2 18:40:06 1998
-@@ -69,6 +69,12 @@
-   : ${TMPDIR=/usr/tmp}
+--- findutils-4.1.5/locate/updatedb.sh.wiget	Wed Feb 23 18:04:28 2000
++++ findutils-4.1.5/locate/updatedb.sh	Wed May 31 14:24:38 2000
+@@ -74,6 +74,12 @@
+   : ${TMPDIR=/tmp}
  fi
  
 +if test -x /bin/mktemp; then
@@ -13,7 +13,7 @@
  # The user to search network directories as.
  : ${NETUSER=daemon}
  
-@@ -91,6 +97,11 @@
+@@ -108,6 +114,11 @@
  
  if test $old = no; then
  
@@ -25,9 +25,9 @@
  # FIXME figure out how to sort null-terminated strings, and use -print0.
  {
  if test -n "$SEARCHPATHS"; then
-@@ -102,23 +113,27 @@
-   su $NETUSER -c \
-   "$find $NETPATHS \\( -type d -regex \"$PRUNEREGEX\" -prune \\) -o -print"
+@@ -131,33 +142,33 @@
+     $find $NETPATHS \( -type d -regex "$PRUNEREGEX" -prune \) -o -print
+   fi
  fi
 -} | sort -f | $frcode > $LOCATE_DB.n
 +} | sort -f | $frcode > $NEW_LOCATE_DB
@@ -35,15 +35,10 @@
  # To avoid breaking locate while this script is running, put the
  # results in a temp file, then rename it atomically.
 -if test -s $LOCATE_DB.n; then
--  rm -f $LOCATE_DB
--  mv $LOCATE_DB.n $LOCATE_DB
 +if test -s $NEW_LOCATE_DB; then
-+  # try atomic move first; mv may not have -f flag on some systems
-+  mv -f $NEW_LOCATE_DB $LOCATE_DB >/dev/null 2>&1 || {
-+    # for systems whose mv does not grok -f
-+    rm -f $LOCATE_DB
-+    mv $NEW_LOCATE_DB $LOCATE_DB
-+  }
+   rm -f $LOCATE_DB
+-  mv $LOCATE_DB.n $LOCATE_DB
++  mv $NEW_LOCATE_DB $LOCATE_DB
    chmod 644 $LOCATE_DB
  else
    echo "updatedb: new database would be empty" >&2
@@ -53,10 +48,46 @@
  
  else # old
  
--bigrams=$TMPDIR/f.bigrams$$
--filelist=$TMPDIR/f.list$$
-+bigrams=`$MKTEMP $TMPDIR/f.bigrams$$XXXXXX`
-+filelist=`$MKTEMP $TMPDIR/f.list$$XXXXXX`
- trap 'rm -f $bigrams $filelist; exit' 1 15
+-if ! bigrams=`tempfile -p updatedb`; then
++if ! bigrams=`$MKTEMP $TMPDIR/f.bigrams$$XXXXXX`; then
+     echo tempfile failed
+     exit 1
+ fi
+ 
+-if ! filelist=`tempfile -p updatedb`; then
++if ! filelist=`$MKTEMP $TMPDIR/f.list$$XXXXXX`; then
+     echo tempfile failed
+     exit 1
+ fi
+ 
+-rm -f $LOCATE_DB.n
+-trap 'rm -f $bigrams $filelist $LOCATE_DB.n; exit' 1 15
++rm -f $NEW_LOCATE_DB
++trap 'rm -f $bigrams $filelist $NEW_LOCATE_DB; exit' 1 15
  
  # Alphabetize subdirectories before file entries using tr.  James says:
+ # "to get everything in monotonic collating sequence, to avoid some
+@@ -191,19 +202,19 @@
+   awk '{ if (NR <= 128) print $2 }' | tr -d '\012' > $bigrams
+ 
+ # Code the file list.
+-$code $bigrams < $filelist > $LOCATE_DB.n
++$code $bigrams < $filelist > $NEW_LOCATE_DB
+ 
+ rm -f $bigrams $filelist
+ 
+ # To reduce the chances of breaking locate while this script is running,
+ # put the results in a temp file, then rename it atomically.
+-if test -s $LOCATE_DB.n; then
++if test -s $NEW_LOCATE_DB; then
+   rm -f $LOCATE_DB
+-  mv $LOCATE_DB.n $LOCATE_DB
++  mv $NEW_LOCATE_DB $LOCATE_DB
+   chmod 644 $LOCATE_DB
+ else
+   echo "updatedb: new database would be empty" >&2
+-  rm -f $LOCATE_DB.n
++  rm -f $NEW_LOCATE_DB
+ fi
+ 
+ fi

@@ -1,0 +1,8 @@
+--- findutils-4.1.5/locate/Makefile.am.wiget	Thu Mar  2 18:46:39 2000
++++ findutils-4.1.5/locate/Makefile.am	Wed May 31 14:50:14 2000
+@@ -36,4 +36,4 @@
+ 	chmod +x $@
+ 
+ install:
+-	$(top_srcdir)/mkinstalldirs $(localstatedir)
++	$(top_srcdir)/mkinstalldirs $(DESTDIR)$(localstatedir)

@@ -84,7 +84,7 @@
  #else /* !DEBUG_STAT */
    xstat = lstat;
 +#ifdef WITH_SELINUX
-+  int is_selinux_enabled_flag = is_selinux_enabled();
++  int is_selinux_enabled_flag = (is_selinux_enabled() > 0);
 +  x_getfilecon = lgetfilecon;
 +#endif /* WITH_SELINUX */
  #endif /* !DEBUG_STAT */

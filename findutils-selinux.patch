@@ -11,9 +11,9 @@
  man_MANS = find.1
  SUBDIRS = testsuite
  
---- findutils-4.2.4/find/defs.h.orig	2004-11-08 20:34:16.000000000 +0100
-+++ findutils-4.2.4/find/defs.h	2004-11-09 00:40:03.771236728 +0100
-@@ -120,6 +120,10 @@
+--- findutils-4.2.8/find/defs.h.orig	2004-11-24 15:05:12.000000000 +0100
++++ findutils-4.2.8/find/defs.h	2004-11-26 01:02:09.010688680 +0100
+@@ -126,6 +126,10 @@
  #define MODE_RWX	(S_IXUSR | S_IXGRP | S_IXOTH | MODE_RW)
  #define MODE_ALL	(S_ISUID | S_ISGID | S_ISVTX | MODE_RWX)
  
@@ -24,7 +24,7 @@
  #if 1
  #include <stdbool.h>
  typedef bool boolean;
-@@ -272,6 +276,9 @@
+@@ -278,6 +282,9 @@
      struct perm_val perm;	/* perm */
      mode_t type;		/* type */
      FILE *stream;		/* fprint fprint0 */
@@ -34,18 +34,16 @@
      struct format_val printf_vec; /* printf fprintf */
    } args;
  
-@@ -317,6 +324,11 @@
- VOID *xmalloc PARAMS((size_t n));
- VOID *xrealloc PARAMS((VOID *p, size_t n));
+@@ -445,4 +452,9 @@
+ extern boolean dereference;
+ extern boolean warnings;
  
 +#ifdef WITH_SELINUX
 +boolean pred_scontext PARAMS((char *pathname, struct stat *stat_buf, struct predicate *pred_ptr));
 +extern int (*x_getfilecon) ();
 +#endif /*WITH_SELINUX*/
 +
- /* xstrdup.c */
- char *xstrdup PARAMS((char *string));
- 
+ #endif
 --- findutils-4.2.6/find/find.1.orig	2004-11-21 10:52:17.000000000 +0100
 +++ findutils-4.2.6/find/find.1	2004-11-21 22:52:25.469719184 +0100
 @@ -396,6 +396,9 @@
@@ -341,8 +339,8 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.7/po/pl.po.orig	2004-11-09 00:39:40.614757048 +0100
-+++ findutils-4.2.7/po/pl.po	2004-11-09 00:44:33.436241416 +0100
+--- findutils-4.2.8/po/pl.po.orig	2004-11-26 00:55:08.041685696 +0100
++++ findutils-4.2.8/po/pl.po	2004-11-26 01:02:56.090531456 +0100
 @@ -216,6 +216,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
@@ -353,9 +351,9 @@
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
  #. Command line option not recognized
- #: find/find.c:247
+ #: find/find.c:427
  #, c-format
-@@ -335,6 +340,10 @@
+@@ -375,6 +380,10 @@
  "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
  "      -used N -user NAZWA -xtype [bcdpfls]"
  
@@ -363,6 +361,6 @@
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:724
+ #: find/parser.c:725
  msgid ""
  "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"

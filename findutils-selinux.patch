@@ -35,16 +35,16 @@
    } args;
  
 @@ -477,6 +484,10 @@
-   
+  
    /* Pointer to the function used to stat files. */
    int (*xstat) (const char *name, struct stat *statbuf);
 +
 +#ifdef WITH_SELINUX
 +  int (*x_getfilecon) ();
 +#endif /* WITH_SELINUX */
- };
- extern struct options options;
  
+ 
+   /* Indicate if we can implement safely_chdir() using the O_NOFOLLOW
 @@ -511,4 +522,9 @@
  # define fchdir(fd) (-1)
  #endif
@@ -348,7 +348,7 @@
 +msgid "Error: invalid predicate %s: the kernel is not SELinux-enabled.\n"
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
- #: find/find.c:455
+ #: find/find.c:515
  #, c-format
  msgid "invalid predicate `%s'"
 @@ -399,6 +404,10 @@
@@ -359,6 +359,6 @@
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:742
+ #: find/parser.c:747
  msgid ""
  "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"

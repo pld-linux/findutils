@@ -14,7 +14,6 @@ Source1:	updatedb.cron
 Source2:	xargs.1.pl
 Patch0:		findutils.patch
 Patch1:		findutils-info.patch
-BuildPrereq:    autoconf >= 2.13-8
 Prereq:		/sbin/install-info
 Requires:	mktemp
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -62,16 +61,16 @@ dosyalarý arar.
 %patch1 -p1
 
 %build
-autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target} \
 	--prefix=/usr \
 	--exec-prefix=/usr
+
 make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/{lib/findutils,share/man/{man[15],pl/man1}} \
+install -d $RPM_BUILD_ROOT/usr/{lib/findutils,share/man/{man{1,5},pl/man1}} \
 	$RPM_BUILD_ROOT/etc/cron.daily
 
 make 	prefix=$RPM_BUILD_ROOT/usr \

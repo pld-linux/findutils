@@ -87,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README
 %attr(750, root, root) %config /etc/cron.daily/updatedb.cron
 %attr(755, root, root) /usr/bin/*
-%attr(644, root,  man) /usr/man/man[51]
+%attr(644, root,  man) /usr/man/man[51]/*
 %attr(755, root, root, 755) /usr/lib/findutils
 /usr/info/find.info*
 

@@ -11,9 +11,9 @@
  man_MANS = find.1
  SUBDIRS = testsuite
  
---- findutils-4.1.7/find/defs.h.selinux	2001-05-20 16:39:37.000000000 -0400
-+++ findutils-4.1.7/find/defs.h	2003-10-10 13:06:11.451070520 -0400
-@@ -118,6 +118,10 @@
+--- findutils-4.2.4/find/defs.h.orig	2004-11-08 20:34:16.000000000 +0100
++++ findutils-4.2.4/find/defs.h	2004-11-09 00:40:03.771236728 +0100
+@@ -120,6 +120,10 @@
  #define MODE_RWX	(S_IXUSR | S_IXGRP | S_IXOTH | MODE_RW)
  #define MODE_ALL	(S_ISUID | S_ISGID | S_ISVTX | MODE_RWX)
  
@@ -21,10 +21,10 @@
 +#include <selinux/selinux.h>
 +#endif /*WITH_SELINUX*/
 +
- /* Not char because of type promotion; NeXT gcc can't handle it.  */
- typedef int boolean;
- #define		true    1
-@@ -265,6 +269,9 @@
+ #if 1
+ #include <stdbool.h>
+ typedef bool boolean;
+@@ -272,6 +276,9 @@
      struct perm_val perm;	/* perm */
      mode_t type;		/* type */
      FILE *stream;		/* fprint fprint0 */
@@ -34,7 +34,7 @@
      struct format_val printf_vec; /* printf fprintf */
    } args;
  
-@@ -310,6 +317,11 @@
+@@ -317,6 +324,11 @@
  VOID *xmalloc PARAMS((size_t n));
  VOID *xrealloc PARAMS((VOID *p, size_t n));
  
@@ -46,9 +46,9 @@
  /* xstrdup.c */
  char *xstrdup PARAMS((char *string));
  
---- findutils-4.1.7/find/find.1.selinux	2003-10-10 13:06:11.334084221 -0400
-+++ findutils-4.1.7/find/find.1	2003-10-10 13:06:11.555058342 -0400
-@@ -230,6 +230,9 @@
+--- findutils-4.2.4/find/find.1.orig	2004-11-08 20:49:55.000000000 +0100
++++ findutils-4.2.4/find/find.1	2004-11-09 00:40:28.271512120 +0100
+@@ -302,6 +302,9 @@
  file of type \fIc\fR; if \-follow has been given, true if \fIc\fR is
  `l'.  In other words, for symbolic links, \-xtype checks the type of
  the file that \-type does not check.
@@ -56,12 +56,12 @@
 +.IP "\--context \fIscontext\fR"
 +(SELinux only) File has the security context \fIscontext\fR.
  .SS ACTIONS
- .IP "\-exec \fIcommand\fR ;"
- Execute \fIcommand\fR; true if 0 status is returned.  All following
-@@ -419,6 +422,8 @@
- File's user name, or numeric user ID if the user has no name.
- .IP %U
- File's numeric user ID.
+ 
+ .IP "\-delete\fR"
+@@ -529,6 +532,8 @@
+ File's type (like in ls -l), U=unknown type (shouldn't happen)
+ .IP %Y
+ File's type (like %y), plus follow symlinks: L=loop, N=nonexistent
 +.IP %Z
 +(SELinux only) file's security context.
  .PP
@@ -105,11 +105,11 @@
        parse_function = find_parser (predicate_name);
        if (parse_function == NULL)
  	/* Command line option not recognized */
---- findutils-4.1.7/find/parser.c.selinux	2001-05-20 16:39:37.000000000 -0400
-+++ findutils-4.1.7/find/parser.c	2003-10-10 13:06:11.558057991 -0400
-@@ -23,6 +23,10 @@
- #include "modetype.h"
- #include "xstrtol.h"
+--- findutils-4.2.4/find/parser.c.orig	2004-11-08 21:18:32.000000000 +0100
++++ findutils-4.2.4/find/parser.c	2004-11-09 00:43:16.106997248 +0100
+@@ -27,6 +27,10 @@
+ #include "../gnulib/lib/xstrtol.h"
+ 
  
 +#ifdef WITH_SELINUX
 +#include <selinux/selinux.h>
@@ -118,31 +118,29 @@
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -113,6 +117,9 @@
- static boolean parse_version PARAMS((char *argv[], int *arg_ptr));
- static boolean parse_xdev PARAMS((char *argv[], int *arg_ptr));
+@@ -127,6 +131,9 @@
+ static boolean parse_warn PARAMS((char *argv[], int *arg_ptr));
  static boolean parse_xtype PARAMS((char *argv[], int *arg_ptr));
+ static boolean parse_quit PARAMS((char *argv[], int *arg_ptr));
 +#ifdef WITH_SELINUX
 +static boolean parse_scontext PARAMS((char *argv[], int *arg_ptr));
 +#endif /*WITH_SELINUX*/
  
  static boolean insert_regex PARAMS((char *argv[], int *arg_ptr, boolean ignore_case));
  static boolean insert_type PARAMS((char *argv[], int *arg_ptr, boolean (*which_pred )()));
-@@ -215,7 +222,11 @@
-   {"-version", parse_version},	/* GNU */
-   {"xdev", parse_xdev},
-   {"xtype", parse_xtype},	/* GNU */
--  {0, 0}
+@@ -251,6 +258,10 @@
+   {ARG_TEST,               "wholename",             parse_wholename},   /* GNU, replaces -path */
+   {ARG_TEST,               "xdev",                  parse_xdev},
+   {ARG_TEST,               "xtype",                 parse_xtype},	/* GNU */
 +#ifdef WITH_SELINUX
-+  {"context", parse_scontext},       /* SELINUX */
-+  {"-context", parse_scontext},       /* SELINUX */
++  {ARG_TEST,               "context",               parse_scontext},    /* SELINUX */
++  {ARG_TEST,               "-context",              parse_scontext},    /* SELINUX */
 +#endif /*WITH_SELINUX*/
-+   {0, 0}
+   {0, 0}
  };
  
- /* Return a pointer to the parser function to invoke for predicate
-@@ -465,7 +476,10 @@
- {
+@@ -611,7 +622,10 @@
+ 
    dereference = true;
    xstat = stat;
 -  no_leaf_check = true;
@@ -153,18 +151,18 @@
    return (true);
  }
  
-@@ -570,6 +584,10 @@
+@@ -720,6 +734,10 @@
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
-       -size N[bckw] -true -type [bcdpfls] -uid N -used N -user NAME\n\
-       -xtype [bcdpfls]\n"));
+       -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
+       -used N -user NAME -xtype [bcdpfls]"));
 +#ifdef WITH_SELINUX
 +  puts (_("\
 +      -context CONTEXT\n"));
 +#endif /*WITH_SELINUX*/
    puts (_("\
  actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n\
-       -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls\n"));
-@@ -1200,6 +1218,32 @@
+       -fls FILE -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls -delete\n\
+@@ -1488,6 +1506,32 @@
    return true;
  }
  
@@ -197,15 +195,14 @@
  static boolean
  parse_xtype (char **argv, int *arg_ptr)
  {
-@@ -1358,7 +1402,11 @@
+@@ -1646,7 +1690,11 @@
  	  if (*scan2 == '.')
  	    for (scan2++; ISDIGIT (*scan2); scan2++)
  	      /* Do nothing. */ ;
--	  if (strchr ("abcdfFgGhHiklmnpPstuU", *scan2))
 +#ifdef WITH_SELINUX
-+        if (strchr ("abcdfFgGhHiklmnpPstuUZ", *scan2))
++	  if (strchr ("abcdDfFgGhHiklmnpPstuUyYZ", *scan2))
 +#else  /* WITH_SELINUX */
-+        if (strchr ("abcdfFgGhHiklmnpPstuU", *scan2))
+ 	  if (strchr ("abcdDfFgGhHiklmnpPstuUyY", *scan2))
 +#endif /* WITH_SELINUX */
  	    {
  	      segmentp = make_segment (segmentp, format, scan2 - format,
@@ -319,8 +316,8 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.1.20/po/pl.po.orig	Wed Jan 28 15:12:55 2004
-+++ findutils-4.1.20/po/pl.po	Wed Jan 28 15:37:07 2004
+--- findutils-4.2.4/po/pl.po.orig	2004-11-09 00:39:40.614757048 +0100
++++ findutils-4.2.4/po/pl.po	2004-11-09 00:44:33.436241416 +0100
 @@ -216,6 +216,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
@@ -331,16 +328,16 @@
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
  #. Command line option not recognized
- #: find/find.c:209
+ #: find/find.c:247
  #, c-format
-@@ -316,6 +321,10 @@
- "      -size N[bckw] -true -type [bcdpfls] -uid N -used N -user NAZWA\n"
- "      -xtype [bcdpfls]\n"
+@@ -335,6 +340,10 @@
+ "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+ "      -used N -user NAZWA -xtype [bcdpfls]"
  
-+#: find/parser.c:590
++#: find/parser.c:738
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:575
+ #: find/parser.c:723
  msgid ""
  "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"

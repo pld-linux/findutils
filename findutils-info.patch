@@ -1,4 +1,3 @@
-diff -urN findutils-4.1.orig/doc/find.texi findutils-4.1/doc/find.texi
 --- findutils-4.1.orig/doc/find.texi	Fri Nov  4 05:13:50 1994
 +++ findutils-4.1/doc/find.texi	Tue Apr  6 18:38:05 1999
 @@ -16,10 +16,11 @@
@@ -9,10 +8,10 @@ diff -urN findutils-4.1.orig/doc/find.texi findutils-4.1/doc/find.texi
 -* Finding Files: (find).        Listing and operating on files
 -                                that match certain criteria.
 -END-INFO-DIR-ENTRY
-+@dircategory Shell Utilities:
++@dircategory Shell utilities:
 +@direntry
 +* Finding Files: (find)			Listing and operating on files
-+					that match certain criteria.
++					that match certain criteria
 +@end direntry
  @end format
  

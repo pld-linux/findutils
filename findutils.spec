@@ -49,8 +49,8 @@ un type de nom).
 
 %description -l pl
 W pakiecie znajduj± siê narzêdzia pozwalaj±ce na poszukiwanie okre¶lonych
-plików. Program find s³u¿y do przeszukania drzewa katalogów za plikami o
-okre¶lonych parametrach, jak nazwa, uprawnienia, typ, data ostatniej
+plików. Program find s³u¿y do poszukiwania w drzewie katalogów plików o
+okre¶lonych parametrach, jak nazwa, uprawnienia, typ czy data ostatniej
 modyfikacji.
 
 %description -l tr

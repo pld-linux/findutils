@@ -10,13 +10,13 @@ Summary(pl):	Narzêdzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.2.11
-Release:	2
+Version:	4.2.16
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	4005c39a4c6de66fd9c93e1f6f7dec77
+# Source0-md5:	c715f3100b1f011a4a119742d27cecd8
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
@@ -24,7 +24,6 @@ Patch0:		%{name}-info.patch
 Patch1:		%{name}-pl.po-update.patch
 Patch2:		%{name}-selinux.patch
 Patch3:		%{name}-man-selinux.patch
-Patch4:		%{name}-pr11495.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -88,7 +87,6 @@ arayabilirsiniz.
 %patch1 -p1
 %{?with_selinux:%patch2 -p1}
 # patch3 is applied in install stage
-%patch4 -p1
 
 %{__perl} -pi -e 's/_jy_FIND LIBOBJS_NORMALIZE/_jy_FINDLIBOBJS_NORMALIZE/' m4/findlib.m4
 

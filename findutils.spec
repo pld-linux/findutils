@@ -17,6 +17,7 @@ Patch2:		%{name}-mktemp.patch
 Patch3:		%{name}-getshort.patch
 Patch4:		%{name}-DESTDIR.patch
 Patch5:		%{name}-am-workaround.patch
+Patch6:		%{name}-nolibrt.patch
 #BuildRequires:	automake
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -66,6 +67,7 @@ arayabilirsiniz.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 #autoconf

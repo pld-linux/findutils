@@ -5,7 +5,7 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
@@ -84,6 +84,8 @@ install pl/*.1  $RPM_BUILD_ROOT%{_mandir}/pl/man1
 gzip -9nf $RPM_BUILD_ROOT%{_infodir}/find.info* \
 	$RPM_BUILD_ROOT%{_mandir}/{man?/*,pl/man1/*} \
 	NEWS README TODO ChangeLog
+	
+%find_lang %{name}
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
@@ -94,7 +96,7 @@ gzip -9nf $RPM_BUILD_ROOT%{_infodir}/find.info* \
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc {NEWS,README,TODO,ChangeLog}.gz
 %attr(755,root,root) %{_bindir}/find

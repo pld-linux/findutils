@@ -10,22 +10,21 @@ Summary(pl):	Narzêdzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.2.6
+Version:	4.2.7
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	af3dcc34e46c30496ec942812fcd0cd5
+# Source0-md5:	506f2158ab4750fac3dbc55bc1544e6c
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-mktemp.patch
 Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-setlocale.patch
-Patch4:		%{name}-selinux.patch
-Patch5:		%{name}-man-selinux.patch
+Patch3:		%{name}-selinux.patch
+Patch4:		%{name}-man-selinux.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -88,9 +87,8 @@ arayabilirsiniz.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%{?with_selinux:%patch4 -p1}
-# patch5 is applied in install stage
+%{?with_selinux:%patch3 -p1}
+# patch4 is applied in install stage
 
 %{__perl} -pi -e 's/_jy_FIND LIBOBJS_NORMALIZE/_jy_FINDLIBOBJS_NORMALIZE/' m4/findlib.m4
 
@@ -110,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH5}}
+%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH4}}
 
 # xargs is wanted in /bin
 install -d $RPM_BUILD_ROOT/bin

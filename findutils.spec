@@ -18,7 +18,7 @@ Patch2:		findutils-glibc.patch
 patch3:		findutils-glibc21.patch
 Patch4:		findutils-xargsoverflow.patch
 BuildRequires:	texinfo
-Prereq:		/sbin/install-info
+Prereq:		/usr/sbin/fix-info-dir
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -80,12 +80,10 @@ gzip -9fn $RPM_BUILD_ROOT%{_infodir}/find.info* \
 	NEWS README TODO ChangeLog
 
 %post
-/sbin/install-info %{_infodir}/find.info.gz /etc/info-dir
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %preun
-if [ "$1" = "0" ]; then
-	/sbin/install-info --delete %{_infodir}/find.info.gz /etc/info-dir
-fi
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT

@@ -72,7 +72,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/usr/{lib/findutils,man/{man[15],pl/man1}} \
 	$RPM_BUILD_ROOT/etc/cron.daily
 
-make prefix=$RPM_BUILD_ROOT/usr exec_prefix=$RPM_BUILD_ROOT/usr install
+make 	prefix=$RPM_BUILD_ROOT/usr \
+	exec_prefix=$RPM_BUILD_ROOT/usr \
+	install
+	
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.daily
 install %{SOURCE2} $RPM_BUILD_ROOT/usr/man/pl/man1/xargs.1
 

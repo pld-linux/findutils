@@ -99,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc {NEWS,README,TODO,ChangeLog}.gz
 %attr(750,root,root) %config /etc/cron.daily/updatedb.cron
-%attr(755,root,root) /usr/bin/*
+%attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %dir %{_libdir}/findutils
 %attr(755,root,root) %{_libdir}/findutils/*
 

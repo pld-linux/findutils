@@ -5,7 +5,7 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.7
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Applications/File

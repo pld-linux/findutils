@@ -12,9 +12,9 @@ Epoch:		1
 License:	GPL
 Group:		Applications/File
 Source0:	ftp://alpha.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5: 582d9b35006065f81f71d681c165fa1e
+# Source0-md5:	e90ce7222daadeb8616b8db461e17cbc
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source1-md5: 5be69c8cb9c2025421197c449b3b0cf2
+# Source1-md5:	5be69c8cb9c2025421197c449b3b0cf2
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-mktemp.patch
 Patch2:		%{name}-getshort.patch

@@ -46,19 +46,19 @@
  /* xstrdup.c */
  char *xstrdup PARAMS((char *string));
  
---- findutils-4.2.4/find/find.1.orig	2004-11-08 20:49:55.000000000 +0100
-+++ findutils-4.2.4/find/find.1	2004-11-09 00:40:28.271512120 +0100
-@@ -302,6 +302,9 @@
- file of type \fIc\fR; if \-follow has been given, true if \fIc\fR is
- `l'.  In other words, for symbolic links, \-xtype checks the type of
- the file that \-type does not check.
+--- findutils-4.2.6/find/find.1.orig	2004-11-21 10:52:17.000000000 +0100
++++ findutils-4.2.6/find/find.1	2004-11-21 22:52:25.469719184 +0100
+@@ -396,6 +396,9 @@
+ link to a file of type \fIc\fR; if the \-L option has been given, true
+ if \fIc\fR is `l'.  In other words, for symbolic links, \-xtype checks
+ the type of the file that \-type does not check.
 +.IP "\-context \fIscontext\fR"
 +.IP "\--context \fIscontext\fR"
 +(SELinux only) File has the security context \fIscontext\fR.
- .SS ACTIONS
  
+ .SS ACTIONS
  .IP "\-delete\fR"
-@@ -529,6 +532,8 @@
+@@ -633,6 +636,8 @@
  File's type (like in ls -l), U=unknown type (shouldn't happen)
  .IP %Y
  File's type (like %y), plus follow symlinks: L=loop, N=nonexistent
@@ -67,9 +67,9 @@
  .PP
  A `%' character followed by any other character is discarded (but the
  other character is printed).
---- findutils-4.1.7/find/find.c.selinux	2001-05-20 16:39:37.000000000 -0400
-+++ findutils-4.1.7/find/find.c	2003-10-10 13:06:11.556058225 -0400
-@@ -135,6 +135,9 @@
+--- findutils-4.2.6/find/find.c.orig	2004-11-21 13:18:59.000000000 +0100
++++ findutils-4.2.6/find/find.c	2004-11-21 23:04:25.185305784 +0100
+@@ -147,6 +147,9 @@
  
  /* Pointer to the function used to stat files. */
  int (*xstat) ();
@@ -79,18 +79,55 @@
  
  /* Status value to return to system. */
  int exit_status;
-@@ -181,6 +184,10 @@
-   xstat = debug_stat;
- #else /* !DEBUG_STAT */
-   xstat = lstat;
+@@ -257,11 +260,17 @@
+     {
+     case SYMLINK_ALWAYS_DEREF:  /* -L */
+       xstat = optionl_stat;
 +#ifdef WITH_SELINUX
-+  int is_selinux_enabled_flag = (is_selinux_enabled() > 0);
-+  x_getfilecon = lgetfilecon;
++      x_getfilecon = getfilecon;
 +#endif /* WITH_SELINUX */
- #endif /* !DEBUG_STAT */
+       no_leaf_check = false;
+       break;
+       
+     case SYMLINK_NEVER_DEREF:	/* -P (default) */
+       xstat = optionp_stat;
++#ifdef WITH_SELINUX
++      x_getfilecon = lgetfilecon;
++#endif /* WITH_SELINUX */
+       /* Can't turn on no_leaf_check because the user might have specified 
+        * -noleaf anyway
+        */
+@@ -269,6 +278,9 @@
+       
+     case SYMLINK_DEREF_ARGSONLY: /* -H */
+       xstat = optionh_stat;
++#ifdef WITH_SELINUX
++      x_getfilecon = getfilecon;
++#endif /* WITH_SELINUX */
+       no_leaf_check = true;
+     }
+   
+@@ -289,6 +301,9 @@
+   struct predicate *cur_pred;
+   char *predicate_name;		/* Name of predicate being parsed. */
+   int end_of_leading_options = 0; /* First arg after any -H/-L etc. */
++#ifdef WITH_SELINUX
++  int is_selinux_enabled_flag;
++#endif /* WITH_SELINUX */
+   program_name = argv[0];
  
-   human_block_size (getenv ("FIND_BLOCK_SIZE"), 0, &output_block_size);
-@@ -202,6 +209,14 @@
+ #ifdef HAVE_SETLOCALE
+@@ -318,6 +333,9 @@
+   stay_on_filesystem = false;
+   ignore_readdir_race = false;
+   exit_status = 0;
++#ifdef WITH_SELINUX
++  is_selinux_enabled_flag = (is_selinux_enabled() > 0);
++#endif /* WITH_SELINUX */
+ 
+ #if defined(DEBUG_STAT)
+   xstat = debug_stat;
+@@ -403,6 +421,14 @@
        if (strchr ("-!(),", argv[i][0]) == NULL)
  	usage (_("paths must precede expression"));
        predicate_name = argv[i];
@@ -105,8 +142,8 @@
        parse_function = find_parser (predicate_name);
        if (parse_function == NULL)
  	/* Command line option not recognized */
---- findutils-4.2.4/find/parser.c.orig	2004-11-08 21:18:32.000000000 +0100
-+++ findutils-4.2.4/find/parser.c	2004-11-09 00:43:16.106997248 +0100
+--- findutils-4.2.6/find/parser.c.orig	2004-11-15 01:22:30.000000000 +0100
++++ findutils-4.2.6/find/parser.c	2004-11-21 23:00:45.121760528 +0100
 @@ -27,6 +27,10 @@
  #include "../gnulib/lib/xstrtol.h"
  
@@ -136,22 +173,10 @@
 +  {ARG_TEST,               "context",               parse_scontext},    /* SELINUX */
 +  {ARG_TEST,               "-context",              parse_scontext},    /* SELINUX */
 +#endif /*WITH_SELINUX*/
-   {0, 0}
+   {0, 0, 0}
  };
  
-@@ -611,7 +622,10 @@
- 
-   dereference = true;
-   xstat = stat;
--  no_leaf_check = true;
-+#ifdef WITH_SELINUX
-+  x_getfilecon = getfilecon;
-+#endif /* WITH_SELINUX */
-+   no_leaf_check = true;
-   return (true);
- }
- 
-@@ -720,6 +734,10 @@
+@@ -720,6 +731,10 @@
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
        -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
        -used N -user NAME -xtype [bcdpfls]"));
@@ -162,7 +187,7 @@
    puts (_("\
  actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n\
        -fls FILE -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls -delete\n\
-@@ -1488,6 +1506,32 @@
+@@ -1515,6 +1530,32 @@
    return true;
  }
  
@@ -195,14 +220,14 @@
  static boolean
  parse_xtype (char **argv, int *arg_ptr)
  {
-@@ -1646,7 +1690,11 @@
+@@ -1675,7 +1716,11 @@
  	  if (*scan2 == '.')
  	    for (scan2++; ISDIGIT (*scan2); scan2++)
  	      /* Do nothing. */ ;
 +#ifdef WITH_SELINUX
-+	  if (strchr ("abcdDfFgGhHiklmnpPstuUyYZ", *scan2))
++	  if (strchr ("abcdDfFgGhHiklmMnpPstuUyYZ", *scan2))
 +#else  /* WITH_SELINUX */
- 	  if (strchr ("abcdDfFgGhHiklmnpPstuUyY", *scan2))
+ 	  if (strchr ("abcdDfFgGhHiklmMnpPstuUyY", *scan2))
 +#endif /* WITH_SELINUX */
  	    {
  	      segmentp = make_segment (segmentp, format, scan2 - format,

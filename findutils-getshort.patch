@@ -1,0 +1,11 @@
+--- findutils-4.1/locate/locate.c.getshort	Wed Jul 29 17:43:46 1998
++++ findutils-4.1/locate/locate.c	Wed Jul 29 17:45:38 1998
+@@ -96,7 +96,7 @@
+ 
+ /* Read in a 16-bit int, high byte first (network byte order).  */
+ 
+-static int
++static short
+ get_short (fp)
+      FILE *fp;
+ {

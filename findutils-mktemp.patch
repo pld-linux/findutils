@@ -1,0 +1,62 @@
+--- findutils-4.1/locate/updatedb.sh.mktemp	Mon Mar  2 18:02:21 1998
++++ findutils-4.1/locate/updatedb.sh	Mon Mar  2 18:40:06 1998
+@@ -69,6 +69,12 @@
+   : ${TMPDIR=/usr/tmp}
+ fi
+ 
++if test -x /bin/mktemp; then
++  : ${MKTEMP=/bin/mktemp}
++else
++  : ${MKTEMP=/bin/touch}
++fi
++
+ # The user to search network directories as.
+ : ${NETUSER=daemon}
+ 
+@@ -91,6 +97,11 @@
+ 
+ if test $old = no; then
+ 
++NEW_LOCATE_DB=`$MKTEMP $LOCATE_DB.n.XXXXXX` || {
++  echo "could not create temporary locate db" >&2
++  exit 1
++}
++
+ # FIXME figure out how to sort null-terminated strings, and use -print0.
+ {
+ if test -n "$SEARCHPATHS"; then
+@@ -102,23 +113,27 @@
+   su $NETUSER -c \
+   "$find $NETPATHS \\( -type d -regex \"$PRUNEREGEX\" -prune \\) -o -print"
+ fi
+-} | sort -f | $frcode > $LOCATE_DB.n
++} | sort -f | $frcode > $NEW_LOCATE_DB
+ 
+ # To avoid breaking locate while this script is running, put the
+ # results in a temp file, then rename it atomically.
+-if test -s $LOCATE_DB.n; then
+-  rm -f $LOCATE_DB
+-  mv $LOCATE_DB.n $LOCATE_DB
++if test -s $NEW_LOCATE_DB; then
++  # try atomic move first; mv may not have -f flag on some systems
++  mv -f $NEW_LOCATE_DB $LOCATE_DB >/dev/null 2>&1 || {
++    # for systems whose mv does not grok -f
++    rm -f $LOCATE_DB
++    mv $NEW_LOCATE_DB $LOCATE_DB
++  }
+   chmod 644 $LOCATE_DB
+ else
+   echo "updatedb: new database would be empty" >&2
+-  rm -f $LOCATE_DB.n
++  rm -f $NEW_LOCATE_DB
+ fi
+ 
+ else # old
+ 
+-bigrams=$TMPDIR/f.bigrams$$
+-filelist=$TMPDIR/f.list$$
++bigrams=`$MKTEMP $TMPDIR/f.bigrams$$XXXXXX`
++filelist=`$MKTEMP $TMPDIR/f.list$$XXXXXX`
+ trap 'rm -f $bigrams $filelist; exit' 1 15
+ 
+ # Alphabetize subdirectories before file entries using tr.  James says:

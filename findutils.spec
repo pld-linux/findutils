@@ -1,3 +1,6 @@
+# Conditional build:
+%bcond_without	selinux		# build without SELinux support
+#
 Summary:	GNU Find Utilities (find, xargs)
 Summary(de):	GNU-Suchprogramme (find, xargs)
 Summary(es):	Utilitarios de búsqueda de la GNU
@@ -7,7 +10,7 @@ Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.2.4
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Applications/File
@@ -26,7 +29,7 @@ URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel
+%{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -85,7 +88,7 @@ arayabilirsiniz.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+%{?with_selinux:%patch4 -p1}
 # patch5 is applied in install stage
 
 %{__perl} -pi -e 's/_jy_FIND LIBOBJS_NORMALIZE/_jy_FINDLIBOBJS_NORMALIZE/' m4/findlib.m4
@@ -106,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH5}
+%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH5}}
 
 # xargs is wanted in /bin
 install -d $RPM_BUILD_ROOT/bin

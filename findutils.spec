@@ -25,6 +25,7 @@ Patch5:		%{name}-xargs_help_cr.patch
 Patch6:		%{name}-selinux.patch
 Patch7:		%{name}-man-selinux.patch
 Patch8:		%{name}-am.patch
+URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel

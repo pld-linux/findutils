@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.20
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL
 Group:		Applications/File

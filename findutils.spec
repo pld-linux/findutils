@@ -5,7 +5,7 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs i locate)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1
-Release:	32
+Release:	33
 Copyright:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
@@ -82,7 +82,7 @@ gzip -9fn $RPM_BUILD_ROOT%{_infodir}/find.info* \
 %post
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%preun
+%postun
 /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean

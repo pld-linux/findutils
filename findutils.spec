@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.2.4
-Release:	0.1
+Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
@@ -20,7 +20,6 @@ Patch0:		%{name}-info.patch
 Patch1:		%{name}-mktemp.patch
 Patch2:		%{name}-DESTDIR.patch
 Patch3:		%{name}-pl.po-update.patch
-# UPDATEME
 Patch4:		%{name}-selinux.patch
 Patch5:		%{name}-man-selinux.patch
 URL:		http://www.gnu.org/software/findutils/
@@ -87,10 +86,12 @@ arayabilirsiniz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+# patch5 is applied in install stage
+
+%{__perl} -pi -e 's/_jy_FIND LIBOBJS_NORMALIZE/_jy_FINDLIBOBJS_NORMALIZE/' m4/findlib.m4
 
 %build
-%{__aclocal} -I gnulib/m4
+%{__aclocal} -I gnulib/m4 -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
@@ -105,12 +106,18 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH7}
+patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH5}
 
-%find_lang %{name}
-
+# xargs is wanted in /bin
 install -d $RPM_BUILD_ROOT/bin
 mv $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
+
+# unpackaged locate
+rm -f $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
+	$RPM_BUILD_ROOT%{_libdir}/{bigram,code,frcode} \
+	$RPM_BUILD_ROOT%{_mandir}/{,*/}man?/{locate.1,updatedb.1,locatedb.5}*
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT

@@ -10,7 +10,7 @@
 -END-INFO-DIR-ENTRY
 +@dircategory Shell utilities:
 +@direntry
-+* Finding Files: (find)			Listing and operating on files
++* Finding Files: (find).		Listing and operating on files
 +					that match certain criteria
 +@end direntry
  @end format

@@ -112,6 +112,9 @@ patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH7}
 
 %find_lang %{name}
 
+install -d $RPM_BUILD_ROOT/bin
+mv $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -125,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README TODO ChangeLog
 %attr(755,root,root) %{_bindir}/find
-%attr(755,root,root) %{_bindir}/xargs
+%attr(755,root,root) /bin/xargs
 
 %{_mandir}/man1/[fx]*
 %lang(de) %{_mandir}/de/man1/[fx]*

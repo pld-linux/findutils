@@ -1,8 +1,8 @@
---- findutils-4.1.5/locate/updatedb.sh.wiget	Wed Feb 23 18:04:28 2000
-+++ findutils-4.1.5/locate/updatedb.sh	Wed May 31 14:24:38 2000
-@@ -74,6 +74,12 @@
-   : ${TMPDIR=/tmp}
+--- findutils-4.2.4/locate/updatedb.sh.orig	2004-11-08 01:41:48.000000000 +0100
++++ findutils-4.2.4/locate/updatedb.sh	2004-11-09 00:00:15.469313808 +0100
+@@ -118,6 +118,12 @@
  fi
+ export TMPDIR
  
 +if test -x /bin/mktemp; then
 +  : ${MKTEMP=/bin/mktemp}
@@ -13,7 +13,7 @@
  # The user to search network directories as.
  : ${NETUSER=daemon}
  
-@@ -108,6 +114,11 @@
+@@ -161,6 +167,11 @@
  
  if test $old = no; then
  
@@ -23,14 +23,18 @@
 +}
 +
  # FIXME figure out how to sort null-terminated strings, and use -print0.
- {
- if test -n "$SEARCHPATHS"; then
-@@ -131,33 +142,33 @@
-     $find $NETPATHS \( -type d -regex "$PRUNEREGEX" -prune \) -o -print
+ if {
+ cd "$changeto"
+@@ -192,7 +203,7 @@
+     exit $?
    fi
  fi
--} | sort -f | $frcode > $LOCATE_DB.n
-+} | sort -f | $frcode > $NEW_LOCATE_DB
+-} | $sort -f | $frcode $frcode_options > $LOCATE_DB.n
++} | $sort -f | $frcode $frcode_options > $NEW_LOCATE_DB
+ then
+     # OK so far
+     true
+@@ -205,29 +216,29 @@
  
  # To avoid breaking locate while this script is running, put the
  # results in a temp file, then rename it atomically.
@@ -61,13 +65,13 @@
  fi
  
 -rm -f $LOCATE_DB.n
--trap 'rm -f $bigrams $filelist $LOCATE_DB.n; exit' 1 15
+-trap 'rm -f $bigrams $filelist $LOCATE_DB.n; exit' HUP TERM
 +rm -f $NEW_LOCATE_DB
-+trap 'rm -f $bigrams $filelist $NEW_LOCATE_DB; exit' 1 15
++trap 'rm -f $bigrams $filelist $NEW_LOCATE_DB; exit' HUP TERM
  
- # Alphabetize subdirectories before file entries using tr.  James says:
+ # Alphabetize subdirectories before file entries using tr.  James Woods says:
  # "to get everything in monotonic collating sequence, to avoid some
-@@ -191,19 +202,19 @@
+@@ -269,19 +280,19 @@
    awk '{ if (NR <= 128) print $2 }' | tr -d '\012' > $bigrams
  
  # Code the file list.

@@ -67,7 +67,6 @@ arayabilirsiniz.
 #autoconf
 touch lib/{stat,lstat}.c
 automake
-LDFLAGS="-s"; export LDFLAGS
 %configure 
 
 %{__make}
@@ -81,9 +80,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/pl/man1
 	
 install pl/*.1  $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
-gzip -9nf $RPM_BUILD_ROOT%{_infodir}/find.info* \
-	$RPM_BUILD_ROOT%{_mandir}/{man?/*,pl/man1/*} \
-	NEWS README TODO ChangeLog
+gzip -9nf NEWS README TODO ChangeLog
 	
 %find_lang %{name}
 

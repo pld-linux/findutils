@@ -5,15 +5,15 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1.7
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 Group(de):	Applikationen/Datei
 Group(pl):	Aplikacje/Pliki
 Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
+Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-info.patch
-Patch1:		%{name}-pl_manpages.patch
 Patch2:		%{name}-mktemp.patch
 Patch3:		%{name}-getshort.patch
 Patch4:		%{name}-DESTDIR.patch
@@ -61,7 +61,6 @@ arayabilirsiniz.
 %prep
 %setup  -q
 %patch0 -p1 
-%patch1 -p1
 %patch2 -p1 
 %patch3 -p1
 %patch4 -p1
@@ -75,12 +74,11 @@ touch lib/{stat,lstat}.c
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 	
-install pl/*.1  $RPM_BUILD_ROOT%{_mandir}/pl/man1
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 gzip -9nf NEWS README TODO ChangeLog
 	
@@ -101,7 +99,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/find
 %attr(755,root,root) %{_bindir}/xargs
 
-%{_mandir}/man1/find.1*
-%{_mandir}/man1/xargs.1*
-%lang(pl) %{_mandir}/pl/man1/*
+%{_mandir}/man1/[fx]*
+%lang(da) %{_mandir}/da/man1/[fx]*
+%lang(de) %{_mandir}/de/man1/[fx]*
+%lang(es) %{_mandir}/es/man1/[fx]*
+%lang(fi) %{_mandir}/fi/man1/[fx]*
+%lang(fr) %{_mandir}/fr/man1/[fx]*
+%lang(hu) %{_mandir}/hu/man1/[fx]*
+%lang(it) %{_mandir}/it/man1/[fx]*
+%lang(ja) %{_mandir}/ja/man1/[fx]*
+%lang(nl) %{_mandir}/nl/man1/[fx]*
+%lang(pl) %{_mandir}/pl/man1/[fx]*
 %{_infodir}/find.info*

@@ -100,10 +100,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/xargs.1*
 %lang(pl) %{_mandir}/pl/man1/*
 %{_infodir}/find.info*
-
-%changelog
-* Mon Jun 21 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [4.1-32]
-- based on RH spec,
-- spec rewrited by PLD team,
-- pl translation by Wojtek ¦lusarczyk <wojtek@shadow.eu.org>.

@@ -11,7 +11,7 @@ Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.2.18
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Applications/File
@@ -106,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH3}}
+%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH2}}
 
 # xargs is wanted in /bin
 install -d $RPM_BUILD_ROOT/bin

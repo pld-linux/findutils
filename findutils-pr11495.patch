@@ -1,0 +1,10 @@
+--- findutils-4.2.11/find/parser.c.orig	2005-01-23 18:34:37.000000000 +0100
++++ findutils-4.2.11/find/parser.c	2005-01-23 18:35:54.768229000 +0100
+@@ -1842,6 +1842,7 @@
+     case 'n':			/* number of links */
+       fprintf_stat_needed = true;
+       *fmt++ = 's';
++      break;
+       
+       /* Numeric items that DO honour #, 0, + flags.
+        */

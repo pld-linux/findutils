@@ -21,7 +21,7 @@ Patch7:		findutils-numblks.patch
 Patch8:		findutils-getshort.patch
 BuildRequires:	texinfo
 Prereq:		/usr/sbin/fix-info-dir
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The findutils package contains programs which will help you locate files on

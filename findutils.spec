@@ -1,22 +1,23 @@
-Summary:     GNU Find Utilities (find, xargs, and locate)
-Summary(de): GNU-Suchprogramme (find, xargs und locate)
-Summary(fr): Utilitaires de recherche de GNU (find, xargs, et locate)
-Summary(pl): GNU narzêdzia do odnajdywania plików (find, xargs i locate)
-Summary(tr): GNU dosya arama araçlarý
-Name:        findutils
-Version:     4.1
-Release:     28
-Copyright:   GPL
-Group:       Utilities/File
-Group(pl):   Narzêdzia/Pliki
-Source0:     ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
-Source1:     updatedb.cron
-Source2:     xargs.1.pl
-Patch0:      findutils.patch
-Patch1:      findutils-info.patch
-Prereq:      /sbin/install-info
-Requires:    mktemp
-Buildroot:   /tmp/%{name}-%{version}-root
+Summary:	GNU Find Utilities (find, xargs, and locate)
+Summary(de):	GNU-Suchprogramme (find, xargs und locate)
+Summary(fr):	Utilitaires de recherche de GNU (find, xargs, et locate)
+Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs i locate)
+Summary(tr):	GNU dosya arama araçlarý
+Name:		findutils
+Version:	4.1
+Release:	30
+Copyright:	GPL
+Group:		Utilities/File
+Group(pl):	Narzêdzia/Pliki
+Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source1:	updatedb.cron
+Source2:	xargs.1.pl
+Patch0:		findutils.patch
+Patch1:		findutils-info.patch
+BuildPrereq:    autoconf >= 2.13-8
+Prereq:		/sbin/install-info
+Requires:	mktemp
+Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
 This package contains programs to help you locate files on your system. The
@@ -61,6 +62,7 @@ dosyalarý arar.
 %patch1 -p1
 
 %build
+autoconf
 CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
 ./configure %{_target} \
 	--prefix=/usr \
@@ -69,7 +71,7 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/{lib/findutils,man/{man[15],pl/man1}} \
+install -d $RPM_BUILD_ROOT/usr/{lib/findutils,share/man/{man[15],pl/man1}} \
 	$RPM_BUILD_ROOT/etc/cron.daily
 
 make 	prefix=$RPM_BUILD_ROOT/usr \
@@ -77,18 +79,18 @@ make 	prefix=$RPM_BUILD_ROOT/usr \
 	install
 	
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.daily
-install %{SOURCE2} $RPM_BUILD_ROOT/usr/man/pl/man1/xargs.1
+install %{SOURCE2} $RPM_BUILD_ROOT/usr/share/man/pl/man1/xargs.1
 
-gzip -9fn $RPM_BUILD_ROOT/usr/info/find.info* \
-	$RPM_BUILD_ROOT/usr/man/{man[15]/*,pl/man1/*} \
+gzip -9fn $RPM_BUILD_ROOT/usr/share/info/find.info* \
+	$RPM_BUILD_ROOT/usr/share/man/{man[15]/*,pl/man1/*} \
 	NEWS README TODO ChangeLog
 
 %post
-/sbin/install-info /usr/info/find.info.gz /etc/info-dir
+/sbin/install-info /usr/share/info/find.info.gz /etc/info-dir
 
 %preun
 if [ "$1" = "0" ]; then
-    /sbin/install-info --delete /usr/info/find.info.gz /etc/info-dir
+    /sbin/install-info --delete /usr/share/info/find.info.gz /etc/info-dir
 fi
 
 %clean
@@ -102,12 +104,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %dir /usr/lib/findutils
 %attr(755,root,root) /usr/lib/findutils/*
 
-/usr/man/man[15]/*
-%lang(pl) /usr/man/pl/man1/*
+/usr/share/man/man[15]/*
+%lang(pl) /usr/share/man/pl/man1/*
 
-/usr/info/find.info*
+/usr/share/info/find.info*
 
 %changelog
+* Wed May 12 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [4.1-30]
+- package is now FHS 2.0 compliant.
+
 * Tue Apr 20 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [4.1-29]
 - recompiled on rpm 3.

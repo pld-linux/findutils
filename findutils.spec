@@ -17,6 +17,7 @@ Patch1:		findutils-basename.patch
 Patch2:		findutils-glibc.patch
 patch3:		findutils-glibc21.patch
 Patch4:		findutils-xargsoverflow.patch
+Patch5:		findutils-pl_manpages.patch
 BuildRequires:	texinfo
 Prereq:		/usr/sbin/fix-info-dir
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -56,6 +57,7 @@ yazýlýmý bir dizin hiyerarþisi altýnda arayabilirsiniz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 autoconf
@@ -73,7 +75,7 @@ make install \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
 	infodir=$RPM_BUILD_ROOT%{_infodir}
 	
-install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/xargs.1
+install pl/*.1  $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 gzip -9fn $RPM_BUILD_ROOT%{_infodir}/find.info* \
 	$RPM_BUILD_ROOT%{_mandir}/{man?/*,pl/man1/*} \

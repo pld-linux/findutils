@@ -12,7 +12,7 @@ Group:		Applications/File
 Group(de):	Applikationen/Datei
 Group(pl):	Aplikacje/Pliki
 Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
-Source1:	%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-info.patch
 Patch2:		%{name}-mktemp.patch
 Patch3:		%{name}-getshort.patch

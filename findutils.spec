@@ -9,7 +9,7 @@ Release:	32
 Copyright:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
-Source0:	ftp://prep.ai.mit.edu/pub/gnu/%{name}-%{version}.tar.gz
+Source0:	ftp://prep.ai.mit.edu/pub/gnu/findutils/%{name}-%{version}.tar.gz
 Source1:	updatedb.cron
 Source2:	xargs.1.pl
 Patch0:		findutils-info.patch

@@ -5,7 +5,7 @@ Summary(pl):	GNU narzêdzia do odnajdywania plików (find, xargs i locate)
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
 Version:	4.1
-Release:	31
+Release:	32
 Copyright:	GPL
 Group:		Utilities/File
 Group(pl):	Narzêdzia/Pliki
@@ -61,11 +61,7 @@ dosyalarý arar.
 %patch1 -p1
 
 %build
-CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="-s" \
-    ./configure \
-	--prefix=%{_prefix} \
-	--exec-prefix=%{_prefix} \
-	%{_target_platform}
+autoconf && %configure 
 
 make
 

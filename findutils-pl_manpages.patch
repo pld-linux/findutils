@@ -1,0 +1,584 @@
+diff -urN findutils-4.1/pl/find.1 findutils-4.1.pld/pl/find.1
+--- findutils-4.1/pl/find.1	Thu Jan  1 01:00:00 1970
++++ findutils-4.1.pld/pl/find.1	Fri Sep 24 14:27:55 1999
+@@ -0,0 +1,456 @@
++.\" 1999 PTM Przemek Borys
++.TH FIND 1L \" -*- nroff -*-
++.SH NAZWA
++find \- szuka plików w hierarchii katalogowej
++.SH SK£ADNIA
++.B find
++[¶cie¿ka...] [wyra¿enie]
++.SH OPIS
++Ta strona podrêcznika man opisuje wersjê GNU programu
++.BR find .
++.B find
++przeszukuje drzewo katalogowe, zakorzenione w ka¿dej z podanych nazw plików,
++wykonuj±c podane wyra¿enie od lewej do prawej, zgodnie z regu³ami
++priorytetów (zobacz sekcjê OPERATORY), a¿ wynik nie bêdzie ustalony (lewa
++strona jest fa³szywa dla operacji \fIand\fR, a prawdziwa dla \fIor\fR),
++kiedy
++.B find
++przechodzi do nastêpnej nazwy pliku.
++.PP
++Pierwszy argument, który rozpoczyna siê od `\-', `(', `)', `,', lub `!' 
++jest rozumiany jak pocz±tek wyra¿enia; wszelkie argumenty przed nim s±
++¶cie¿kami przeszukiwania, a wszystkie argumenty po nim s± reszt± wyra¿enia.
++Je¶li nie podano ¶cie¿ek, u¿ywany jest katalog bie¿±cy. Je¶li nie podano
++wyra¿enia, u¿ywane jest wyra¿enie `\-print'.
++.PP
++.B find
++koñczy dzia³anie ze statusem 0 tylko gdy wszystkie pliki zostan± poprawnie
++przetworzone. W przeciwnym wypadku status jest wiêkszy od zera.
++.SH WYRA¯ENIA
++.P
++Wyra¿enie jest z³o¿one z opcji (które tycz± siê raczej ogólnego dzia³ania,
++ni¿ przetwarzania konkretnego pliku i zawsze zwracaj± prawdê), testów (które
++sprawdzaj± warto¶æ prawdy lub fa³szu) i akcji (które maj± efekty uboczne i
++zwracaj± warto¶æ prawdziw± lub fa³szyw±); wszystkie te elementy s±
++rozdzielone operatorami.
++\-and jest domy¶lnym operatorem, zak³adanym w wypadku pominiêcia go w jawnym
++zapisie. Je¶li wyra¿enie nie zawiera innych akcji ni¿ \-prune, na wszystkich
++plikach, dla których jest ono prawdziwe, jest wykonywany \-print.
++.SS OPCJE
++.P
++Wszystkie opcje zawsze zwracaj± prawdê. Zawsze dzia³aj±, nie s±
++przetwarzane tylko gdy osi±gniêta zostanie ich pozycja w wyra¿eniu.
++Dlatego, dla jasno¶ci najlepiej umiejscawiaæ je na pocz±tku wyra¿enia.
++.IP \-daystart
++Mierz czasy (dla \-amin, \-atime, \-cmin, \-ctime, \-mmin, and \-mtime)
++od dzi¶, a nie od 24 godzin temu.
++.IP \-depth
++Przetwarzaj zawarto¶æ ka¿dego katalogu przed samym katalogiem jako takim.
++.IP \-follow
++Rozwik³uj dowi±zania symboliczne. Wymusza \-noleaf.
++.IP "\-help, \-\-help"
++Drukuj podsumowanie u¿ycia 
++.B find
++z linii komend i zakoñcz.
++.IP "\-maxdepth \fIg³êboko¶æ\fR"
++Zejd¼ maksymalnie \fIg³êboko¶æ\fR (nieujemna liczba ca³kowita) poziomów
++katalogów od argumentów linii komend. `\-maxdepth 0' oznacza, by testy
++i akcje aplikowaæ tylko do  argumentów linii komend.
++.IP "\-mindepth \fIlg³êboko¶æ\fR"
++Nie stosuje testów lub akcji w poziomach ni¿szych ni¿ \fIg³êboko¶æ\fR
++(nieujemna liczba ca³kowita). `\-mindepth 1' oznacza przetwarzanie
++wszystkich plików poza argumentami linii komend.
++.IP \-mount
++Nie zg³êbiaj katalogów na innych systemach plików. Jest to alternatywna
++nazwa dla \-xdev, stworzona dla kompatybilno¶ci z innymi wersjami
++.BR find .
++.IP "\-noleaf"
++Nie dokonuj optymalizacji przez zak³adanie, ¿e katalogi zawieraj± o dwa
++mniej katalogi ni¿ ich licznik twardych dowi±zañ. Opcja ta jest wymagana
++podczas przeszukiwania systemów plików, które nie u¿ywaj± unixowej konwencji
++wi±zania katalogów, takich jak systemy plików CD-ROM, MS-DOS czy wolumenów
++AFS. Ka¿dy katalog w normalnym systemie Unixowym zawiera przynajmniej dwa
++twarde dowi±zania: jego nazwê i `.'. Dodatkowo, jego podkatalogi mog± mieæ
++dowi±zania `..'.
++Gdy
++.B find
++testuje katalog po przestatowaniu o 2 mniej podkatalogów ni¿ licznik
++dowi±zañ, wie, ¿e reszta wpisów jest niekatalogowa. Je¶li testowane maj± byæ
++tylko nazwy plików, to nie ma potrzeby ich sprawdzaæ; daje to znacz±ce
++przyspieszenie.
++.IP "\-version, \-\-version"
++Drukuj wersjê i zakoñcz.
++.IP \-xdev
++Nie zg³êbiaj katalogów na innych systemach plików.
++.SS TESTY
++.P
++Warto¶ci numeryczne mog± byæ podawane jako
++.IP \fI+n\fP
++dla wiêkszych ni¿
++.IR n ,
++.IP \fI\-n\fP
++dla mniejszych ni¿
++.IR n ,
++.IP \fIn\fP
++dla równych
++.IR n .
++.IP "\-amin \fIn\fR"
++Dostêp do pliku nast±pi³ ostatnio \fIn\fR minut temu.
++.IP "\-anewer \fIplik\fR"
++Do pliku ostatnio dostano siê wcze¶niej ni¿ \fIplik\fR zosta³ zmodyfikowany.
++\-anewer podlega \-follow tylko je¶li \-follow pojawia siê w linii komend
++przed \-anewer.
++.IP "\-atime \fIn\fR"
++Do pliku dostano siê po raz ostatni \fIn\fR*24 godzin temu.
++.IP "\-cmin \fIn\fR"
++Status pliku zosta³ zmieniony \fIn\fR minut temu.
++.IP "\-cnewer \fIplik\fR"
++Status pliku by³ ostatnio zmieniony wcze¶niej ni¿ zmodyfikowano \fIplik\fR.
++\-cnewer podlega \-follow tylko je¶li \-follow pojawia siê w linii komend
++przed \-cnewer.
++.IP "\-ctime \fIn\fR"
++Status pliku zmieni³ siê ostatnio \fIn\fR*24 godzin temu.
++.IP \-empty
++Plik jest pusty i jest albo plikiem regularnym, albo katalogiem.
++.IP \-false
++Zawsze fa³szywe.
++.IP "\-fstype \fItyp\fR"
++Plik jest na systemie plików o typie \fItyp\fR. Prawid³owe typy systemów
++plików ró¿ni± siê na ró¿nych wersjach unixa; ich niekompletna lista, która
++jest przyjmowana w czê¶ci systemów to: ufs, 4.2, 4.3, nfs, tmp, mfs, S51K, 
++S52K.  Aby zobaczyæ typy twoich systemów plików, u¿yj
++\-printf z dyrektyw± %F.
++.IP "\-gid \fIn\fR"
++Numeryczny GID pliku to \fIn\fR.
++.IP "\-group \fInazwag\fR"
++Plik nale¿y do grupy \fInazwag\fR (numeryczny GID jest dopuszczalny).
++.IP "\-ilname \fIpattern\fR"
++Podobne do \-lname, lecz dopasowania s± niewra¿liwe na rozmiar liter.
++.IP "\-iname \fIpattern\fR"
++Podobne do \-name, lecz dopasowanie jest niewra¿liwe na rozmiar liter.
++Na przyk³ad wzorce `fo*' i `F??' dopasuj± siê do nazw `Foo', `FOO', `foo',
++`fOo', itd.
++.IP "\-inum \fIn\fR"
++Plik ma numer iwêz³a \fIn\fR.
++.IP "\-ipath \fIwzorzec\fR"
++Podobne do \-path, lecz dopasowanie jest niewra¿liwe na rozmiar liter.
++.IP "\-iregex \fIwzorzec\fR"
++Podobne do \-regex, lecz dopasowanie jest niewrazliwe na rozmiar liter.
++.IP "\-links \fIn\fR"
++Plik ma \fIn\fR dowi±zañ.
++.IP "\-lname \fIwzorzec\fR"
++Plik jest dowi±zaniem symbolicznym, którego zawarto¶æ odpowiada wzorcowi
++pow³oki \fIwzorzec\fR. Metaznaki nie traktuj± specjalnie `/' i `.'.
++.IP "\-mmin \fIn\fR"
++Dane pliku by³y ostatnio modyfikowane \fIn\fR minut temu.
++.IP "\-mtime \fIn\fR"
++Dane pliku by³y ostatnio modyfikowane \fIn\fR*24 godzin temu.
++.IP "\-name \fIwzorzec\fR"
++Podstawa nazwy pliku (z usuniêt± ¶cie¿k± i poprzedzaj±cymi katalogami)
++odpowiada wzorcowi pow³oki \fIwzorzec\fR. Metaznaki (`*', `?', `[]') nie
++odpowiadaj± `.' na pocz±tku nazwy pliku. Aby zignorowaæ katalogi i pliki im
++podleg³e, u¿yj \-prune; zobacz przyk³ad w opisie \-path.
++.IP "\-newer \fIplik\fR"
++Plik zosta zmodyfikowany wcze¶niej ni¿ \fIplik\fR.
++\-newer podlega \-follow tylko je¶li \-follow znajduje siê w linii komend
++przed \-newer.
++.IP \-nouser
++Do numerycznego UID pliku nie pasuje ¿aden u¿ytkownik.
++.IP \-nogroup
++Do numerycznego GID pliku nie pasuje ¿adna grupa.
++.IP "\-path \fIwzorzec\fR"
++Nazwa pliku odpowiada wzorcowi pow³oki \fIwzorzec\fR. Metaznaki nie traktuj±
++specjalnie `/' lub `.'; tak wiêc na przyk³ad,
++.br
++.in +1i
++find . \-path './sr*sc'
++.br
++.in -1i
++wydrukuje wpis dla katalogu o nazwie './src/misc' (je¶li taki istnieje).
++Aby zignorowaæ ca³e drzewo katalogowe, u¿yj \-prune. Na przyk³ad, aby
++pomin±æ katalog `src/emacs' i wszystkie jego pliki oraz wydrukowaæ nazwy
++innych znalezionych plików, u¿yj:
++.br
++.in +1i
++find . \-path './src/emacs' -prune -o -print
++.br
++.in -1i
++.IP "\-perm \fIprawa\fR"
++Bity praw pliku s± dok³adnie równe \fIprawom\fR (ósemkowym lub
++symbolicznym). Prawa symboliczne u¿ywaj± 0 jako punktu wyj¶cia.
++.IP "\-perm \-\fIprawa\fR"
++wszystkie bity \fIprawa\fR s± ustawione dla pliku.
++.IP "\-perm +\fIprawa\fR"
++Wszystkie bity \fIpraw\fR s± dla pliku ustawione.
++.IP "\-regex \fIwzorzec\fR"
++Nazwa pliku odpowiada wyra¿eniu regularnegmu \fIwzorzec\fR. Dopasowanie
++stosuje siê do ca³ej ¶cie¿ki, nie dla przeszukiwanej. Na przyk³ad, aby
++dopasowaæ plik o nazwie `./fubar3', mo¿esz u¿yæ wyra¿enia regularnego
++`.*bar' lub `.*b.*3'.
++.IP "\-size \fIn\fR[bckw]"
++Plik zajmije \fIn\fP jednostek miejsca. Jednostki to domy¶lnie 512-bajtowe
++bloki. Je¶li doklejona jest literka `c', jest to \fIn\fP bajtów, je¶li `k',
++kilobajtów, je¶li `w', dwubajtówych s³ów.
++Rozmiar nie wlicza niebezpo¶rednich bloków, lecz liczy bloki w w plikach
++`sparse', które w rzeczywisto¶ci nie s± zajête.
++.IP \-true
++Zawsze prawda.
++.IP "\-type \fIc\fR"
++Plik jest typu \fIc\fR:
++.RS
++.IP b
++blokowy (buforowany) plik specjalny
++.IP c
++znakowy (niebuforowany) plik specjalny
++.IP d
++katalog
++.IP p
++³±cze nazwane (FIFO)
++.IP f
++plik regularny
++.IP l
++dowi±zanie symboliczne
++.IP s
++gniazdo
++.RE
++.IP "\-uid \fIn\fR"
++Numeryczny UID pliku to \fIn\fR.
++.IP "\-used \fIn\fR"
++Do pliku ostatnio dostano siê \fIn\fR dni po zmianie jego statusu.
++.IP "\-user \fIunazwa\fR"
++W³a¶cicielem pliku jest u¿ytkownik \fIunazwa\fR (numeryczny UID jest tu
++dozwolony).
++.IP "\-xtype \fIc\fR"
++Jest to to samo co \-type, chyba ¿e plik jest dowi±zaniem symbolicznym. Dla
++dowi±zañ symbolicznych: je¶li nie podano \-follow, jest prawdziwe gdy plik
++jest dowi±zaniem do pliku typu \fIc\fR; je¶li podnao \-follow, jest
++prawdziwe, je¶li \fIc\fR to `l'. Innymi s³owy, dla dowi±zañ symbolicznych
++\-xtype sprawdza typ pliku, którego nie sprawdza \-type.
++.SS AKCJE
++.IP "\-exec \fIkomenda\fR ;"
++Wykonaj \fIkomendê\fR; prawdziwe je¶li zwrócony zosta³ status 0. Wszelkie
++nastêpuj±ce argumenty
++.B find
++s± brane jakoa argumenty komendy, a¿ nie zostanie napotkany argument,
++sk³adaj±cy siê z `;'. £añcuch `{}' jest podmieniany na obecnie przetwarzan±
++nazwê pliku.
++Obydwie te konstrukcje byæ mo¿e bêd± wymaga³y wycytowania (znakiem `\e') aby
++uchroniæ je przed rozwiniêciem przez pow³okê. Komenda jest wykonywana w
++katalogu startowym.
++.IP "\-fls \fIplik\fR"
++Prawdziwe; podobne do \-ls, lecz zapisuje do \fIpliku\fR jak \-fprint.
++.IP "\-fprint \fIplik\fR"
++Prawdziwe; drukuj pe³n± nazwê pliku do \fIpliku\fR. Je¶li \fIplik\fR nie
++istnieje, zostanie utworzony; je¶li istnieje, zostanie obciêty. Nazwy plików
++``/dev/stdout'' i ``/dev/stderr'' s± traktowane osobno; odnosz± siê one
++odpowiednio do standardowego wyj¶cia i standardowego wyj¶cia b³êdów.
++.IP "\-fprint0 \fIplik\fR"
++Prawdziwe; podobne do \-print0, lecz zapisuje do \fIpliku\fR, podobnie jak
++\-fprint.
++.IP "\-fprintf \fIplik\fR \fIformat\fR"
++Prawdziwe; podobne do \-printf, lecz zapisuje do \fIpliku\fR, podobnie jak
++\-fprint.
++.IP "\-ok \fIkomenda\fR ;"
++Podobne do \-exec, lecz pyta wpierw u¿ytkownika (na standardowym wej¶ciu);
++je¶li odpowied¼ nie rozpoczyna siê od `y' lub `Y', nie uruchamiaj komendy i
++zwróæ fa³sz.
++.IP \-print
++Prawdziwe; drukuj pe³n± nazwê pliku na standardowe wyj¶cie. Za nazw± daj
++now± liniê.
++.IP \-print0
++Prawdziwe; drukuj pe³n± nazwê pliku na standardowe wyj¶cie. Za nazw± daj
++znak null. Umo¿liwia to na poprawne wy¶wietlenie plików, zawieraj±cych w
++nazwach znaki nowej linii w programach, przetwarzaj±cych wyj¶cie
++\fBfind\fRa.
++.IP "\-printf \fIformat\fR"
++Prawdziwe; drukuj \fIformat\fR na standardowe wyj¶cie, interpretuj±c
++sekwencje specjalne `\e' i dyrektywy `%'. Szeroko¶ci pól i precyzje mog± byæ
++podawane dok³adnie jak w printf(3) z C. W przeciwieñstwie do \-print,
++\-printf nie dodaje nowej linii do koñca ³añcucha. Sekwencje specjalne i
++dyrektywy to:
++.RS
++.IP \ea
++Dzwonek.
++.IP \eb
++Backspace.
++.IP \ec
++Wstrzymaj drukowanie tego formatu i natychmiast wypró¿nij wyj¶cie.
++.IP \ef
++Form feed.
++.IP \en
++Nowa linia.
++.IP \er
++Powrót karetki.
++.IP \et
++Tabulacja poprzeczna.
++.IP \ev
++Tabulacja pionowa.
++.IP \e\e
++Literalny lewy uko¶nik (`\e').
++.PP
++`\e', za którym nastêpuje dowolny inny znak, jest traktowany jak zwyk³y
++znak, wiêc s± drukowane obydwa.
++.IP %%
++Literalny znak procenta.
++.IP %a
++Ostatni czas dostêpu do pliku w formacie zwracanym przez funkcjê ctime(3).
++.IP %A\fIk\fP
++Ostatni czas dostêpu do pliku, w formacie okreslonym przez \fIk\fR, którym
++mo¿e byæ `@', lub dyrektywa dla funkcji C strftime(3). Mo¿liwe warto¶ci
++\fIk\fR s± wymienione ni¿ej; niektóre z nich mog± nie byæ dostêpne na
++wszystkich systemach z powodu ró¿nic w strftime(3) miêdzy systemami.
++.RS
++.IP @
++Sekundy od 1 stycznia, 1970, 00:00 GMT.
++.PP
++Pola czasowe:
++.IP H
++godzina (00..23)
++.IP I
++godzina (01..12)
++.IP k
++godzina ( 0..23)
++.IP l
++godzina ( 1..12)
++.IP M
++minuta (00..59)
++.IP p
++localowe AM lub PM
++.IP r
++czas, 12-godzinny (gg:mm:ss [AP]M)
++.IP S
++sekunda (00..61)
++.IP T
++czas, 24-godzinny (gg:mm:ss)
++.IP X
++localowa reprezentacja czasu (G:M:S)
++.IP Z
++strefa czasowa (np. EDT), lub nic je¶li nie da siê jej okre¶liæ
++.PP
++Pola daty:
++.IP a
++localowy skrót nazwy tygodnia (Sun..Sat)
++.IP A
++localowa pe³na nazwa tygodnia o zmiennej d³ugo¶ci (Sunday..Saturday)
++.IP b
++localowa skrócona nazwa miesi±ca (Jan..Dec)
++.IP B
++localowa pe³na nazwa miesi±ca o zmiennej d³ugo¶ci (January..December)
++.IP c
++localowa data i czas (Sat Nov 04 12:02:33 EST 1989)
++.IP d
++dzieñ miesi±ca (01..31)
++.IP D
++data (mm/dd/rr)
++.IP h
++to samo co b
++.IP j
++dzieñ roku (001..366)
++.IP m
++miesi±c (01..12)
++.IP U
++numer tygodnia w roku, z niedziel± liczon± jako pierwszy dzieñ tygodnia
++(00..53)
++.IP w
++dzieñ tygodnia (0..6)
++.IP W
++numer tygodnia w roku, licz±c z poniedzia³kiem, jako pierwszym dniem
++tygodnia (00..53)
++.IP x
++localowa reprezentacja daty (mm/dd/rr)
++.IP y
++ostatnie dwie cyfry roku (00..99)
++.IP Y
++rok (1970...)
++.RE
++.IP %b
++Rozmiar pliku w 512-bajtowych blokach (zaokr±glanych w górê).
++.IP %c
++Ostatni czas zmiany statusu plik, w formacie zwróconym przez funkcjê
++ctime(3) z C.
++.IP %C\fIk\fP
++Ostatni czas zmiany statusu pliku w formacie okre¶lonym przez \fIk\fR, w
++taki sam sposób, jak dla %A.
++.IP %d
++G³êboko¶æ pliku w drzewie katalogowym; 0 oznacza plik w argumencie linii
++komend.
++.IP %f
++Nazwa pliku z usuniêtymi prowadz±cymi katalogami (tylko ostatni element).
++.IP %F
++Rodzaj systemu plików, na którym znajduje siê plik; warto¶æ ta mo¿e byæ
++u¿ywana do \-fstype.
++.IP %g
++Nazwa grupy pliku lub numeryczny GID je¶li grupa nie ma nazwy.
++.IP %G
++Numeryczny GID pliku.
++.IP %h
++Prowadz±ce katalogi nazwy pliku (wszystko poza ostatnim elementem).
++.IP %H
++Argument linii komend, pod którym plik zosta³ znaleziony.
++.IP %i
++Numer iwêz³a pliku (dziesiêtnie).
++.IP %k
++Rozmiar pliku w 1K blokach (zaokr±glane w górê).
++.IP %l
++Obiekt dowi±zania symbolicznego (pusty ³añcuch, je¶li plik nie jest
++dowi±zaniem symbolicznym).
++.IP %m
++Prawa pliku (ósemkowo).
++.IP %n
++Liczba twardych dowi±zañ do pliku.
++.IP %p
++Nazwa pliku.
++.IP %P
++Nazwa pliku z nazw± argumentu linii komend, pod którym plik zosta³
++znaleziony usuniêty (?? `it was found removed' -- przyp. t³um.)
++.IP %s
++Rozmiar pliku w bajtach.
++.IP %t
++Ostatni czas modyfikacji pliku w formacie zwróconym przez funkcjê ctime(3) z C.
++.IP %T\fIk\fP
++Ostatni czas modyfikacji pliku, w formacie okre¶lonym przez \fIk\fR,
++podobnie jak dla %A.
++.IP %u
++Nazwa u¿ytkownika pliku, lub numeryczny UID, je¶li u¿ytkownik nie ma nazwy.
++.IP %U
++Numeryczny UID pliku.
++.PP
++Znak `%', za którym nastêpuje dowolny inny znak jest usuwany (lecz drugi
++znak jest drukowany).
++.RE
++.IP \-prune
++Jesli nie podano \-depth, prawdziwe; nie schod¼ z (descend the) bie¿±cego 
++katalogu.
++.br
++Je¶li podano \-depth, fa³szywe; bez rezultatu.
++.IP \-ls
++Prawdziwe; listuj plik bie¿±cy w formacie `ls \dils' na standardowe wyj¶cie.
++Liczniki bloków s± 1K blokami, chyba ¿e ustawiono zmienn± ¶rodowiskow±
++POSIXLY_CORRECT, kiedy u¿ywane bêd± 512-bajtowe bloki.
++.SS OPERATORY
++.P
++Wymienione w malej±cym priorytecie:
++.IP "( \fIwyra¿\fR )"
++Wymu¶ pierwszeñstwo.
++.IP "! \fIwyra¿\fR"
++Prawdziwe je¶li \fIwyra¿\fR jest fa³szywe
++.IP "\-not \fIwyra¿\fR"
++To samo co ! \fIwyra¿\fR.
++.IP "\fIwyra¿1 wyra¿2\fR"
++And (wymuszony); \fIwyra¿2\fR nie jest analizowany jesli \fIwyra¿1\fR jest
++fa³szywe.
++.IP "\fIwyra¿1\fR \-a \fIwyra¿2\fR"
++To samo co \fIwyra¿1 wyra¿2\fR.
++.IP "\fIwyra¿1\fR \-and \fIwyra¿2\fR"
++To samo co \fIwyra¿1 wyra¿2\fR.
++.IP "\fIwyra¿1\fR \-o \fIwyra¿2\fR"
++Or; \fIwyra¿2\fR nie jest analizowane je¶li \fIwyra¿1\fR jest prawdziwe.
++.IP "\fIwyra¿1\fR \-or \fIwyra¿2\fR"
++To samo co \fIwyra¿1\fR \-o \fIwyra¿2\fR.
++.IP "\fIwyra¿1\fR , \fIwyra¿2\fR"
++Lista; zarówno \fIwyra¿1\fR jak i \fIwyra¿2\fR zawsze s± analizowane.
++Warto¶æ \fIwyra¿1\fR jest niszczona; warto¶æ listy jest warto¶ci±
++\fIwyra¿2\fR.
++.SH "ZOBACZ TAK¯E"
++\fBlocate\fP(1L), \fBlocatedb\fP(5L), \fBupdatedb\fP(1L), \fBxargs\fP(1L)
++\fBFinding Files\fP (on-line w Info, lub w postaci wydrukowanej)
+diff -urN findutils-4.1/pl/xargs.1 findutils-4.1.pld/pl/xargs.1
+--- findutils-4.1/pl/xargs.1	Thu Jan  1 01:00:00 1970
++++ findutils-4.1.pld/pl/xargs.1	Sat Aug 28 22:45:48 1999
+@@ -0,0 +1,120 @@
++.\" {PTM/LK/0.1/27-09-1998/"xargs - utwórz liniê polecenia ze standardowego wejscia"}
++.\" T³umaczenie: 27-09-1998 £ukasz Kowalczyk (lukow@tempac.okwf.fuw.edu.pl)
++.TH XARGS 1L \" -*- nroff -*-
++.SH NAZWA
++xargs \- wykonaj polecenie z argumentami pobranymi ze standardowego wej¶cia
++.SH SK£ADNIA
++.B xargs
++[\-0prtx] [\-e[eof-str]] [\-i[replace-str]] [\-l[max-lines]]
++[\-n max-args] [\-s max-chars] [\-P max-procs] [\-\-null] [\-\-eof[=eof-str]]
++[\-\-replace[=replace-str]] [\-\-max-lines[=max-lines]] [\-\-interactive]
++[\-\-max-chars=max-chars] [\-\-verbose] [\-\-exit] [\-\-max-procs=max-procs]
++[\-\-max-args=max-args] [\-\-no-run-if-empty] [\-\-version] [\-\-help]
++[polecenie [argumenty-pocz±tkowe]]
++.SH OPIS
++Ta strona opisuje wersjê GNU programu
++.BR xargs .
++.B xargs
++czyta ze standardowego wej¶cia listê argumentów rozdzielonych spacjami lub
++znakami nowej linii. Argumenty zawieraj±ce spacje mog± byæ ujête w cudzys³owy.
++Nastêpnie wykonywane jest
++.I polecenie
++(domy¶lnie /bin/echo) jeden lub wiêcej razy z
++.IR argumentami-pocz±tkowymi ", "
++po których nastêpuj± argumenty przeczytane ze standardowego wej¶cia. Puste
++linie ze standardowego wej¶cia s± ignorowane.
++.P
++.B xargs
++zwraca nastêpuj±ce kody wyj¶cia:
++.nf
++0 gdy polecenie zakoñczy³o siê sukcesem
++123 je¿eli którekolwiek wywo³anie polecenia zakoñczy³o siê z kodem wyj¶cia 1-125
++124 je¿eli polecenie zakoñczy³o siê z kodem wyj¶cia 255
++125 je¿eli polecenie zosta³o zakoñczone przez sygna³
++126 je¿eli polecenie nie mog³o byæ uruchomione
++127 je¿eli polecenie nie zosta³o znalezione
++1 je¿eli wyst±pi³ inny b³±d
++.fi
++.SS OPCJE
++.TP
++.I "\-\-null, \-0"
++Nazwy plików wej¶ciowych s± zakoñczone znakiem o kodzie zero zamiast spacj±,
++a cudzys³owy i odwrotne uko¶niki nie maj± specjalnego znaczenia (wszystkie znaki
++s± brane dos³ownie). Znak koñca pliku jest traktowany jak ka¿dy inny znak.
++Opcja jest u¿yteczna, gdy argumenty mog± zawieraæ bia³e spacje, cudzys³owy,
++apostrofy lub odwrotne uko¶niki. Ta opcja mo¿e byæ u¿yta do pobrania argumentów
++od programu GNU find uruchomionego z opcj± \-print0.
++.TP
++.I "\-\-eof[=eof-str], \-e[eof-str]"
++Ustawia ci±g interpretowany jako koniec danych na \fIeof-str\fR. Je¿eli
++ci±g oznaczaj±cy koniec danych pojawi siê jako jedna z linii danych, reszta
++danych jest ignorowana. Je¿eli parametr \fIeof-str\fP nie zostanie podany,
++¿aden ci±g nie jest interpretowany jako koniec danych. Je¿eli ca³a opcja
++nie zostanie podana, znakiem koñca danych jest "_".
++.TP
++.I "\-\-help"
++Podaje wszystkie opcje programu
++.B xargs
++i koñczy dzia³anie.
++.TP
++.I "\-\-replace[=replace-str], \-i[replace-str]"
++Zastêpuje wszystkie wyst±pienia \fIreplace-str\fP w 
++.I pocz±tkowych_argumentach
++argumentami przeczytanym ze standardowego wej¶cia.
++.\"Also, unquoted blanks do not terminate arguments.
++Je¿eli nie podano parametru \fIreplace-str\fP, jego domy¶ln± warto¶ci±
++staje siê "{}" (jak dla opcji -exec programu find). Automatycznie w³±czane
++s± opcje \fI\-x\fP oraz \fI\-l 1\fP.
++.TP
++.I "\-\-max\-lines[=max\-lines], \-l[max\-lines]"
++U¿ywa co najwy¿ej \fImax-lines\fR niepustych linii danych wej¶ciowych na
++ka¿d± liniê poleceñ. Je¿eli nie podano parametru \fImax-lines\fR, jest on
++przyjmowany jako 1. Spacje na koñcu linii powoduj±, ¿e jest do niej
++do³±czana nastêpna linia. Automatycznie w³±czana jest opcja \fI\-x\fR.
++.TP
++.I "\-\-max-args=max-args, \-n max-args"
++U¿ywa co najwy¿ej \fImax-args\fR argumentów na ka¿d± liniê poleceñ. Je¿eli
++przekroczona zostanie ilo¶æ znaków (patrz opcja \-s), u¿ytych zostanie mniej
++argumentów ni¿ \fImax-args\fR chyba, ¿e podana zostanie opcja \-x. W takim
++wypadku dzia³anie programu
++.I xargs
++zostanie zakoñczone.
++.TP
++.I "\-\-interactive, \-p"
++Prosi u¿ytkownika o potwierdzenie przed uruchomieniem ka¿dej linii poleceñ i
++przeczytaniem danych z terminala. Uruchamia liniê poleceñ tylko wtedy, gdy
++odpowied¼ zaczyna siê od `y' lub `Y'. Automatycznie w³±cza opcjê \fI\-t\fR.
++.TP
++.I "\-\-no-run-if-empty, \-r"
++Je¿eli w danych ze standardowego wej¶cia nie znajduj± siê znaki inne ni¿
++spacje, polecenie nie jest uruchamiane. Normalnie polecenie jest uruchamiane
++jednorazowo nawet, gdy nie odczytano ¿adnych danych.
++.TP
++.I "\-\-max-chars=max-chars, \-s max-chars"
++U¿ywa co najwy¿ej \fImax-chars\fR znaków na ka¿d± liniê poleceñ, w³±cznie z
++poleceniem, argumentami pocz±tkowymi i znakami \\0 (null) na koñcu ka¿dej
++linii poleceñ. Domy¶lna warto¶æ jest tak du¿a, jak to mo¿liwe, do 20k znaków.
++.TP
++.I "\-\-verbose, \-t"
++Linia poleceñ jest wypisywana na standardowe wyj¶cie b³êdów przed wykonaniem
++polecenia.
++.TP
++.I "\-\-version"
++Wypisuje numer wersji
++.I xargs
++i koñczy dzia³anie programu.
++.TP
++.I "\-\-exit, \-x"
++Koñczy dzia³anie programu, je¿eli przekroczona zostanie ilo¶æ znaków (patrz
++opcja \fI\-s\fR).
++.TP
++.I "\-\-max-procs=max-procs, \-P max-procs"
++Uruchamia co najwy¿ej \fImax-procs\fR procesów za jednym razem; domy¶ln±
++warto¶ci± jest 1. Je¿eli \fImax-procs\fR jest równe 0, 
++.I xargs
++uruchmowi tyle procesów, ile bêdzie to mo¿liwe za jednym razem. 
++U¿ywaj opcji \fI\-n\fR razem z \fI\-P\fR; w przeciwnym razie jest mo¿liwe, 
++¿e uruchomiony zostanie tylko jeden dodatkowy proces.
++.SH "ZOBACZ TAK¯E"
++\fBfind\fP(1L), \fBlocate\fP(1L), \fBlocatedb\fP(5L), \fBupdatedb\fP(1)
++\fBFinding Files\fP (w dokumentacji Info lub wydane w druku)

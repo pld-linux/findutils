@@ -7,14 +7,16 @@ Name:		findutils
 Version:	4.1.6
 Release:	1
 License:	GPL
-Group:		Utilities/File
-Group(pl):	Narzêdzia/Pliki
+Group:		Applications/File
+Group(de):	Applikationen/Datei
+Group(pl):	Aplikacje/Pliki
 Source0:	ftp://alpha.gnu.org/gnu/%{name}-%{version}.tar.gz
-Patch0:		findutils-info.patch
-Patch1:		findutils-pl_manpages.patch
-Patch2:		findutils-mktemp.patch
-Patch3:		findutils-getshort.patch
-Patch4:		findutils-DESTDIR.patch
+Patch0:		%{name}-info.patch
+Patch1:		%{name}-pl_manpages.patch
+Patch2:		%{name}-mktemp.patch
+Patch3:		%{name}-getshort.patch
+Patch4:		%{name}-DESTDIR.patch
+BuildRequires:	automake
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -66,7 +68,7 @@ arayabilirsiniz.
 %build
 #autoconf
 touch lib/{stat,lstat}.c
-automake
+automake -a -c
 %configure 
 
 %{__make}

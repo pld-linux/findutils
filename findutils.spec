@@ -94,8 +94,6 @@ rm -rf $RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-gzip -9nf NEWS README TODO ChangeLog
-
 %find_lang %{name}
 
 %post
@@ -109,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc {NEWS,README,TODO,ChangeLog}.gz
+%doc NEWS README TODO ChangeLog
 %attr(755,root,root) %{_bindir}/find
 %attr(755,root,root) %{_bindir}/xargs
 

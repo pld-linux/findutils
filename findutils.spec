@@ -99,16 +99,19 @@ rm -rf $RPM_BUILD_ROOT
 %doc {NEWS,README,TODO,ChangeLog}.gz
 %attr(750,root,root) %config /etc/cron.daily/updatedb.cron
 %attr(755,root,root) /usr/bin/*
-
-%dir /usr/lib/findutils
+%attr(755,root,root) %dir /usr/lib/findutils
 %attr(755,root,root) /usr/lib/findutils/*
 
-/usr/info/find.info*
 /usr/man/man[15]/*
-
 %lang(pl) /usr/man/pl/man1/*
 
+/usr/info/find.info*
+
 %changelog
+* Tue Apr 20 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [4.1-29]
+- recompiled on rpm 3.
+
 * Tue Apr  5 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [4.1-28]
 - revision up to 28,
@@ -119,7 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 - standarized {un}registering info pages (added findutils-info.patch),
 - added more documentation,
 - added pl man page for xargs(1L),
-- added gzipping documentation and man pages.
+- added gzipping documentation and man pages,
+- changes in %files (for rpm-2.9x).
 
 * Sun Oct  4 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [4.1.26]

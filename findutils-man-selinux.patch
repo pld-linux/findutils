@@ -1,0 +1,21 @@
+--- pl/man1/find.1.orig	Fri Jul 20 11:16:37 2001
++++ pl/man1/find.1	Wed Jan 28 16:27:25 2004
+@@ -224,6 +224,9 @@
+ jest dowi±zaniem do pliku typu \fIc\fR; je¶li podano \-follow, jest
+ prawdziwe, je¶li \fIc\fR to `l'. Innymi s³owy, dla dowi±zañ symbolicznych
+ \-xtype sprawdza typ pliku, którego nie sprawdza \-type.
++.IP "\-context \fIkontekst\fR"
++.IP "\--context \fIkontekst\fR"
++(tylko SELinux) Plik ma kontekst bezpieczeñstwa \fIkontekst\fR.
+ .SS AKCJE
+ .IP "\-exec \fIpolecenie\fR ;"
+ Wykonuje \fIpolecenie\fR; prawdziwe je¶li zwrócony zosta³ status 0. Wszelkie
+@@ -412,6 +415,8 @@
+ Nazwa u¿ytkownika pliku, lub numeryczny UID, je¶li u¿ytkownik nie ma nazwy.
+ .IP %U
+ Numeryczny UID pliku.
++.IP %Z
++(tylko SELinux) Kontekst bezpieczeñstwa pliku.
+ .PP
+ Znak `%', za którym nastêpuje dowolny inny znak jest usuwany (lecz drugi
+ znak jest drukowany).

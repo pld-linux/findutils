@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	selinux		# build without SELinux support
 #

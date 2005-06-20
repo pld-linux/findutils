@@ -24,14 +24,14 @@
  #if 1
  #include <stdbool.h>
  typedef bool boolean;
-@@ -290,6 +294,9 @@
+@@ -322,6 +322,9 @@
      struct dir_id   fileid;	/* samefile */
      mode_t type;		/* type */
-     FILE *stream;		/* fprint fprint0 */
+     FILE *stream;		/* ls fls fprint0 */
 +#ifdef WITH_SELINUX
 +    security_context_t scontext; /* scontext */
 +#endif /*WITH_SELINUX*/
-     struct format_val printf_vec; /* printf fprintf */
+     struct format_val printf_vec; /* printf fprintf fprint  */
    } args;
  
 @@ -477,6 +484,10 @@
@@ -351,14 +351,14 @@
  #: find/find.c:518
  #, c-format
  msgid "invalid predicate `%s'"
-@@ -400,6 +405,10 @@
- "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
- "      -used N -user NAZWA -xtype [bcdpfls]\n"
+@@ -408,6 +404,10 @@
+ "w przypadku braku dostêpu do WWW, wysy³aj±c pocztê elektroniczn± pod\n"
+ "adres <bug-findutils@gnu.org>."
  
-+#: find/parser.c:755
++#: find/parser.c:771
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:747
- msgid ""
- "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"
+ #: find/parser.c:795
+ msgid "sanity check of the fnmatch() library function failed."
+ msgstr ""

@@ -1,0 +1,40 @@
+--- findutils-4.2.23/po/pl.po.orig	2005-06-19 10:48:03.000000000 +0200
++++ findutils-4.2.23/po/pl.po	2005-06-20 23:57:10.897897272 +0200
+@@ -5,10 +5,10 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: findutils 4.2.22\n"
++"Project-Id-Version: findutils 4.2.23\n"
+ "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
+ "POT-Creation-Date: 2005-06-18 22:41+0100\n"
+-"PO-Revision-Date: 2005-06-18 23:02+0200\n"
++"PO-Revision-Date: 2005-06-20 23:51+0200\n"
+ "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
+ "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+ "MIME-Version: 1.0\n"
+@@ -387,6 +387,10 @@
+ "      -exec COMMAND ; -exec COMMAND {} + -ok COMMAND ;\n"
+ "      -execdir COMMAND ; -execdir COMMAND {} + -okdir COMMAND ;\n"
+ msgstr ""
++"akcje: -delete -print0 -printf FORMAT -fprintf PLIK FORMAT -print \n"
++"      -fprint0 PLIK -fprint PLIK -ls -fls PLIK -prune -quit\n"
++"      -exec POLECENIE ; -exec POLECENIE {} + -ok POLECENIE ;\n"
++"      -execdir POLECENIE ; -execdir POLECENIE {} + -okdir POLECENIE ;\n"
+ 
+ #: find/parser.c:764
+ msgid ""
+@@ -778,13 +782,3 @@
+ "       [--max-chars=max-znaków] [--verbose] [--exit] [--max-procs=max-proc]\n"
+ "       [--max-args=max-arg] [--no-run-if-empty] [--arg-file=plik]\n"
+ "       [--version] [--help] [polecenie [pocz±tkowe-argumenty]]\n"
+-
+-#~ msgid ""
+-#~ "actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n"
+-#~ "      -fls FILE -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls -"
+-#~ "delete\n"
+-#~ "      -quit\n"
+-#~ msgstr ""
+-#~ "akcje: -exec POLECENIE ; -fprint PLIK -fprint0 PLIK -fprintf PLIK FORMAT\n"
+-#~ "      -fls PLIK -ok POLECENIE ; -print -print0 -printf FORMAT -prune -ls\n"
+-#~ "      -delete -quit\n"

@@ -24,6 +24,7 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-selinux.patch
 Patch2:		%{name}-man-selinux.patch
+Patch3:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -83,6 +84,7 @@ arayabilirsiniz.
 
 %prep
 %setup -q
+%patch3 -p1
 %patch0 -p1
 %{?with_selinux:%patch1 -p1}
 # patch2 is applied in install stage

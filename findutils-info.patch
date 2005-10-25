@@ -1,6 +1,6 @@
---- findutils-4.2.4/doc/find.texi.orig	2004-11-08 21:35:13.000000000 +0100
-+++ findutils-4.2.4/doc/find.texi	2004-11-08 23:57:06.080105344 +0100
-@@ -12,9 +12,9 @@
+--- findutils-4.2.25/doc/find.texi.orig	2005-09-02 22:48:07.000000000 +0200
++++ findutils-4.2.25/doc/find.texi	2005-10-26 00:05:29.278486352 +0200
+@@ -12,17 +12,11 @@
  @finalout
  @end iftex
  
@@ -8,7 +8,315 @@
 +@dircategory Shell utilities:
  @direntry
 -* Finding files: (find).        Operating on files matching certain criteria.
+-@end direntry
+-
+-@dircategory Individual utilities
+-@direntry
+-* find: (find)Invoking find.                    Finding and acting on files.
+-* locate: (find)Invoking locate.                Finding files in a database.
+-* updatedb: (find)Invoking updatedb.            Building the locate database.
+-* xargs: (find)Invoking xargs.                  Operating on many files.
 +* Finding files: (find).		Operating on files matching certain criteria
++* find: (find)find.			Finding and acting on files
++* xargs: (find)xargs.			Operating on many files
  @end direntry
  
- @ifinfo
+ @copying
+@@ -2259,10 +2253,6 @@
+ fileserver where that filesystem is on a local disk, to prevent
+ thrashing the network.
+ 
+-@xref{Invoking updatedb},
+-for the description of the options to @code{updatedb}, which specify
+-which directories would each database contain entries for.
+-
+ 
+ @node Database Formats
+ @section Database Formats
+@@ -2435,14 +2425,12 @@
+ discussed in this manual.
+ 
+ @menu
+-* Invoking find::
+-* Invoking locate::
+-* Invoking updatedb::
+-* Invoking xargs::
++* find::
++* xargs::
+ * Regular Expressions::
+ @end menu
+ 
+-@node Invoking find, Invoking locate, , Reference
++@node find, xargs, , Reference
+ @section Invoking @code{find}
+ 
+ @example
+@@ -2510,7 +2498,7 @@
+ @end menu
+ 
+ 
+-@node Warning Messages,,, Invoking find
++@node Warning Messages,,, find
+ @subsection Warning Messages
+ 
+ If there is an error on the @code{find} command line, an error message
+@@ -2562,249 +2550,7 @@
+ Use of an unrecognised formatting directive with @samp{-fprintf}
+ @end itemize
+ 
+-@node Invoking locate, Invoking updatedb, Invoking find, Reference
+-@section Invoking @code{locate}
+-
+-@example
+-locate @r{[}@var{option}@dots{}@r{]} @var{pattern}@dots{}
+-@end example
+-
+-For each @var{pattern} given @code{locate} searches one or more file
+-name databases returning each match of @var{pattern}.
+-
+-For each @var{pattern} given @code{locate} searches one or more file
+-name databases returning each match of @var{pattern}.
+-
+-@table @code
+-@item --all
+-@itemx -A
+-Print only names which match all non-option arguments, not those
+-matching one or more non-option arguments.
+-
+-@item --basename
+-@itemx -b
+-The specified pattern is matched against just the last component of
+-the name of a file in the @code{locate} database.  This last
+-component is also called the ``base name''.  For example, the base
+-name of @file{/tmp/mystuff/foo.old.c} is @file{foo.old.c}.  If the
+-pattern contains metacharacters, it must match the base name exactly.
+-If not, it must match part of the base name.
+-
+-@item --count
+-@itemx -c
+-Instead of printing the matched file names, just print the total
+-number of matches found, unless @samp{--print} (@samp{-p}) is also
+-present.
+-
+-
+-@item --database=@var{path}
+-@itemx -d @var{path}
+-Instead of searching the default @code{locate} database, @code{locate} search the file
+-name databases in @var{path}, which is a colon-separated list of
+-database file names.  You can also use the environment variable
+-@code{LOCATE_PATH} to set the list of database files to search.  The
+-option overrides the environment variable if both are used.  Empty
+-elements in @var{path} (that is, a leading or trailing colon, or two
+-colons in a row) are taken to stand for the default database.
+-A database can be supplied on stdin, using @samp{-} as an element
+-of @samp{path}. If more than one element of @samp{path} is @samp{-},
+-later instances are ignored (but a warning message is printed).
+-
+-@item --existing
+-@itemx -e
+-Only print out such names which currently exist (instead of such names
+-which existed when the database was created).  Note that this may slow
+-down the program a lot, if there are many matches in the database.
+-The way in which broken symbolic links are treated is affected by the
+-@samp{-L}, @samp{-P} and @samp{-H} options.
+-
+-@item --non-existing
+-@itemx -E
+-Only print out such names which currently do not exist (instead of
+-such names which existed when the database was created).  Note that
+-this may slow down the program a lot, if there are many matches in the
+-database.  The way in which broken symbolic links are treated is
+-affected by the @samp{-L}, @samp{-P} and @samp{-H} options.
+-
+-@item --follow
+-@itemx -L
+-If testing for the existence of files (with the @samp{-e} or @samp{-E}
+-options), consider broken symbolic links to be non-existing.  This is
+-the default behaviour.
+-
+-
+-@item --nofollow
+-@itemx -P
+-@itemx -H
+-If testing for the existence of files (with the @samp{-e} or @samp{-E}
+-options), treat broken symbolic links as if they were existing files.
+-The @samp{-H} form of this option is provided purely for similarity
+-with @code{find}; the use of @samp{-P} is recommended over @samp{-H}.
+-
+-@item --ignore-case
+-@itemx -i
+-Ignore case distinctions in both the pattern and the file names.
+-
+-@item --limit=N
+-@itemx -l N
+-Limit the number of results printed to N.  When used with the
+-@samp{--count} option, the value printed will never be larger than
+-this limit.
+-
+-@item --mmap
+-@itemx -m
+-Accepted but does nothing.  The option is supported only to provide
+-compatibility with BSD's @code{locate}.
+-
+-@item --null
+-@itemx -0
+-Results are separated with the ASCII NUL character rather than the
+-newline character.  To get the full benefit of the use of this option,
+-use the new @code{locate} database format (that is the default
+-anyway).
+-
+-@item --print
+-@itemx -p
+-Print search results when they normally would not, because of the
+-presence of @samp{--statistics} (@samp{-S}) or @samp{--count}
+-(@samp{-c}).
+-
+-@item --wholename
+-@itemx -w
+-The specified pattern is matched against the whole name of the file in
+-the @code{locate} database.  If the pattern contains metacharacters,
+-it must match exactly.  If not, it must match part of the whole file
+-name.  This is the default behaviour.
+-
+-@item --regex
+-@itemx -r
+-Instead of using substring or shell glob matching, the pattern
+-specified on the command line is understood to be a regular
+-expression.  GNU Emacs-style regular expressions are assumed unless
+-the @samp{--regextype} option is also given.  File names from the
+-@code{locate} database are matched using the specified regular
+-expression.  If the @samp{-i} flag is also given, matching is
+-case-insensitive.  Matches are performed against the whole path name,
+-and so by default a pathname will be matched if any part of it matches
+-the specified regular expression.  The regular expression may use
+-@samp{^} or @samp{$} to anchor a match at the beginning or end of a
+-pathname.
+-
+-@item --regextype
+-This option changes the regular expression dialect used.  Dialects
+-understood are described in @ref{Regular Expressions}.
+-
+-
+-
+-@item --regextype
+-This option changes the regular expression syntax and behaviour used
+-by the @samp{--regex} option.  @ref{Regular Expressions} for more
+-information on the regular expression dialects understood by GNU
+-findutils.
+-
+-@item --stdio
+-@itemx -s
+-Accepted but does nothing.  The option is supported only to provide
+-compatibility with BSD's @code{locate}.
+-
+-@item --statistics
+-@itemx -S
+-Print some summary information for each @code{locate} database.  No
+-search is performed unless non-option arguments are given.
+-
+-@item --help
+-Print a summary of the command line usage for @code{locate} and exit.
+-
+-@item --version
+-Print the version number of @code{locate} and exit.
+-@end table
+-
+-@node Invoking updatedb, Invoking xargs, Invoking locate, Reference
+-@section Invoking @code{updatedb}
+-
+-@example
+-updatedb @r{[}@var{option}@dots{}@r{]}
+-@end example
+-
+-@code{updatedb} creates and updates the database of file names used by
+-@code{locate}.  @code{updatedb} generates a list of files similar to
+-the output of @code{find} and then uses utilities for optimizing the
+-database for performance.  @code{updatedb} is often run periodically
+-as a @code{cron} job and configured with environment variables or
+-command options.  Typically, operating systems have a shell script
+-that ``exports'' configurations for variable definitions and uses
+-another schell script that ``sources'' the configuration file into the
+-environment and then executes @code{updatedb} in the environment.
+-
+-@code{updatedb} creates and updates the database of file names used by
+-@code{locate}.  @code{updatedb} generates a list of files similar to
+-the output of @code{find} and then uses utilities for optimizing the
+-database for performance.  @code{updatedb} is often run periodically
+-as a @code{cron} job and configured with environment variables or
+-command options.  Typically, operating systems have a shell script
+-that ``exports'' configurations for variable definitions and uses
+-another schell script that ``sources'' the configuration file into the
+-environment and then executes @code{updatedb} in the environment.
+-
+-@table @code
+-@item --findoptions='@var{OPTION}@dots{}'
+-Global options to pass on to @code{find}.
+-The environment variable @code{FINDOPTIONS} also sets this value.
+-Default is none.
+-
+-@item --localpaths='@var{path}@dots{}'
+-Non-network directories to put in the database.
+-Default is @file{/}.
+-
+-@item --netpaths='@var{path}@dots{}'
+-Network (NFS, AFS, RFS, etc.) directories to put in the database.
+-The environment variable @code{NETPATHS} also sets this value.
+-Default is none.
+-
+-@item --prunepaths='@var{path}@dots{}'
+-Directories to omit from the database, which would otherwise be
+-included.  The environment variable @code{PRUNEPATHS} also sets this
+-value.  Default is @file{/tmp /usr/tmp /var/tmp /afs}.  The paths are
+-used as regular expressions (with @code{find ... -regex}, so you need
+-to specify these paths in the same way that @code{find} will encounter
+-them.  This means for example that the paths must not include trailing
+-slashes.
+-
+-@item --prunefs='@var{path}@dots{}'
+-Filesystems to omit from the database, which would otherwise be
+-included.  Note that files are pruned when a filesystem is reached;
+-Any filesystem mounted under an undesired filesystem will be ignored.
+-The environment variable @code{PRUNEFS} also sets this value.  Default
+-is @file{nfs NFS proc}.
+-
+-@item --output=@var{dbfile}
+-The database file to build.  Default is system-dependent, but
+-typically @file{/usr/local/var/locatedb}.
+-
+-@item --localuser=@var{user}
+-The user to search the non-network directories as, using @code{su}.
+-Default is to search the non-network directories as the current user.
+-You can also use the environment variable @code{LOCALUSER} to set this user.
+-
+-@item --netuser=@var{user}
+-The user to search network directories as, using @code{su}.  Default
+-@code{user} is @code{daemon}.  You can also use the environment variable
+-@code{NETUSER} to set this user.
+-
+-@item --old-format
+-Generate a @code{locate} database in the old format, for compatibility
+-with versions of @code{locate} other than GNU @code{locate}.  Using
+-this option means that @code{locate} will not be able to properly
+-handle non-ASCII characters in file names (that is, file names
+-containing characters which have the eighth bit set, such as many of
+-the characters from the ISO-8859-1 character set).
+-@item --help
+-Print a summary of the command line usage and exit.
+-@item --version
+-Print the version number of @code{updatedb} and exit.
+-@end table
+-
+-@node Invoking xargs, Regular Expressions,  Invoking updatedb, Reference
++@node xargs, Regular Expressions,  find, Reference
+ @section Invoking @code{xargs}
+ 
+ @example
+@@ -2915,7 +2661,7 @@
+ @end table
+ 
+ 
+-@node Regular Expressions,, Invoking xargs, Reference
++@node Regular Expressions,, xargs, Reference
+ @section Regular Expressions
+ 
+ The @samp{-regex} and @samp{-iregex} tests of @code{find} allow

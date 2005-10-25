@@ -76,9 +76,9 @@
  .PP
  A `%' character followed by any other character is discarded (but the
  other character is printed).
---- findutils-4.2.11/find/find.c.orig	2005-01-03 01:10:13.000000000 +0100
-+++ findutils-4.2.11/find/find.c	2005-01-09 18:11:42.808971856 +0100
-@@ -238,11 +238,17 @@
+--- findutils-4.2.25/find/find.c.orig	2005-08-30 09:40:03.000000000 +0200
++++ findutils-4.2.25/find/find.c	2005-10-25 23:47:22.594687400 +0200
+@@ -272,11 +272,17 @@
      {
      case SYMLINK_ALWAYS_DEREF:  /* -L */
        options.xstat = optionl_stat;
@@ -96,7 +96,7 @@
        /* Can't turn no_leaf_check off because the user might have specified 
         * -noleaf anyway
         */
-@@ -250,6 +256,9 @@
+@@ -284,6 +290,9 @@
        
      case SYMLINK_DEREF_ARGSONLY: /* -H */
        options.xstat = optionh_stat;
@@ -106,7 +106,7 @@
        options.no_leaf_check = true;
      }
  
-@@ -272,6 +281,9 @@
+@@ -394,6 +403,9 @@
    struct predicate *cur_pred;
    char *predicate_name;		/* Name of predicate being parsed. */
    int end_of_leading_options = 0; /* First arg after any -H/-L etc. */
@@ -114,9 +114,9 @@
 +  int is_selinux_enabled_flag;
 +#endif /* WITH_SELINUX */
    program_name = argv[0];
+   const struct parser_table *entry_close, *entry_print, *entry_open;
  
- #ifdef HAVE_SETLOCALE
-@@ -301,6 +313,9 @@
+@@ -441,6 +453,9 @@
    options.ignore_readdir_race = false;
  
    state.exit_status = 0;
@@ -126,7 +126,7 @@
  
  #if defined(DEBUG_STAT)
    options.xstat = debug_stat;
-@@ -382,6 +397,14 @@
+@@ -537,6 +552,14 @@
        if (strchr ("-!(),", argv[i][0]) == NULL)
  	usage (_("paths must precede expression"));
        predicate_name = argv[i];
@@ -138,14 +138,14 @@
 +	}
 +      }
 +#endif
-       parse_function = find_parser (predicate_name);
-       if (parse_function == NULL)
- 	/* Command line option not recognized */
---- findutils-4.2.11/find/parser.c.orig	2005-01-03 01:10:27.000000000 +0100
-+++ findutils-4.2.11/find/parser.c	2005-01-09 18:12:19.498394216 +0100
-@@ -28,6 +28,10 @@
- #include "../gnulib/lib/xalloc.h"
- 
+       parse_entry = find_parser (predicate_name);
+       if (parse_entry == NULL)
+ 	{
+--- findutils-4.2.25/find/parser.c.orig	2005-07-31 23:01:54.000000000 +0200
++++ findutils-4.2.25/find/parser.c	2005-10-25 23:58:27.823557240 +0200
+@@ -47,6 +47,10 @@
+ /* We need <unistd.h> for isatty(). */
+ #include <unistd.h> 
  
 +#ifdef WITH_SELINUX
 +#include <selinux/selinux.h>
@@ -154,28 +154,28 @@
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -129,6 +133,9 @@
- static boolean parse_warn PARAMS((char *argv[], int *arg_ptr));
- static boolean parse_xtype PARAMS((char *argv[], int *arg_ptr));
- static boolean parse_quit PARAMS((char *argv[], int *arg_ptr));
+@@ -147,6 +151,9 @@
+ static boolean parse_warn          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
+ static boolean parse_xtype         PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
+ static boolean parse_quit          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
 +#ifdef WITH_SELINUX
-+static boolean parse_scontext PARAMS((char *argv[], int *arg_ptr));
++static boolean parse_scontext      PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
 +#endif /*WITH_SELINUX*/
  
- static boolean insert_regex PARAMS((char *argv[], int *arg_ptr, boolean ignore_case));
- static boolean insert_type PARAMS((char *argv[], int *arg_ptr, boolean (*which_pred )()));
-@@ -254,6 +261,10 @@
-   {ARG_TEST,               "wholename",             parse_wholename},   /* GNU, replaces -path */
-   {ARG_OPTION,             "xdev",                  parse_xdev},
-   {ARG_TEST,               "xtype",                 parse_xtype},	/* GNU */
+ 
+ 
+@@ -280,6 +287,10 @@
+   PARSE_TEST_NP    ("wholename",             wholename), /* GNU, replaces -path */
+   PARSE_OPTION     ("xdev",                  xdev),
+   PARSE_TEST       ("xtype",                 xtype),	     /* GNU */
 +#ifdef WITH_SELINUX
-+  {ARG_TEST,               "context",               parse_scontext},    /* SELINUX */
-+  {ARG_TEST,               "-context",              parse_scontext},    /* SELINUX */
++  PARSE_TEST       ("context",               scontext),      /* SELINUX */
++  PARSE_TEST       ("-context",              scontext),      /* SELINUX */
 +#endif /*WITH_SELINUX*/
-   {0, 0, 0}
- };
- 
-@@ -726,6 +737,10 @@
+ #ifdef UNIMPLEMENTED_UNIX
+   /* It's pretty ugly for find to know about archive formats.
+      Plus what it could do with cpio archives is very limited.
+@@ -803,6 +814,10 @@
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
        -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
        -used N -user NAME -xtype [bcdpfls]\n"));
@@ -184,26 +184,24 @@
 +      -context CONTEXT\n"));
 +#endif /*WITH_SELINUX*/
    puts (_("\
- actions: -exec COMMAND ; -fprint FILE -fprint0 FILE -fprintf FILE FORMAT\n\
-       -fls FILE -ok COMMAND ; -print -print0 -printf FORMAT -prune -ls -delete\n\
-@@ -1542,6 +1557,32 @@
-   return true;
+ actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print \n\
+       -fprint0 FILE -fprint FILE -ls -fls FILE -prune -quit\n\
+@@ -1614,6 +1629,30 @@
+   return insert_num (argv, arg_ptr, entry);
  }
  
 +#ifdef WITH_SELINUX
 +
 +static boolean
-+parse_scontext ( argv, arg_ptr )
-+     char *argv[];
-+     int *arg_ptr;
++parse_scontext (const struct parser_table *entry, char **argv, int *arg_ptr)
 +{
 +  struct predicate *our_pred;
 +
 +  if ( (argv == NULL) || (argv[*arg_ptr] == NULL) )
 +    return( false );
 +
-+  our_pred = insert_primary(pred_scontext);
-+  our_pred->need_stat = false;
++  our_pred = insert_primary_withpred (entry, pred_scontext);
++  our_pred->need_stat = our_pred->need_type = false;
 +#ifdef DEBUG
 +  our_pred->p_name = find_pred_name (pred_scontext);
 +#endif /*DEBUG*/
@@ -217,9 +215,9 @@
 +#endif /*WITH_SELINUX*/
 +
  static boolean
- parse_xtype (char **argv, int *arg_ptr)
+ parse_used (const struct parser_table* entry, char **argv, int *arg_ptr)
  {
-@@ -1702,7 +1743,11 @@
+@@ -1949,7 +1988,11 @@
  	  if (*scan2 == '.')
  	    for (scan2++; ISDIGIT (*scan2); scan2++)
  	      /* Do nothing. */ ;
@@ -337,28 +335,28 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.20/po/pl.po.orig	2005-03-08 00:20:30.000000000 +0100
-+++ findutils-4.2.20/po/pl.po	2005-03-27 23:37:43.592682032 +0200
-@@ -204,6 +204,11 @@
+--- findutils-4.2.25/po/pl.po.orig	2005-10-25 23:46:10.482650096 +0200
++++ findutils-4.2.25/po/pl.po	2005-10-26 00:00:02.716131376 +0200
+@@ -132,6 +132,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
  
-+#: find/find.c:471
++#: find/find.c:559
 +#, c-format
 +msgid "Error: invalid predicate %s: the kernel is not SELinux-enabled.\n"
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
- #: find/find.c:518
+ #: find/find.c:544
  #, c-format
  msgid "invalid predicate `%s'"
-@@ -408,6 +404,10 @@
+@@ -338,6 +343,10 @@
  "w przypadku braku dostêpu do WWW, wysy³aj±c pocztê elektroniczn± pod\n"
  "adres <bug-findutils@gnu.org>."
  
-+#: find/parser.c:771
++#: find/parser.c:818
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:795
+ #: find/parser.c:843
  msgid "sanity check of the fnmatch() library function failed."
  msgstr ""

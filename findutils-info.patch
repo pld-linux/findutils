@@ -1,5 +1,5 @@
---- findutils-4.2.25/doc/find.texi.orig	2005-09-02 22:48:07.000000000 +0200
-+++ findutils-4.2.25/doc/find.texi	2005-10-26 00:05:29.278486352 +0200
+--- findutils-4.2.26/doc/find.texi.orig	2005-10-31 06:21:47.000000000 +0100
++++ findutils-4.2.26/doc/find.texi	2005-11-27 03:30:29.025869696 +0100
 @@ -12,17 +12,11 @@
  @finalout
  @end iftex
@@ -22,7 +22,7 @@
  @end direntry
  
  @copying
-@@ -2259,10 +2253,6 @@
+@@ -2260,10 +2254,6 @@
  fileserver where that filesystem is on a local disk, to prevent
  thrashing the network.
  
@@ -33,7 +33,7 @@
  
  @node Database Formats
  @section Database Formats
-@@ -2435,14 +2425,12 @@
+@@ -2436,14 +2426,12 @@
  discussed in this manual.
  
  @menu
@@ -51,7 +51,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -2510,7 +2498,7 @@
+@@ -2511,7 +2499,7 @@
  @end menu
  
  
@@ -60,7 +60,7 @@
  @subsection Warning Messages
  
  If there is an error on the @code{find} command line, an error message
-@@ -2562,249 +2550,7 @@
+@@ -2563,243 +2551,7 @@
  Use of an unrecognised formatting directive with @samp{-fprintf}
  @end itemize
  
@@ -193,12 +193,6 @@
 -pathname.
 -
 -@item --regextype
--This option changes the regular expression dialect used.  Dialects
--understood are described in @ref{Regular Expressions}.
--
--
--
--@item --regextype
 -This option changes the regular expression syntax and behaviour used
 -by the @samp{--regex} option.  @ref{Regular Expressions} for more
 -information on the regular expression dialects understood by GNU
@@ -311,7 +305,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -2915,7 +2661,7 @@
+@@ -2925,7 +2677,7 @@
  @end table
  
  

@@ -76,8 +76,8 @@
  .PP
  A `%' character followed by any other character is discarded (but the
  other character is printed).
---- findutils-4.2.25/find/find.c.orig	2005-08-30 09:40:03.000000000 +0200
-+++ findutils-4.2.25/find/find.c	2005-10-25 23:47:22.594687400 +0200
+--- findutils-4.2.26/find/find.c.orig	2005-11-11 08:41:37.000000000 +0100
++++ findutils-4.2.26/find/find.c	2005-11-27 03:32:00.836912296 +0100
 @@ -272,11 +272,17 @@
      {
      case SYMLINK_ALWAYS_DEREF:  /* -L */
@@ -106,17 +106,17 @@
        options.no_leaf_check = true;
      }
  
-@@ -394,6 +403,9 @@
+@@ -395,6 +404,9 @@
    struct predicate *cur_pred;
    char *predicate_name;		/* Name of predicate being parsed. */
    int end_of_leading_options = 0; /* First arg after any -H/-L etc. */
 +#ifdef WITH_SELINUX
 +  int is_selinux_enabled_flag;
 +#endif /* WITH_SELINUX */
-   program_name = argv[0];
-   const struct parser_table *entry_close, *entry_print, *entry_open;
  
-@@ -441,6 +453,9 @@
+   
+   program_name = argv[0];
+@@ -442,6 +454,9 @@
    options.ignore_readdir_race = false;
  
    state.exit_status = 0;
@@ -126,7 +126,7 @@
  
  #if defined(DEBUG_STAT)
    options.xstat = debug_stat;
-@@ -537,6 +552,14 @@
+@@ -538,6 +553,14 @@
        if (strchr ("-!(),", argv[i][0]) == NULL)
  	usage (_("paths must precede expression"));
        predicate_name = argv[i];
@@ -335,9 +335,9 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.25/po/pl.po.orig	2005-10-25 23:46:10.482650096 +0200
-+++ findutils-4.2.25/po/pl.po	2005-10-26 00:00:02.716131376 +0200
-@@ -132,6 +132,11 @@
+--- findutils-4.2.26/po/pl.po.orig	2005-11-27 03:31:21.302922376 +0100
++++ findutils-4.2.26/po/pl.po	2005-11-27 03:33:03.122443456 +0100
+@@ -151,6 +151,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
  
@@ -346,10 +346,10 @@
 +msgid "Error: invalid predicate %s: the kernel is not SELinux-enabled.\n"
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
- #: find/find.c:544
+ #: find/find.c:545
  #, c-format
  msgid "invalid predicate `%s'"
-@@ -338,6 +343,10 @@
+@@ -357,6 +362,10 @@
  "w przypadku braku dostêpu do WWW, wysy³aj±c pocztê elektroniczn± pod\n"
  "adres <bug-findutils@gnu.org>."
  

@@ -1,5 +1,5 @@
---- findutils-4.2.26/doc/find.texi.orig	2005-10-31 06:21:47.000000000 +0100
-+++ findutils-4.2.26/doc/find.texi	2005-11-27 03:30:29.025869696 +0100
+--- findutils-4.2.27/doc/find.texi.orig	2005-12-05 08:35:33.000000000 +0100
++++ findutils-4.2.27/doc/find.texi	2006-02-05 22:46:45.723352000 +0100
 @@ -12,17 +12,11 @@
  @finalout
  @end iftex
@@ -22,7 +22,7 @@
  @end direntry
  
  @copying
-@@ -2260,10 +2254,6 @@
+@@ -2390,10 +2384,6 @@
  fileserver where that filesystem is on a local disk, to prevent
  thrashing the network.
  
@@ -33,7 +33,7 @@
  
  @node Database Formats
  @section Database Formats
-@@ -2436,14 +2426,12 @@
+@@ -2569,15 +2559,13 @@
  discussed in this manual.
  
  @menu
@@ -44,6 +44,7 @@
 +* find::
 +* xargs::
  * Regular Expressions::
+ * Environment Variables::
  @end menu
  
 -@node Invoking find, Invoking locate, , Reference
@@ -51,7 +52,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -2511,7 +2499,7 @@
+@@ -2648,7 +2636,7 @@
  @end menu
  
  
@@ -60,7 +61,7 @@
  @subsection Warning Messages
  
  If there is an error on the @code{find} command line, an error message
-@@ -2563,243 +2551,7 @@
+@@ -2700,247 +2688,7 @@
  Use of an unrecognised formatting directive with @samp{-fprintf}
  @end itemize
  
@@ -118,7 +119,9 @@
 -which existed when the database was created).  Note that this may slow
 -down the program a lot, if there are many matches in the database.
 -The way in which broken symbolic links are treated is affected by the
--@samp{-L}, @samp{-P} and @samp{-H} options.
+-@samp{-L}, @samp{-P} and @samp{-H} options.  Please note that it is
+-possible for the file to be deleted after @code{locate} has checked
+-that it exists, but before you use it.
 -
 -@item --non-existing
 -@itemx -E
@@ -126,14 +129,16 @@
 -such names which existed when the database was created).  Note that
 -this may slow down the program a lot, if there are many matches in the
 -database.  The way in which broken symbolic links are treated is
--affected by the @samp{-L}, @samp{-P} and @samp{-H} options.
+-affected by the @samp{-L}, @samp{-P} and @samp{-H} options.  Please
+-note that @code{locate} checks that the file does not exist, but a
+-file of the same name might be created after @code{locate}'s check but
+-before you read @code{locate}'s output.
 -
 -@item --follow
 -@itemx -L
 -If testing for the existence of files (with the @samp{-e} or @samp{-E}
 -options), consider broken symbolic links to be non-existing.  This is
--the default behaviour.
--
+-the default behaviour.  
 -
 -@item --nofollow
 -@itemx -P
@@ -305,12 +310,12 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -2925,7 +2677,7 @@
+@@ -3089,7 +2837,7 @@
  @end table
  
  
--@node Regular Expressions,, Invoking xargs, Reference
-+@node Regular Expressions,, xargs, Reference
+-@node Regular Expressions, Environment Variables, Invoking xargs, Reference
++@node Regular Expressions, Environment Variables, xargs, Reference
  @section Regular Expressions
  
  The @samp{-regex} and @samp{-iregex} tests of @code{find} allow

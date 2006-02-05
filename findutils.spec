@@ -10,14 +10,14 @@ Summary(pl):	Narzêdzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR):	Utilitários de procura da GNU
 Summary(tr):	GNU dosya arama araçlarý
 Name:		findutils
-Version:	4.2.26
+Version:	4.2.27
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	9ac4e62937b1fdc4eb643d1d4bf117d3
+# Source0-md5:	f1e0ddf09f28f8102ff3b90f3b5bc920
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515

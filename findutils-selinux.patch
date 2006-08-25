@@ -335,8 +335,8 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.26/po/pl.po.orig	2005-11-27 03:31:21.302922376 +0100
-+++ findutils-4.2.26/po/pl.po	2005-11-27 03:33:03.122443456 +0100
+--- findutils-4.2.28/po/pl.po.orig	2006-08-26 00:46:49.506053750 +0200
++++ findutils-4.2.28/po/pl.po	2006-08-26 00:48:19.247662250 +0200
 @@ -151,6 +151,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
@@ -353,10 +353,10 @@
  "w przypadku braku dostêpu do WWW, wysy³aj±c pocztê elektroniczn± pod\n"
  "adres <bug-findutils@gnu.org>."
  
-+#: find/parser.c:818
++#: find/parser.c:817
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:843
+ #: find/parser.c:841
  msgid "sanity check of the fnmatch() library function failed."
  msgstr ""

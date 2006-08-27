@@ -118,6 +118,8 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
 	$RPM_BUILD_ROOT%{_libdir}/{bigram,code,frcode} \
 	$RPM_BUILD_ROOT%{_mandir}/{,*/}man?/{locate.1,updatedb.1,locatedb.5}*
 
+rm -f $RPM_BUILD_ROOT{%{_infodir}/dir,%{_mandir}/README.findutils-non-english-man-pages}
+
 %find_lang %{name}
 
 %clean

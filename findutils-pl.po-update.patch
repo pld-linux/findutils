@@ -1,22 +1,31 @@
---- findutils-4.2.28/po/pl.po.orig	2006-08-05 20:48:27.000000000 +0200
-+++ findutils-4.2.28/po/pl.po	2006-08-26 00:45:13.696066000 +0200
+--- findutils-4.2.29/po/pl.po.orig	2006-08-19 20:53:55.000000000 +0200
++++ findutils-4.2.29/po/pl.po	2006-12-01 21:16:22.158982000 +0100
 @@ -5,10 +5,10 @@
  #
  msgid ""
  msgstr ""
 -"Project-Id-Version: findutils 4.2.27\n"
-+"Project-Id-Version: findutils 4.2.28\n"
++"Project-Id-Version: findutils 4.2.29\n"
  "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
- "POT-Creation-Date: 2006-08-05 19:48+0100\n"
+ "POT-Creation-Date: 2006-08-19 19:53+0100\n"
 -"PO-Revision-Date: 2006-05-20 09:28+0200\n"
-+"PO-Revision-Date: 2006-08-26 00:40+0200\n"
++"PO-Revision-Date: 2006-12-01 21:14+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "MIME-Version: 1.0\n"
-@@ -457,9 +457,8 @@
+@@ -428,7 +428,7 @@
+ #: find/parser.c:1952
+ #, c-format
+ msgid "error: %s at end of format string"
+-msgstr ""
++msgstr "b³±d: %s na koñcu ³añcucha formatuj±cego"
+ 
+ #: find/parser.c:1988
+ #, c-format
+@@ -462,9 +462,8 @@
  msgstr "Obs³ugiwane jest tylko jedno wyst±pienie {} przy -exec%s ... +"
  
- #: find/parser.c:2223
+ #: find/parser.c:2228
 -#, fuzzy
  msgid "The environment is too large for exec()."
 -msgstr "¶rodowisko jest zbyt du¿e, aby wykonaæ exec"
@@ -24,57 +33,61 @@
  
  #: find/pred.c:1164
  #, c-format
-@@ -693,7 +692,7 @@
- #: xargs/xargs.c:541
+@@ -698,7 +697,7 @@
+ #: xargs/xargs.c:535
  #, c-format
  msgid "warning: value %ld for -s option is too large, using %ld instead"
 -msgstr ""
 +msgstr "uwaga: wrto¶æ %ld dla opcji -s jest zbyt du¿a, u¿yto %ld"
  
- #: xargs/xargs.c:580
+ #: xargs/xargs.c:574
  #, c-format
-@@ -706,14 +705,14 @@
+@@ -711,14 +710,14 @@
  msgstr "Nie mo¿na otworzyæ pliku wej¶ciowego `%s'"
  
- #: xargs/xargs.c:646
+ #: xargs/xargs.c:640
 -#, fuzzy, c-format
 +#, c-format
  msgid "Your environment variables take up %lu bytes\n"
 -msgstr "Zmienne ¶rodowiskowe zajmuj± %ld bajtów\n"
 +msgstr "Zmienne ¶rodowiskowe zajmuj± %lu bajtów\n"
  
- #: xargs/xargs.c:649
+ #: xargs/xargs.c:643
 -#, fuzzy, c-format
 +#, c-format
  msgid "POSIX lower and upper limits on argument length: %lu, %lu\n"
 -msgstr "POSIX-owy dolny i górny limit na d³ugo¶æ argumentów: %ld, %ld\n"
 +msgstr "POSIX-owy dolny i górny limit na d³ugo¶æ argumentów: %lu, %lu\n"
  
- #: xargs/xargs.c:653
+ #: xargs/xargs.c:647
  #, c-format
-@@ -721,9 +720,9 @@
+@@ -726,9 +725,9 @@
  msgstr "Maksymalna d³ugo¶æ polecenia, które mo¿na u¿yæ: %ld\n"
  
- #: xargs/xargs.c:657
+ #: xargs/xargs.c:651
 -#, fuzzy, c-format
 +#, c-format
  msgid "Size of command buffer we are actually using: %lu\n"
 -msgstr "Rozmiar u¿ywanego bufora polecenia: %ld\n"
 +msgstr "Rozmiar u¿ywanego bufora polecenia: %lu\n"
  
- #: xargs/xargs.c:779 xargs/xargs.c:860
+ #: xargs/xargs.c:773 xargs/xargs.c:854
  #, c-format
-@@ -781,7 +780,7 @@
+@@ -786,7 +785,7 @@
  msgstr "%s: warto¶æ dla opcji -%c powinna byæ < %ld\n"
  
- #: xargs/xargs.c:1230
+ #: xargs/xargs.c:1213
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
  "Usage: %s [-0prtx] [--interactive] [--null] [-d|--delimiter=delim]\n"
  "       [-E eof-str] [-e[eof-str]]  [--eof[=eof-str]]\n"
-@@ -799,9 +798,6 @@
- "       [-I ³añc-zmienn] [-i[³añc-zmienn]] [--replace[=³añc-zminn]]\n"
+@@ -801,12 +800,9 @@
+ "Sk³adnia: %s [-0prtx] [--interactive] [--null] [-d|--delimiter=ogranicznik]\n"
+ "       [-E ³añc-eof] [-e[³añc-eof]]  [--eof[=³añc-eof]\n"
+ "       [-L maks-linii] [-l[maks-linii]] [--max-lines[=maks-linii]]\n"
+-"       [-I ³añc-zmienn] [-i[³añc-zmienn]] [--replace[=³añc-zminn]]\n"
++"       [-I ³añc-zmienn] [-i[³añc-zmienn]] [--replace[=³añc-zmienn]]\n"
  "       [-n maks-arg] [--max-args=maks-arg]\n"
  "       [-s maks-znaków] [--max-chars=maks-znaków]\n"
 -"       [-P maks-proc]  [--max-procs=maks-proc]\n"

@@ -3,12 +3,12 @@
 %bcond_without	selinux		# build without SELinux support
 #
 Summary:	GNU Find Utilities (find, xargs)
-Summary(de.UTF-8):   GNU-Suchprogramme (find, xargs)
-Summary(es.UTF-8):   Utilitarios de búsqueda de la GNU
-Summary(fr.UTF-8):   Utilitaires de recherche de GNU (find, xargs)
-Summary(pl.UTF-8):   Narzędzia GNU do odnajdywania plików (find, xargs)
-Summary(pt_BR.UTF-8):   Utilitários de procura da GNU
-Summary(tr.UTF-8):   GNU dosya arama araçları
+Summary(de.UTF-8):	GNU-Suchprogramme (find, xargs)
+Summary(es.UTF-8):	Utilitarios de búsqueda de la GNU
+Summary(fr.UTF-8):	Utilitaires de recherche de GNU (find, xargs)
+Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
+Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
+Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
 Version:	4.2.29
 Release:	1

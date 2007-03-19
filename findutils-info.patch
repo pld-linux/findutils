@@ -1,5 +1,5 @@
---- findutils-4.2.29/doc/find.texi.orig	2006-11-24 23:41:10.000000000 +0100
-+++ findutils-4.2.29/doc/find.texi	2006-12-01 21:17:49.640449250 +0100
+--- findutils-4.2.30/doc/find.texi.orig	2007-01-13 22:14:06.000000000 +0100
++++ findutils-4.2.30/doc/find.texi	2007-03-19 14:10:51.332801131 +0100
 @@ -12,17 +12,11 @@
  @finalout
  @end iftex
@@ -236,7 +236,7 @@
 -as a @code{cron} job and configured with environment variables or
 -command options.  Typically, operating systems have a shell script
 -that ``exports'' configurations for variable definitions and uses
--another schell script that ``sources'' the configuration file into the
+-another shell script that ``sources'' the configuration file into the
 -environment and then executes @code{updatedb} in the environment.
 -
 -@code{updatedb} creates and updates the database of file names used by
@@ -246,7 +246,7 @@
 -as a @code{cron} job and configured with environment variables or
 -command options.  Typically, operating systems have a shell script
 -that ``exports'' configurations for variable definitions and uses
--another schell script that ``sources'' the configuration file into the
+-another shell script that ``sources'' the configuration file into the
 -environment and then executes @code{updatedb} in the environment.
 -
 -@table @code

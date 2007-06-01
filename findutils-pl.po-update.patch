@@ -1,9 +1,8 @@
---- findutils-4.2.30/po/pl.po.orig	2007-02-28 11:38:03.000000000 +0100
-+++ findutils-4.2.30/po/pl.po	2007-03-19 14:08:43.025489314 +0100
+--- findutils-4.2.31/po/pl.po.orig	2007-05-30 21:28:19.000000000 +0200
++++ findutils-4.2.31/po/pl.po	2007-06-01 19:35:07.469107408 +0200
 @@ -1,14 +1,14 @@
  # Polish translation for GNU findutils.
--# Copyright (C) 1996, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
-+# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+ # Copyright (C) 1996, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
  # Pawe³ Krawczyk <kravietz@ceti.pl>, 1996.
 -# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2006.
 +# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2007.
@@ -11,27 +10,127 @@
  msgid ""
  msgstr ""
 -"Project-Id-Version: findutils 4.2.27\n"
-+"Project-Id-Version: findutils 4.2.30\n"
++"Project-Id-Version: findutils 4.2.31\n"
  "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
- "POT-Creation-Date: 2007-02-28 10:38+0000\n"
+ "POT-Creation-Date: 2007-05-30 20:28+0100\n"
 -"PO-Revision-Date: 2006-05-20 09:28+0200\n"
-+"PO-Revision-Date: 2007-03-19 14:04+0100\n"
++"PO-Revision-Date: 2007-06-01 19:26+0200\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "MIME-Version: 1.0\n"
-@@ -428,7 +428,7 @@
- #: find/parser.c:1952
+@@ -18,17 +18,17 @@
+ #: gnulib/lib/argmatch.c:134
+ #, c-format
+ msgid "invalid argument %s for %s"
+-msgstr "b³êdny argument %s dla %s"
++msgstr "b³êdny argument %s opcji %s"
+ 
+ #: gnulib/lib/argmatch.c:135
+ #, c-format
+ msgid "ambiguous argument %s for %s"
+-msgstr "niejednoznaczny argument %s dla %s"
++msgstr "niejednoznaczny argument %s opcji %s"
+ 
+ #: gnulib/lib/argmatch.c:154
+ #, c-format
+ msgid "Valid arguments are:"
+-msgstr "Poprawne argumenty to:"
++msgstr "Prawid³owe argumenty to:"
+ 
+ #: gnulib/lib/error.c:125
+ msgid "Unknown system error"
+@@ -42,33 +42,33 @@
+ #: gnulib/lib/getopt.c:580 gnulib/lib/getopt.c:584
+ #, c-format
+ msgid "%s: option `--%s' doesn't allow an argument\n"
+-msgstr "%s: opcja `--%s' nie mo¿e mieæ argumentu\n"
++msgstr "%s: opcja `--%s' nie mo¿e mieæ argumentów\n"
+ 
+ #: gnulib/lib/getopt.c:593 gnulib/lib/getopt.c:598
+ #, c-format
+ msgid "%s: option `%c%s' doesn't allow an argument\n"
+-msgstr "%s: opcja `%c%s' nie mo¿e mieæ argumentu\n"
++msgstr "%s: opcja `%c%s' nie mo¿e mieæ argumentów\n"
+ 
+ #: gnulib/lib/getopt.c:641 gnulib/lib/getopt.c:660 gnulib/lib/getopt.c:976
+ #: gnulib/lib/getopt.c:995
+ #, c-format
+ msgid "%s: option `%s' requires an argument\n"
+-msgstr "%s: opcja `%s' wymaga argumentu\n"
++msgstr "%s: opcja `%s' musi mieæ argument\n"
+ 
+ #: gnulib/lib/getopt.c:698 gnulib/lib/getopt.c:701
+ #, c-format
+ msgid "%s: unrecognized option `--%s'\n"
+-msgstr "%s: nierozpoznana opcja `--%s'\n"
++msgstr "%s: nieznana opcja `--%s'\n"
+ 
+ #: gnulib/lib/getopt.c:709 gnulib/lib/getopt.c:712
+ #, c-format
+ msgid "%s: unrecognized option `%c%s'\n"
+-msgstr "%s: nierozpoznana opcja `%c%s'\n"
++msgstr "%s: nieznana opcja `%c%s'\n"
+ 
+ #: gnulib/lib/getopt.c:764 gnulib/lib/getopt.c:767
+ #, c-format
+ msgid "%s: illegal option -- %c\n"
+-msgstr "%s: nielegalna opcja -- %c\n"
++msgstr "%s: niew³a¶ciwa opcja -- %c\n"
+ 
+ #: gnulib/lib/getopt.c:773 gnulib/lib/getopt.c:776
+ #, c-format
+@@ -79,7 +79,7 @@
+ #: gnulib/lib/getopt.c:1066
+ #, c-format
+ msgid "%s: option requires an argument -- %c\n"
+-msgstr "%s: opcja wymaga argumentu -- %c\n"
++msgstr "%s: opcja musi mieæ argument -- %c\n"
+ 
+ #: gnulib/lib/getopt.c:897 gnulib/lib/getopt.c:913
+ #, c-format
+@@ -89,7 +89,7 @@
+ #: gnulib/lib/getopt.c:937 gnulib/lib/getopt.c:955
+ #, c-format
+ msgid "%s: option `-W %s' doesn't allow an argument\n"
+-msgstr "%s: opcja `-W %s' nie mo¿e mieæ argumentu\n"
++msgstr "%s: opcja `-W %s' nie mo¿e mieæ argumentów\n"
+ 
+ #: gnulib/lib/human.c:477
+ msgid "block size"
+@@ -403,7 +403,7 @@
+ 
+ #: find/parser.c:1528
+ msgid "invalid null argument to -size"
+-msgstr "b³êdny zerowy argument dla -size"
++msgstr "b³êdny zerowy argument opcji -size"
+ 
+ #: find/parser.c:1574
+ #, c-format
+@@ -416,9 +416,9 @@
+ msgstr "GNU find wersja %s\n"
+ 
+ #: find/parser.c:1693 locate/code.c:167 locate/locate.c:1273 xargs/xargs.c:576
+-#, fuzzy, c-format
++#, c-format
+ msgid "Built using GNU gnulib version %s\n"
+-msgstr "GNU findutils wersja %s\n"
++msgstr "Zbudowano przy u¿yciu GNU gnuliba w wersji %s\n"
+ 
+ #: find/parser.c:1694
+ #, c-format
+@@ -433,7 +433,7 @@
+ #: find/parser.c:1956
  #, c-format
  msgid "error: %s at end of format string"
 -msgstr ""
 +msgstr "b³±d: %s na koñcu ³añcucha formatuj±cego"
  
- #: find/parser.c:1988
+ #: find/parser.c:1992
  #, c-format
-@@ -462,9 +462,8 @@
+@@ -467,9 +467,8 @@
  msgstr "Obs³ugiwane jest tylko jedno wyst±pienie {} przy -exec%s ... +"
  
- #: find/parser.c:2228
+ #: find/parser.c:2232
 -#, fuzzy
  msgid "The environment is too large for exec()."
 -msgstr "¶rodowisko jest zbyt du¿e, aby wykonaæ exec"
@@ -39,58 +138,85 @@
  
  #: find/pred.c:1166
  #, c-format
-@@ -698,7 +697,7 @@
- #: xargs/xargs.c:535
+@@ -555,12 +554,12 @@
+ #: locate/locate.c:475
+ #, c-format
+ msgid "locate database %s contains a filename longer than locate can handle"
+-msgstr ""
++msgstr "Baza danych locate %s zawiera nazwê pliku d³u¿sz± ni¿ obs³ugiwana przez locate"
+ 
+ #: locate/locate.c:564
+ #, c-format
+ msgid "locate database `%s' is corrupt or invalid"
+-msgstr "baza danych locate `%s' jest uszkodzona lub niepoprawna"
++msgstr "Baza danych locate `%s' jest uszkodzona lub niepoprawna"
+ 
+ #: locate/locate.c:832
+ #, c-format
+@@ -630,7 +629,7 @@
+ msgstr "starym"
+ 
+ #: locate/locate.c:1146
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "Usage: %s [-d path | --database=path] [-e | -E | --[non-]existing]\n"
+ "      [-i | --ignore-case] [-w | --wholename] [-b | --basename] \n"
+@@ -708,7 +707,7 @@
+ #: xargs/xargs.c:536
  #, c-format
  msgid "warning: value %ld for -s option is too large, using %ld instead"
 -msgstr ""
 +msgstr "uwaga: wrto¶æ %ld dla opcji -s jest zbyt du¿a, u¿yto %ld"
  
- #: xargs/xargs.c:574
+ #: xargs/xargs.c:575
  #, c-format
-@@ -711,14 +710,14 @@
+@@ -721,14 +720,14 @@
  msgstr "Nie mo¿na otworzyæ pliku wej¶ciowego `%s'"
  
- #: xargs/xargs.c:640
+ #: xargs/xargs.c:642
 -#, fuzzy, c-format
 +#, c-format
  msgid "Your environment variables take up %lu bytes\n"
 -msgstr "Zmienne ¶rodowiskowe zajmuj± %ld bajtów\n"
 +msgstr "Zmienne ¶rodowiskowe zajmuj± %lu bajtów\n"
  
- #: xargs/xargs.c:643
+ #: xargs/xargs.c:645
 -#, fuzzy, c-format
 +#, c-format
  msgid "POSIX lower and upper limits on argument length: %lu, %lu\n"
 -msgstr "POSIX-owy dolny i górny limit na d³ugo¶æ argumentów: %ld, %ld\n"
 +msgstr "POSIX-owy dolny i górny limit na d³ugo¶æ argumentów: %lu, %lu\n"
  
- #: xargs/xargs.c:647
+ #: xargs/xargs.c:649
  #, c-format
-@@ -726,9 +725,9 @@
+@@ -736,9 +735,9 @@
  msgstr "Maksymalna d³ugo¶æ polecenia, które mo¿na u¿yæ: %ld\n"
  
- #: xargs/xargs.c:651
+ #: xargs/xargs.c:653
 -#, fuzzy, c-format
 +#, c-format
  msgid "Size of command buffer we are actually using: %lu\n"
 -msgstr "Rozmiar u¿ywanego bufora polecenia: %ld\n"
 +msgstr "Rozmiar u¿ywanego bufora polecenia: %lu\n"
  
- #: xargs/xargs.c:773 xargs/xargs.c:854
+ #: xargs/xargs.c:775 xargs/xargs.c:856
  #, c-format
-@@ -786,7 +785,7 @@
+@@ -796,7 +795,7 @@
  msgstr "%s: warto¶æ dla opcji -%c powinna byæ < %ld\n"
  
- #: xargs/xargs.c:1213
+ #: xargs/xargs.c:1215
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
  "Usage: %s [-0prtx] [--interactive] [--null] [-d|--delimiter=delim]\n"
  "       [-E eof-str] [-e[eof-str]]  [--eof[=eof-str]]\n"
-@@ -801,12 +800,9 @@
+@@ -809,14 +808,11 @@
+ "       [--version] [--help] [command [initial-arguments]]\n"
+ msgstr ""
  "Sk³adnia: %s [-0prtx] [--interactive] [--null] [-d|--delimiter=ogranicznik]\n"
- "       [-E ³añc-eof] [-e[³añc-eof]]  [--eof[=³añc-eof]\n"
+-"       [-E ³añc-eof] [-e[³añc-eof]]  [--eof[=³añc-eof]\n"
++"       [-E ³añc-eof] [-e[³añc-eof]]  [--eof[=³añc-eof]]\n"
  "       [-L maks-linii] [-l[maks-linii]] [--max-lines[=maks-linii]]\n"
 -"       [-I ³añc-zmienn] [-i[³añc-zmienn]] [--replace[=³añc-zminn]]\n"
 +"       [-I ³añc-zmienn] [-i[³añc-zmienn]] [--replace[=³añc-zmienn]]\n"

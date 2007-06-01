@@ -1,5 +1,5 @@
---- findutils-4.2.30/doc/find.texi.orig	2007-01-13 22:14:06.000000000 +0100
-+++ findutils-4.2.30/doc/find.texi	2007-03-19 14:10:51.332801131 +0100
+--- findutils-4.2.31/doc/find.texi.orig	2007-05-30 21:11:29.000000000 +0200
++++ findutils-4.2.31/doc/find.texi	2007-06-01 19:36:29.869803156 +0200
 @@ -12,17 +12,11 @@
  @finalout
  @end iftex
@@ -22,7 +22,7 @@
  @end direntry
  
  @copying
-@@ -2397,10 +2391,6 @@
+@@ -2414,10 +2408,6 @@
  fileserver where that filesystem is on a local disk, to prevent
  thrashing the network.
  
@@ -33,7 +33,7 @@
  
  @node Database Formats
  @section Database Formats
-@@ -2576,15 +2566,13 @@
+@@ -2598,15 +2588,13 @@
  discussed in this manual.
  
  @menu
@@ -52,7 +52,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -2655,7 +2643,7 @@
+@@ -2677,7 +2665,7 @@
  @end menu
  
  
@@ -61,7 +61,7 @@
  @subsection Warning Messages
  
  If there is an error on the @code{find} command line, an error message
-@@ -2706,249 +2694,7 @@
+@@ -2728,251 +2716,7 @@
  Use of an unrecognised formatting directive with @samp{-fprintf}
  @end itemize
  
@@ -300,7 +300,9 @@
 -this option means that @code{locate} will not be able to properly
 -handle non-ASCII characters in file names (that is, file names
 -containing characters which have the eighth bit set, such as many of
--the characters from the ISO-8859-1 character set).
+-the characters from the ISO-8859-1 character set).  Versions of
+-@code{locate} prior to 4.2.31 fail to correctly handle long filenames
+-in old-format databases.
 -@item --help
 -Print a summary of the command line usage and exit.
 -@item --version
@@ -312,7 +314,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -3097,7 +2843,7 @@
+@@ -3121,7 +2865,7 @@
  @end table
  
  

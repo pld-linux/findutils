@@ -10,14 +10,14 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.2.31
+Version:	4.2.32
 Release:	1
 Epoch:		1
-License:	GPL
+License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	a0e31a0f18a49709bf5a449867c8049a
+# Source0-md5:	aaa6beeb41a6f04963dff58f24a55b96
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
@@ -125,10 +125,10 @@ rm -f $RPM_BUILD_ROOT{%{_infodir}/dir,%{_mandir}/README.findutils-non-english-ma
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p	/sbin/postshell
+%post	-p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
-%postun	-p	/sbin/postshell
+%postun	-p /sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files -f %{name}.lang

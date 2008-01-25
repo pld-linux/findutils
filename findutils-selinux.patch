@@ -335,28 +335,28 @@
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
---- findutils-4.2.31/po/pl.po.orig	2007-06-01 19:36:59.927516047 +0200
-+++ findutils-4.2.31/po/pl.po	2007-06-01 19:37:29.789217769 +0200
-@@ -151,6 +151,11 @@
+--- findutils-4.2.32/po/pl.po.orig	2008-01-26 00:38:26.276837190 +0100
++++ findutils-4.2.32/po/pl.po	2008-01-26 00:47:58.617453022 +0100
+@@ -162,6 +162,11 @@
  msgid "paths must precede expression"
  msgstr "¶cie¿ki musz± poprzedzaæ wyra¿enie"
  
-+#: find/find.c:559
++#: find/find.c:558
 +#, c-format
 +msgid "Error: invalid predicate %s: the kernel is not SELinux-enabled.\n"
 +msgstr "B³±d: b³êdne wyra¿enie %s: j±dro nie ma w³±czonej obs³ugi SELinuksa.\n"
 +
- #: find/find.c:545
+ #: find/find.c:543
  #, c-format
  msgid "invalid predicate `%s'"
-@@ -357,6 +362,10 @@
+@@ -368,6 +373,10 @@
  "w przypadku braku dostêpu do WWW, wysy³aj±c pocztê elektroniczn± pod\n"
  "adres <bug-findutils@gnu.org>."
  
-+#: find/parser.c:817
++#: find/parser.c:815
 +msgid "      -context CONTEXT\n"
 +msgstr "      -context KONTEKST\n"
 +
- #: find/parser.c:842
+ #: find/parser.c:840
  msgid "sanity check of the fnmatch() library function failed."
  msgstr ""

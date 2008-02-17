@@ -10,23 +10,22 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.2.32
+Version:	4.2.33
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	aaa6beeb41a6f04963dff58f24a55b96
+# Source0-md5:	b7e35aa175778c84942b1fee4144988b
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-selinux.patch
 Patch2:		%{name}-man-selinux.patch
-Patch3:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	gettext-devel >= 0.14.5
 %{?with_selinux:BuildRequires:	libselinux-devel}
@@ -84,7 +83,6 @@ arayabilirsiniz.
 
 %prep
 %setup -q
-%patch3 -p1
 %patch0 -p1
 %{?with_selinux:%patch1 -p1}
 # patch2 is applied in install stage

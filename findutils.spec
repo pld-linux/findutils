@@ -10,20 +10,21 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.2.33
+Version:	4.4.0
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	b7e35aa175778c84942b1fee4144988b
+# Source0-md5:	49e769ac4382fae6f104f99d54d0a112
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-selinux.patch
 Patch2:		%{name}-man-selinux.patch
+Patch3:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -84,6 +85,7 @@ arayabilirsiniz.
 %prep
 %setup -q
 %patch0 -p1
+%patch3 -p1
 %{?with_selinux:%patch1 -p1}
 # patch2 is applied in install stage
 
@@ -111,8 +113,11 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 install -d $RPM_BUILD_ROOT/bin
 mv $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
 
+# useless in binary package
+rm $RPM_BUILD_ROOT%{_infodir}/find-maint.info*
+
 # unpackaged locate
-rm -f $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
+rm $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
 	$RPM_BUILD_ROOT%{_libdir}/{bigram,code,frcode} \
 	$RPM_BUILD_ROOT%{_mandir}/{,*/}man?/{locate.1,updatedb.1,locatedb.5}*
 
@@ -133,6 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README TODO ChangeLog
 %attr(755,root,root) %{_bindir}/find
+%attr(755,root,root) %{_bindir}/oldfind
 %attr(755,root,root) /bin/xargs
 
 %{_mandir}/man1/[fx]*

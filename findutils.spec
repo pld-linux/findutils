@@ -23,6 +23,8 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-selinux.patch
 Patch1:		%{name}-man-selinux.patch
+Patch2:		%{name}-info.patch
+Patch3:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -84,8 +86,10 @@ arayabilirsiniz.
 %setup -q
 %{?with_selinux:%patch0 -p1}
 # patch1 is applied in install stage
+%patch2 -p1
+%patch3 -p1
 
-rm -f po/stamp-po
+%{__rm} po/stamp-po
 
 %build
 %{__aclocal} -I gnulib/m4 -I m4
@@ -110,10 +114,10 @@ install -d $RPM_BUILD_ROOT/bin
 mv $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
 
 # useless in binary package
-rm $RPM_BUILD_ROOT%{_infodir}/find-maint.info*
+%{__rm} $RPM_BUILD_ROOT%{_infodir}/find-maint.info*
 
 # unpackaged locate
-rm $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
 	$RPM_BUILD_ROOT%{_libdir}/{bigram,code,frcode} \
 	$RPM_BUILD_ROOT%{_mandir}/{,*/}man?/{locate.1,updatedb.1,locatedb.5}*
 
@@ -136,8 +140,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/find
 %attr(755,root,root) %{_bindir}/oldfind
 %attr(755,root,root) /bin/xargs
-
-%{_mandir}/man1/[fx]*
+%{_mandir}/man1/find.1*
+%{_mandir}/man1/xargs.1*
 %lang(de) %{_mandir}/de/man1/[fx]*
 %lang(es) %{_mandir}/es/man1/[fx]*
 %lang(fi) %{_mandir}/fi/man1/[fx]*

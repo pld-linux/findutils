@@ -29,7 +29,7 @@ Patch4:		%{name}-automake_1.12.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	gettext-devel >= 0.14.5
+BuildRequires:	gettext-tools >= 0.14.5
 %{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

@@ -26,6 +26,8 @@ Patch1:		%{name}-man-selinux.patch
 Patch2:		%{name}-info.patch
 Patch3:		%{name}-pl.po-update.patch
 Patch4:		%{name}-automake_1.12.patch
+Patch5:		21-Fix-time_t-vs-long-int-mismatches.patch
+Patch6:		22_gl_update_mktime.diff
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -90,6 +92,8 @@ arayabilirsiniz.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %{__rm} po/stamp-po
 

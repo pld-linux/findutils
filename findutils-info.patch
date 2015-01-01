@@ -22,6 +22,15 @@
  @end direntry
  
  @copying
+@@ -50,7 +50,7 @@
+ 
+ @page
+ @vskip 0pt plus 1filll
+-@insertcopying{}
++@insertcopying
+ @end titlepage
+ 
+ @contents
 @@ -72,7 +66,6 @@
  * Introduction::                Summary of the tasks this manual describes.
  * Finding Files::               Finding files that match certain criteria.
@@ -185,6 +194,31 @@
  names, to shell patterns.  A @dfn{shell pattern} is a string that may
  contain the following special characters, which are known as
  @dfn{wildcards} or @dfn{metacharacters}.
+@@ -1665,6 +1665,7 @@ no output is ever sent to it.
+ * Escapes::
+ * Format Directives::
+ * Time Formats::
++* Formatting Flags::
+ @end menu
+ 
+ @node Escapes
+@@ -1733,7 +1734,6 @@ from the novel you are reading.
+ * Size Directives::
+ * Location Directives::
+ * Time Directives::
+-* Formatting Flags::
+ @end menu
+ 
+ @node Name Directives
+@@ -2002,7 +2002,7 @@ seconds field includes a fractional part
+ @end table
+ 
+ @node Formatting Flags
+-@subsubsection Formatting Flags
++@subsection Formatting Flags
+ 
+ The @samp{%m} and @samp{%d} directives support the @samp{#}, @samp{0}
+ and @samp{+} flags, but the other directives do not, even if they
 @@ -2659,261 +2559,6 @@
  @end example
  

@@ -87,8 +87,7 @@ arayabilirsiniz.
 %setup -q
 
 # patch1 is applied in install stage
-# FIXME and push upstream
-# %patch2 -p1
+%patch2 -p1
 %patch3 -p1
 
 %{__rm} po/stamp-po

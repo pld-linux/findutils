@@ -1,6 +1,6 @@
---- findutils-4.4.2/doc/find.texi.orig	2010-11-04 08:40:08.371101613 +0100
-+++ findutils-4.4.2/doc/find.texi	2010-11-04 08:55:18.691099937 +0100
-@@ -12,17 +12,11 @@
+--- findutils-4.6.0/doc/find.texi.orig	2015-12-28 22:10:23.000000000 +0100
++++ findutils-4.6.0/doc/find.texi	2016-01-24 17:56:21.578207819 +0100
+@@ -13,17 +13,11 @@
  @finalout
  @end iftex
  
@@ -22,24 +22,15 @@
  @end direntry
  
  @copying
-@@ -50,7 +50,7 @@
- 
- @page
- @vskip 0pt plus 1filll
--@insertcopying{}
-+@insertcopying
- @end titlepage
- 
- @contents
-@@ -72,7 +66,6 @@
+@@ -73,7 +67,6 @@
  * Introduction::                Summary of the tasks this manual describes.
  * Finding Files::               Finding files that match certain criteria.
  * Actions::                     Doing things to files you have found.
 -* Databases::                   Maintaining file name databases.
  * File Permissions::            How to control access to files.
  * Date input formats::          Specifying literal times.
- * Reference::                   Summary of how to invoke the programs.
-@@ -90,16 +83,14 @@
+ * Configuration::               Options you can select at compile time.
+@@ -92,16 +85,14 @@
  This manual shows how to find files that meet criteria you specify,
  and how to perform various actions on the files that you find.  The
  principal programs that you use to perform these tasks are
@@ -58,7 +49,7 @@
  from Dan Bernstein.  The current maintainer of GNU findutils (and this
  manual) is James Youngman.  Many other people have contributed bug
  fixes, small improvements, and helpful suggestions.  Thanks!
-@@ -125,7 +116,7 @@
+@@ -127,7 +118,7 @@
  
  @itemize @bullet
  @item The version of the software you are running.  You can find this
@@ -67,7 +58,7 @@
  @item What you were trying to do
  @item The @emph{exact} command line you used
  @item The @emph{exact} output you got (if this is very long, try to
-@@ -224,9 +215,7 @@
+@@ -226,9 +217,7 @@
  @section Overview
  
  The principal programs used for making lists of files that match given
@@ -78,7 +69,7 @@
  
  @code{find} searches for files in a directory hierarchy and prints
  information about the files it found.  It is run like this:
-@@ -246,23 +235,6 @@
+@@ -248,23 +237,6 @@
  Notice that the wildcard must be enclosed in quotes in order to
  protect it from expansion by the shell.
  
@@ -102,7 +93,7 @@
  The name @code{xargs}, pronounced EX-args, means ``combine
  arguments.''  @code{xargs} builds and executes command lines by
  gathering together arguments it reads on the standard input.  Most
-@@ -370,7 +342,6 @@
+@@ -372,7 +344,6 @@
  @menu
  * Base Name Patterns::
  * Full Name Patterns::
@@ -110,7 +101,7 @@
  * Shell Pattern Matching::      Wildcards used by these programs.
  @end menu
  
-@@ -503,82 +474,11 @@
+@@ -524,82 +495,10 @@
  
  @end deffn
  
@@ -124,8 +115,8 @@
 -displays the file names that contain the pattern.  @xref{Shell Pattern
 -Matching}, for details about shell patterns.
 -
--If a pattern is a plain string---it contains no
--metacharacters---@code{locate} displays all file names in the database
+-If a pattern is a plain string -- it contains no
+-metacharacters -- @code{locate} displays all file names in the database
 -that contain that string.  If a pattern contains
 -metacharacters, @code{locate} only displays file names that match the
 -pattern exactly.  As a result, patterns that contain metacharacters
@@ -185,7 +176,7 @@
 -compatible with @code{slocate}.  @xref{Invoking updatedb}, for a
 -description of its @samp{--dbformat} and @samp{--output} options.
 -
- 
+-
  @node Shell Pattern Matching
  @subsection Shell Pattern Matching
  
@@ -194,32 +185,7 @@
  names, to shell patterns.  A @dfn{shell pattern} is a string that may
  contain the following special characters, which are known as
  @dfn{wildcards} or @dfn{metacharacters}.
-@@ -1665,6 +1665,7 @@ no output is ever sent to it.
- * Escapes::
- * Format Directives::
- * Time Formats::
-+* Formatting Flags::
- @end menu
- 
- @node Escapes
-@@ -1733,7 +1734,6 @@ from the novel you are reading.
- * Size Directives::
- * Location Directives::
- * Time Directives::
--* Formatting Flags::
- @end menu
- 
- @node Name Directives
-@@ -2002,7 +2002,7 @@ seconds field includes a fractional part
- @end table
- 
- @node Formatting Flags
--@subsubsection Formatting Flags
-+@subsection Formatting Flags
- 
- The @samp{%m} and @samp{%d} directives support the @samp{#}, @samp{0}
- and @samp{+} flags, but the other directives do not, even if they
-@@ -2659,261 +2559,6 @@
+@@ -2849,261 +2748,6 @@
  @end example
  
  
@@ -317,7 +283,7 @@
 -additional number of characters of prefix of the preceding entry to
 -use beyond the number that the preceding entry is using of its
 -predecessor.  (The counts can be negative.)  Following the count is a
--null-terminated ASCII remainder---the part of the name that follows
+-null-terminated ASCII remainder -- the part of the name that follows
 -the shared prefix.
 -
 -If the offset-differential count is larger than can be stored in a
@@ -386,7 +352,7 @@
 -first database entry.  The first entry in the database is not preceded
 -by any differential count or dummy entry.  Instead the differential
 -count for the first item is assumed to be zero.
--.P
+-
 -Starting with the second entry (if any) in the database, data is
 -interpreted as for the GNU LOCATE02 format.
 -
@@ -427,7 +393,7 @@
 -not use it.
 -
 -Because the long counts are stored by the @code{code} program as
--native-order machine words, the database format is not eaily used in
+-native-order machine words, the database format is not easily used in
 -environments which differ in terms of byte order.  If locate databases
 -are to be shared between machines, the LOCATE02 database format should
 -be used.  This has other benefits as discussed above.  However, the
@@ -481,7 +447,7 @@
  @node File Permissions
  @chapter File Permissions
  
-@@ -2928,15 +2573,13 @@
+@@ -3182,15 +2826,13 @@
  discussed in this manual.
  
  @menu
@@ -500,7 +466,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -3144,268 +2787,8 @@
+@@ -3404,255 +3046,7 @@
  actions, and options that the expression can contain.  If the
  expression is missing, @samp{-print} is assumed.
  
@@ -510,9 +476,6 @@
 -@example
 -locate @r{[}@var{option}@dots{}@r{]} @var{pattern}@dots{}
 -@end example
--
--For each @var{pattern} given @code{locate} searches one or more file
--name databases returning each match of @var{pattern}.
 -
 -For each @var{pattern} given @code{locate} searches one or more file
 -name databases returning each match of @var{pattern}.
@@ -608,7 +571,7 @@
 -@itemx -m
 -Accepted but does nothing.  The option is supported only to provide
 -compatibility with BSD's @code{locate}.
- 
+-
 -@item --null
 -@itemx -0
 -Results are separated with the ASCII NUL character rather than the
@@ -674,16 +637,6 @@
 -@example
 -updatedb @r{[}@var{option}@dots{}@r{]}
 -@end example
--
--@code{updatedb} creates and updates the database of file names used by
--@code{locate}.  @code{updatedb} generates a list of files similar to
--the output of @code{find} and then uses utilities for optimizing the
--database for performance.  @code{updatedb} is often run periodically
--as a @code{cron} job and configured with environment variables or
--command options.  Typically, operating systems have a shell script
--that ``exports'' configurations for variable definitions and uses
--another shell script that ``sources'' the configuration file into the
--environment and then executes @code{updatedb} in the environment.
 -
 -@code{updatedb} creates and updates the database of file names used by
 -@code{locate}.  @code{updatedb} generates a list of files similar to
@@ -770,15 +723,15 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -4690,7 +4073,6 @@
+@@ -4953,7 +4347,6 @@
  * Levels of Risk::      What is your level of exposure to security problems?
  * Security Considerations for find::  Security problems with find
  * Security Considerations for xargs:: Security problems with xargs
 -* Security Considerations for locate:: Security problems with locate
  * Security Summary:: That was all very complex, what does it boil down to?
+ * Further Reading on Security::
  @end menu
- 
-@@ -5090,59 +4472,6 @@
+@@ -5360,59 +4753,6 @@
  trailing whitespace is turned off by the @samp{-0} argument to
  @code{xargs}, which is another reason to use that option.
  
@@ -838,7 +791,7 @@
  
  @node Security Summary
  @section Summary
-@@ -5188,8 +4517,6 @@
+@@ -5485,8 +4825,6 @@
  @menu
  * Error Messages From find::
  * Error Messages From xargs::
@@ -847,8 +800,8 @@
  @end menu
  
  @node Error Messages From find
-@@ -5320,37 +4647,6 @@
- See the description of the similar message for @code{find}.
+@@ -5631,38 +4969,6 @@
+ why @code{xargs} is confused by your operating system).
  @end table
  
 -@node Error Messages From locate
@@ -876,12 +829,13 @@
 -
 -
 -@node Error Messages From updatedb
--@section Error Messages From updatedb
+-@section Error Messages From @code{updatedb}
 -
 -The @code{updatedb} program (and the programs it invokes) do issue
 -error messages, but none seem to be candidates for guidance.  If
 -you are having a problem understanding one of these, ask for help on
 -@email{bug-findutils@@gnu.org}.
- 
+-
  @node GNU Free Documentation License
  @appendix GNU Free Documentation License
+ @include fdl.texi

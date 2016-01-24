@@ -10,24 +10,22 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.4.2
-Release:	2
+Version:	4.6.0
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	http://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	351cc4adb07d54877fa15f75fb77d39f
+# Source0-md5:	9936aa8009438ce185bea2694a997fc1
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
-Patch0:		%{name}-selinux.patch
+
 Patch1:		%{name}-man-selinux.patch
 Patch2:		%{name}-info.patch
+# http://translationproject.org/latest/findutils/pl.po
 Patch3:		%{name}-pl.po-update.patch
-Patch4:		%{name}-automake_1.12.patch
-Patch5:		21-Fix-time_t-vs-long-int-mismatches.patch
-Patch6:		22_gl_update_mktime.diff
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -87,22 +85,21 @@ arayabilirsiniz.
 
 %prep
 %setup -q
-%{?with_selinux:%patch0 -p1}
+
 # patch1 is applied in install stage
-%patch2 -p1
+# FIXME and push upstream
+# %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %{__rm} po/stamp-po
 
 %build
-%{__aclocal} -I gnulib/m4 -I m4
+%{__aclocal} -I gl/m4 -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	%{__with_without selinux}
 
 %{__make}
 
@@ -144,7 +141,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README TODO ChangeLog
 %attr(755,root,root) %{_bindir}/find
-%attr(755,root,root) %{_bindir}/oldfind
 %attr(755,root,root) /bin/xargs
 %{_mandir}/man1/find.1*
 %{_mandir}/man1/xargs.1*

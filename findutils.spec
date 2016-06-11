@@ -26,6 +26,7 @@ Patch1:		%{name}-man-selinux.patch
 Patch2:		%{name}-info.patch
 # http://translationproject.org/latest/findutils/pl.po
 Patch3:		%{name}-pl.po-update.patch
+Patch4:		findutils-4.6.0-mbrtowc-tests.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -89,6 +90,7 @@ arayabilirsiniz.
 # patch1 is applied in install stage
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %{__rm} po/stamp-po
 

@@ -11,7 +11,7 @@ Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
 Version:	4.6.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
@@ -21,7 +21,7 @@ Source0:	http://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
-
+Patch0:		findutils-4.6.0-exec-args.patch
 Patch1:		%{name}-man-selinux.patch
 Patch2:		%{name}-info.patch
 # http://translationproject.org/latest/findutils/pl.po
@@ -85,7 +85,7 @@ arayabilirsiniz.
 
 %prep
 %setup -q
-
+%patch0 -p1
 # patch1 is applied in install stage
 %patch2 -p1
 %patch3 -p1

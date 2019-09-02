@@ -1,42 +1,411 @@
---- findutils-4.6.0/po/pl.po.orig	2016-01-24 21:21:37.307690975 +0100
-+++ findutils-4.6.0/po/pl.po	2016-01-24 21:21:41.544357465 +0100
-@@ -31,9 +31,9 @@
+--- findutils-4.7.0/po/pl.po.orig	2019-08-29 21:53:10.000000000 +0200
++++ findutils-4.7.0/po/pl.po	2019-09-01 21:35:37.664174620 +0200
+@@ -32,9 +32,9 @@
  msgstr "Nie można zamknąć standardowego wejścia"
  
- #: find/exec.c:285
+ #: find/exec.c:271
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to change directory%s%s"
 -msgstr "Nie udało się zmienić katalogu: %s"
 +msgstr "Nie udało się zmienić katalogu%s%s"
  
- #: find/exec.c:314 xargs/xargs.c:1265
+ #: find/exec.c:303 xargs/xargs.c:1275
+ msgid "cannot fork"
+@@ -193,16 +193,16 @@
+ "-depth."
+ 
+ #: find/parser.c:609
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "warning: you have specified the global option %s after the argument %s, but "
+ "global options are not positional, i.e., %s affects tests specified before "
+ "it as well as those specified after it.  Please specify global options "
+ "before other arguments."
+ msgstr ""
+-"uwaga: podano opcję %s po argumencie %s nie będącym opcją, ale opcje nie są "
+-"pozycyjne (%s wpływa na testy podane przed nią jak i po niej). Proszę "
+-"podawać opcje przed innymi argumentami.\n"
++"uwaga: podano opcję globalną %s po argumencie %s, ale opcje globalne nie są "
++"pozycyjne (np. %s wpływa na testy podane przed nią jak i po niej). Proszę "
++"podawać opcje globalne przed innymi argumentami."
+ 
+ #: find/parser.c:912
  #, c-format
-@@ -402,7 +402,7 @@
- #: find/parser.c:2128
+@@ -243,6 +243,8 @@
+ "directory separator (%s), thus the expression will evaluate to false all the "
+ "time.  Did you mean %s?"
+ msgstr ""
++"uwaga: %s pasuje tylko do nazw podstawowych, ale podany wzorzec zawiera separator "
++"katalogów (%s), więc wyrażenie będzie cały czas fałszywe. Czy nie miało być %s?"
+ 
+ #: find/parser.c:1387
+ #, c-format
+@@ -296,7 +298,7 @@
+ #: find/parser.c:2057
  #, c-format
  msgid "failed to compile regular expression '%s': %s"
 -msgstr ""
 +msgstr "nie udało się skompilować wyrażenia regularnego '%s': %s"
  
- #: find/parser.c:2157
- #, c-format
-@@ -747,14 +747,14 @@
- msgstr "] [ścieżka...] [wyrażenie]\n"
+ #: find/parser.c:2086
+ msgid "invalid null argument to -size"
+@@ -344,60 +346,60 @@
+ msgstr "błędne wyrażenie -context: SELinux nie jest włączony."
  
- #: find/util.c:458
+ #: find/parser.c:2648
+-#, fuzzy, c-format
++#, c-format
+ msgid "Arguments to %s should contain at least one letter"
+-msgstr "Argumenty dla -type powinny zawierać tylko jedną literę"
++msgstr "Argumenty dla %s powinny zawierać przynajmniej jedną literę"
+ 
+ #: find/parser.c:2713
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "%s %c is not supported because symbolic links are not supported on the "
+ "platform find was compiled on."
+ msgstr ""
+-"-type %c nie jest obsługiwane, ponieważ dowiązania symboliczne nie są "
++"%s %c nie jest obsługiwane, ponieważ dowiązania symboliczne nie są "
+ "obsługiwane na platformie, dla której find został skompilowany."
+ 
+ #: find/parser.c:2725
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "%s %c is not supported because FIFOs are not supported on the platform find "
+ "was compiled on."
+ msgstr ""
+-"-type %c nie jest obsługiwane, ponieważ FIFO nie są obsługiwane na "
++"%s %c nie jest obsługiwane, ponieważ FIFO nie są obsługiwane na "
+ "platformie, dla której find został skompilowany."
+ 
+ #: find/parser.c:2737
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "%s %c is not supported because named sockets are not supported on the "
+ "platform find was compiled on."
+ msgstr ""
+-"-type %c nie jest obsługiwane, ponieważ gniazda nazwane nie są obsługiwane "
++"%s %c nie jest obsługiwane, ponieważ gniazda nazwane nie są obsługiwane "
+ "na platformie, dla której find został skompilowany."
+ 
+ #: find/parser.c:2753
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "%s %c is not supported because Solaris doors are not supported on the "
+ "platform find was compiled on."
+ msgstr ""
+-"-type %c nie jest obsługiwane, ponieważ solarisowe \"drzwi\" nie są "
++"%s %c nie jest obsługiwane, ponieważ solarisowe \"drzwi\" nie są "
+ "obsługiwane na platformie, dla której find został skompilowany."
+ 
+ #: find/parser.c:2761
+-#, fuzzy, c-format
++#, c-format
+ msgid "Unknown argument to %s: %c"
+-msgstr "Nieznany argument opcji -type: %c"
++msgstr "Nieznany argument opcji %s: %c"
+ 
+ #: find/parser.c:2769
+ #, c-format
+ msgid "Duplicate file type '%c' in the argument list to %s."
+-msgstr ""
++msgstr "Powtórzony typ pliku '%c' w liście argumentów opcji %s."
+ 
+ #: find/parser.c:2785
+ #, c-format
+ msgid "Must separate multiple arguments to %s using: ','"
+-msgstr ""
++msgstr "Wielokrotne argumenty opcji %s muszą być rozdzielone znakiem ','"
+ 
+ #: find/parser.c:2794
+ #, c-format
+@@ -405,6 +407,7 @@
+ "Last file type in list argument to %s is missing, i.e., list is ending on: "
+ "','"
+ msgstr ""
++"Brak ostatniego typu pliku na liście argumentów %s, tzn. lista kończy się znakiem ','"
+ 
+ #: find/parser.c:2853
+ #, c-format
+@@ -554,13 +557,13 @@
+ msgstr "błędne wyrażenie; za dużo ')'"
+ 
+ #: find/tree.c:175
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "invalid expression; expected to find a ')' but didn't see one. Perhaps you "
+ "need an extra predicate after '%s'"
+ msgstr ""
+-"błędne wyrażenie; oczekiwano gdzieś ')', ale nie znaleziono. Być może "
+-"potrzebne jest dodatkowe wyrażenie po '%s'"
++"błędne wyrażenie; oczekiwano ')', ale nie znaleziono. Być może "
++"potrzebne jest dodatkowe słowo po '%s'"
+ 
+ #: find/tree.c:184
+ msgid "invalid expression; empty parentheses are not allowed."
+@@ -591,14 +594,14 @@
+ "zgłosić to jako błąd"
+ 
+ #: find/tree.c:1272
+-#, fuzzy, c-format
++#, c-format
+ msgid "paths must precede expression: `%s'"
+-msgstr "ścieżki muszą poprzedzać wyrażenie: %s"
++msgstr "ścieżki muszą poprzedzać wyrażenie: `%s'"
+ 
+ #: find/tree.c:1274
+ #, c-format
+ msgid "possible unquoted pattern after predicate `%s'?"
+-msgstr ""
++msgstr "czyżby niecytowany wzorzec po słowie `%s'?"
+ 
+ #: find/tree.c:1284
+ #, c-format
+@@ -638,20 +641,20 @@
+ msgstr "ojej -- błędne domyślne wstawienie and!"
+ 
+ #: find/util.c:139
+-#, fuzzy
+ msgid "Valid arguments for -D:\n"
+-msgstr "Prawidłowe argumenty to:"
++msgstr "Prawidłowe argumenty dla -D:\n"
+ 
+ #: find/util.c:163 locate/frcode.c:142 locate/locate.c:1363 xargs/xargs.c:1655
+ #, c-format
+ msgid "Try '%s --help' for more information.\n"
+-msgstr ""
++msgstr "Polecenie '%s --help' pozwoli uzyskać więcej informacji.\n"
+ 
+ #: find/util.c:169
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "Usage: %s [-H] [-L] [-P] [-Olevel] [-D debugopts] [path...] [expression]\n"
+-msgstr "Składnia: %s [-H] [-L] [-P] [-Opoziom] [-D "
++msgstr ""
++"Składnia: %s [-H] [-L] [-P] [-Opoziom] [-D opcje_diagn] [ścieżka...] [wyrażenie]\n"
+ 
+ #: find/util.c:173
+ msgid ""
+@@ -704,7 +707,6 @@
+ "      -links N -lname WZORZEC -mmin N -mtime N -name WZORZEC -newer PLIK"
+ 
+ #: find/util.c:190
+-#, fuzzy
+ msgid ""
+ "\n"
+ "      -nouser -nogroup -path PATTERN -perm [-/]MODE -regex PATTERN\n"
+@@ -712,6 +714,7 @@
+ "      -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+ "      -used N -user NAME -xtype [bcdpfls]"
+ msgstr ""
++"\n"
+ "      -nouser -nogroup -path WZORZEC -perm [-/]TRYB -regex WZORZEC\n"
+ "      -readable -writable -executable\n"
+ "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+@@ -722,7 +725,6 @@
+ msgstr "      -context KONTEKST\n"
+ 
+ #: find/util.c:197
+-#, fuzzy
+ msgid ""
+ "\n"
+ "actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print \n"
+@@ -743,16 +745,19 @@
+ "Use '-D help' for a description of the options, or see find(1)\n"
+ "\n"
+ msgstr ""
++"\n"
++"Opis opcji można uzyskać przy użyciu '-D help' lub w podręczniku find(1)\n"
++"\n"
+ 
+ #: find/util.c:491
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to save initial working directory%s%s"
 -msgstr "nie udało się zachować początkowego katalogu roboczego: %s"
 +msgstr "Nie udało się zachować początkowego katalogu roboczego%s%s"
  
- #: find/util.c:477
+ #: find/util.c:510
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to restore initial working directory%s%s"
 -msgstr "nie udało się przywrócić początkowego katalogu roboczego: %s"
 +msgstr "Nie udało się przywrócić początkowego katalogu roboczego%s%s"
  
- #: find/util.c:827
+ #: find/util.c:848
  #, c-format
+@@ -787,9 +792,9 @@
+ "można użyć GNU locate."
+ 
+ #: find/util.c:957
+-#, fuzzy, c-format
++#, c-format
+ msgid "Missing argument after the -D option."
+-msgstr "Pusty argument dla opcji -D."
++msgstr "Brak argumentu dla opcji -D."
+ 
+ #: find/util.c:1060
+ msgid ""
+@@ -800,7 +805,7 @@
+ "na rozmiar bloku, to zmienna środowiskowa POSIXLY_CORRECT"
+ 
+ #: lib/bugreports.c:28
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "Please see also the documentation at %s.\n"
+ "You can report (and track progress on fixing) bugs in the \"%s\"\n"
+@@ -808,10 +813,11 @@
+ "%s or, if\n"
+ "you have no web access, by sending email to <%s>.\n"
+ msgstr ""
+-"Proszę zgłaszać błędy (i śledzić proces ich naprawiania) poprzez stronę\n"
+-"zgłaszania błędów w findutils pod adresem http://savannah.gnu.org/ lub,\n"
++"Więcej dokumentacji można znaleźć pod %s.\n"
++"Błędy w programie \"%s\" można zgłaszać (i śledzić proces ich naprawiania)\n"
++"poprzez stronę zgłaszania błędów w %s pod adresem %s lub,\n"
+ "w przypadku braku dostępu do WWW, wysyłając pocztę elektroniczną pod\n"
+-"adres <bug-findutils@gnu.org>."
++"adres <%s>.\n"
+ 
+ #: lib/buildcmd.c:144
+ msgid "command too long"
+@@ -908,9 +914,9 @@
+ msgstr "Poziom bezpieczeństwa slocate %ld nie jest obsługiwany."
+ 
+ #: locate/frcode.c:265
+-#, fuzzy, c-format
++#, c-format
+ msgid "no argument expected."
+-msgstr "Nieznany argument opcji -type: %c"
++msgstr "nie oczekiwano argumentu."
+ 
+ #: locate/frcode.c:282
+ msgid "Failed to write to standard output"
+@@ -919,7 +925,7 @@
+ #: locate/frcode.c:291
+ #, c-format
+ msgid "The input file should end with the delimiter"
+-msgstr ""
++msgstr "Plik wejściowy powinien kończyć się ogranicznikiem"
+ 
+ #: locate/locate.c:110
+ msgid "days"
+@@ -1102,7 +1108,7 @@
+ #: locate/locate.c:1720
+ #, c-format
+ msgid "pattern argument expected"
+-msgstr ""
++msgstr "oczekiwano argumentu będącego wzorcem"
+ 
+ #: locate/locate.c:1761
+ #, c-format
+@@ -1117,9 +1123,9 @@
+ msgstr "wywołanie systemowe nie powiodło się"
+ 
+ #: locate/locate.c:1845
+-#, fuzzy, c-format
++#, c-format
+ msgid "warning: database %s is more than %u %s old (actual age is %.1f %s)"
+-msgstr "uwaga: baza danych %s ma już ponad %d %s (jej wiek to %.1f %s)"
++msgstr "uwaga: baza danych %s ma już ponad %u %s (jej wiek to %.1f %s)"
+ 
+ #: locate/word_io.c:77
+ #, c-format
+@@ -1326,7 +1332,7 @@
+ 
+ #: xargs/xargs.c:1212
+ msgid "failed to redirect standard input of the child process"
+-msgstr ""
++msgstr "nie udało się przekierować standardowego wejścia procesu potomnego"
+ 
+ #: xargs/xargs.c:1264
+ msgid "could not create pipe before fork"
+@@ -1342,12 +1348,12 @@
+ "proszę to zgłosić)"
+ 
+ #: xargs/xargs.c:1388
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "read returned unexpected value %<PRIuMAX>; this is probably a bug, please "
+ "report it"
+ msgstr ""
+-"read zwróciło nieoczekiwaną wartość %zu; prawdopodobnie błąd, proszę to "
++"read zwróciło nieoczekiwaną wartość %<PRIuMAX>; prawdopodobnie błąd, proszę to "
+ "zgłosić"
+ 
+ #: xargs/xargs.c:1481
+@@ -1375,19 +1381,19 @@
+ msgstr "%s: zakończony sygnałem %d"
+ 
+ #: xargs/xargs.c:1624
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s: invalid number \"%s\" for -%c option\n"
+-msgstr "%s: błędna liczba dla opcji -%c\n"
++msgstr "%s: błędna liczba \"%s\" dla opcji -%c\n"
+ 
+ #: xargs/xargs.c:1631
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s: value %s for -%c option should be >= %ld\n"
+-msgstr "%s: wartość dla opcji -%c powinna być >= %ld\n"
++msgstr "%s: wartość %s dla opcji -%c powinna być >= %ld\n"
+ 
+ #: xargs/xargs.c:1640
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s: value %s for -%c option should be <= %ld\n"
+-msgstr "%s: wartość dla opcji -%c powinna być <= %ld\n"
++msgstr "%s: wartość %s dla opcji -%c powinna być <= %ld\n"
+ 
+ #: xargs/xargs.c:1660
+ #, c-format
+@@ -1510,7 +1516,6 @@
+ "                               polecenia\n"
+ 
+ #: xargs/xargs.c:1690
+-#, fuzzy
+ msgid ""
+ "  -o, --open-tty               Reopen stdin as /dev/tty in the child "
+ "process\n"
+@@ -1518,11 +1523,10 @@
+ "an\n"
+ "                                 interactive application.\n"
+ msgstr ""
+-"  -0, --null                   elementy oddzielone znakiem NULL zamiast "
+-"spacji;\n"
+-"                                 wyłącza przetwarzanie cytowania, "
+-"odwrotnych\n"
+-"                                 ukośników i logicznych EOF\n"
++"  -o, --open-tty               Ponowne otwarcie standardowego wejścia jako\n"
++"                                 /dev/tty w procesie potomnym przed\n"
++"                                 uruchomieniem polecenia; przydatne przy\n"
++"                                 uruchamianiu aplikacji interaktywnych.\n"
+ 
+ #: xargs/xargs.c:1693
+ msgid ""
+@@ -1584,12 +1588,12 @@
+ msgstr "      --help                   wyświetlenie tego opisu i zakończenie\n"
+ 
+ #: xargs/xargs.c:1705
+-#, fuzzy
+ msgid ""
+ "      --version                output version information and exit\n"
+ "\n"
+ msgstr ""
+ "      --version                wypisanie informacji o wersji i zakończenie\n"
++"\n"
+ 
+ #~ msgid ""
+ #~ "warning: Unix filenames usually don't contain slashes (though pathnames "

@@ -1,6 +1,7 @@
 #
 # Conditional build:
-%bcond_without	selinux		# build without SELinux support
+%bcond_without	selinux		# SELinux support
+%bcond_without	tests		# unit tests
 #
 Summary:	GNU Find Utilities (find, xargs)
 Summary(de.UTF-8):	GNU-Suchprogramme (find, xargs)
@@ -10,29 +11,29 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.6.0
-Release:	2
+Version:	4.7.0
+Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
-Source0:	http://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-# Source0-md5:	9936aa8009438ce185bea2694a997fc1
+Source0:	http://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.xz
+# Source0-md5:	731356dec4b1109b812fecfddfead6b2
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
-Patch0:		findutils-4.6.0-exec-args.patch
-Patch1:		%{name}-man-selinux.patch
-Patch2:		%{name}-info.patch
-# http://translationproject.org/latest/findutils/pl.po
-Patch3:		%{name}-pl.po-update.patch
-Patch4:		findutils-4.6.0-mbrtowc-tests.patch
+Patch0:		%{name}-man-selinux.patch
+Patch1:		%{name}-info.patch
+# (will be again after tp update) http://translationproject.org/latest/findutils/pl.po
+Patch2:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
-BuildRequires:	gettext-tools >= 0.14.5
+BuildRequires:	autoconf >= 2.69
+BuildRequires:	automake >= 1:1.11
+BuildRequires:	gettext-tools >= 0.19.3
 %{?with_selinux:BuildRequires:	libselinux-devel}
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	texinfo
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -86,11 +87,9 @@ arayabilirsiniz.
 
 %prep
 %setup -q
-%patch0 -p1
-# patch1 is applied in install stage
+# patch0 is applied in install stage
+%patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %{__rm} po/stamp-po
 
@@ -100,9 +99,16 @@ arayabilirsiniz.
 %{__autoheader}
 %{__automake}
 %configure \
+	--disable-silent-rules \
 	%{__with_without selinux}
 
 %{__make}
+
+%if %{with tests}
+# tests use bashish $'\n' substitution
+%{__make} check \
+	SHELL=/bin/bash
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,21 +117,22 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH1}}
+%{?with_selinux:patch -p0 -d $RPM_BUILD_ROOT%{_mandir} < %{PATCH0}}
 
 # xargs is wanted in /bin
 install -d $RPM_BUILD_ROOT/bin
-mv $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/xargs $RPM_BUILD_ROOT/bin
 
 # useless in binary package
 %{__rm} $RPM_BUILD_ROOT%{_infodir}/find-maint.info*
 
 # unpackaged locate
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{locate,updatedb} \
-	$RPM_BUILD_ROOT%{_libdir}/{bigram,code,frcode} \
+	$RPM_BUILD_ROOT%{_libexecdir}/frcode \
 	$RPM_BUILD_ROOT%{_mandir}/{,*/}man?/{locate.1,updatedb.1,locatedb.5}*
 
-rm -f $RPM_BUILD_ROOT{%{_infodir}/dir,%{_mandir}/README.findutils-non-english-man-pages}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/README.findutils-non-english-man-pages
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %find_lang %{name}
 

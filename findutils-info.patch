@@ -1,5 +1,5 @@
---- findutils-4.6.0/doc/find.texi.orig	2015-12-28 22:10:23.000000000 +0100
-+++ findutils-4.6.0/doc/find.texi	2016-01-24 17:56:21.578207819 +0100
+--- findutils-4.7.0/doc/find.texi.orig	2019-06-23 11:00:40.000000000 +0200
++++ findutils-4.7.0/doc/find.texi	2019-09-01 20:37:54.009605511 +0200
 @@ -13,17 +13,11 @@
  @finalout
  @end iftex
@@ -22,7 +22,7 @@
  @end direntry
  
  @copying
-@@ -73,7 +67,6 @@
+@@ -72,7 +66,6 @@
  * Introduction::                Summary of the tasks this manual describes.
  * Finding Files::               Finding files that match certain criteria.
  * Actions::                     Doing things to files you have found.
@@ -30,7 +30,7 @@
  * File Permissions::            How to control access to files.
  * Date input formats::          Specifying literal times.
  * Configuration::               Options you can select at compile time.
-@@ -92,16 +85,14 @@
+@@ -91,16 +84,14 @@
  This manual shows how to find files that meet criteria you specify,
  and how to perform various actions on the files that you find.  The
  principal programs that you use to perform these tasks are
@@ -49,7 +49,7 @@
  from Dan Bernstein.  The current maintainer of GNU findutils (and this
  manual) is James Youngman.  Many other people have contributed bug
  fixes, small improvements, and helpful suggestions.  Thanks!
-@@ -127,7 +118,7 @@
+@@ -126,7 +117,7 @@
  
  @itemize @bullet
  @item The version of the software you are running.  You can find this
@@ -58,7 +58,7 @@
  @item What you were trying to do
  @item The @emph{exact} command line you used
  @item The @emph{exact} output you got (if this is very long, try to
-@@ -226,9 +217,7 @@
+@@ -225,9 +216,7 @@
  @section Overview
  
  The principal programs used for making lists of files that match given
@@ -69,7 +69,7 @@
  
  @code{find} searches for files in a directory hierarchy and prints
  information about the files it found.  It is run like this:
-@@ -248,23 +237,6 @@
+@@ -247,23 +236,6 @@
  Notice that the wildcard must be enclosed in quotes in order to
  protect it from expansion by the shell.
  
@@ -93,7 +93,7 @@
  The name @code{xargs}, pronounced EX-args, means ``combine
  arguments.''  @code{xargs} builds and executes command lines by
  gathering together arguments it reads on the standard input.  Most
-@@ -372,7 +344,6 @@
+@@ -376,7 +348,6 @@
  @menu
  * Base Name Patterns::
  * Full Name Patterns::
@@ -101,7 +101,7 @@
  * Shell Pattern Matching::      Wildcards used by these programs.
  @end menu
  
-@@ -524,82 +495,10 @@
+@@ -528,82 +499,10 @@
  
  @end deffn
  
@@ -185,7 +185,7 @@
  names, to shell patterns.  A @dfn{shell pattern} is a string that may
  contain the following special characters, which are known as
  @dfn{wildcards} or @dfn{metacharacters}.
-@@ -2849,261 +2748,6 @@
+@@ -2886,245 +2785,6 @@
  @end example
  
  
@@ -248,18 +248,17 @@
 -database format changed starting with GNU @code{locate} version 4.0 to
 -allow machines with different byte orderings to share the databases.
 -
--GNU @code{locate} can read both the old and new database formats.
--However, old versions of @code{locate} (on other Unix systems, or GNU
--@code{locate} before version 4.0) produce incorrect results if run
--against a database in something other than the old format.
--
--Support for the old database format will eventually be discontinued,
--first in @code{updatedb} and later in @code{locate}.
+-GNU @code{locate} can read both the old pre-findutils-4.0 database
+-format and the @samp{LOCATE02} database format.  Support for the old
+-database format will shortly be removed from @code{locate}.  It has
+-already been removed from @code{updatedb}.
 -
 -If you run @samp{locate --statistics}, the resulting summary indicates
 -the type of each @code{locate} database.   You select which database
 -format @code{updatedb} will use with the @samp{--dbformat} option.
 -
+-The @samp{slocate} database format is very similar to @samp{LOCATE02}
+-and is also supported (in both @code{updatedb} and @code{locate}).
 -
 -@menu
 -* LOCATE02 Database Format::
@@ -360,21 +359,20 @@
 -@subsection Old Database Format
 -
 -The old database format is used by Unix @code{locate} and @code{find}
--programs and earlier releases of the GNU ones.  @code{updatedb}
--produces this format if given the @samp{--old-format} option.
+-programs and pre-4.0 releases of GNU findutils.  @code{locate}
+-understands this format, though @code{updatedb} will no longer produce
+-it.
 -
--@code{updatedb} runs programs called @code{bigram} and @code{code} to
--produce old-format databases.  The old format differs from the new one
--in the following ways.  Instead of each entry starting with an
--offset-differential count byte and ending with a null, byte values
--from 0 through 28 indicate offset-differential counts from -14 through
--14.  The byte value indicating that a long offset-differential count
--follows is 0x1e (30), not 0x80.  The long counts are stored in host
--byte order, which is not necessarily network byte order, and host
--integer word size, which is usually 4 bytes.  They also represent a
--count 14 less than their value.  The database lines have no
--termination byte; the start of the next line is indicated by its first
--byte having a value <= 30.
+-The old format differs from @samp{LOCATE02} in the following ways.
+-Instead of each entry starting with an offset-differential count byte
+-and ending with a null, byte values from 0 through 28 indicate
+-offset-differential counts from -14 through 14.  The byte value
+-indicating that a long offset-differential count follows is 0x1e (30),
+-not 0x80.  The long counts are stored in host byte order, which is not
+-necessarily network byte order, and host integer word size, which is
+-usually 4 bytes.  They also represent a count 14 less than their
+-value.  The database lines have no termination byte; the start of the
+-next line is indicated by its first byte having a value <= 30.
 -
 -In addition, instead of starting with a dummy entry, the old database
 -format starts with a 256 byte table containing the 128 most common
@@ -385,17 +383,13 @@
 -than the new format, but makes them not 8-bit clean.  Any byte in a
 -file name that is in the ranges used for the special codes is replaced
 -in the database by a question mark, which not coincidentally is the
--shell wildcard to match a single character.
+-shell wildcard to match a single character. The old format therefore
+-cannot faithfully store entries with non-ASCII characters.
 -
--The old format therefore cannot faithfully store entries with
--non-ASCII characters. It therefore should not be used in
--internationalised environments.  That is, most installations should
--not use it.
--
--Because the long counts are stored by the @code{code} program as
+-Because the long counts are stored as
 -native-order machine words, the database format is not easily used in
 -environments which differ in terms of byte order.  If locate databases
--are to be shared between machines, the LOCATE02 database format should
+-are to be shared between machines, the @samp{LOCATE02} database format should
 -be used.  This has other benefits as discussed above.  However, the
 -length of the filename currently being processed can normally be used
 -to place reasonable limits on the long counts and so this information
@@ -434,20 +428,10 @@
 -newlines will be incorrectly sorted.  This can result in both
 -incorrect matches and incorrect failures to match.
 -
--On the other hand, if you are using the old database format, file
--names with embedded newlines are not correctly handled.  There is no
--technical limitation which enforces this, it's just that the
--@code{bigram} program has not been updated to support lists of file
--names separated by nulls.
--
--So, if you are using the new database format (this is the default) and
--your system uses GNU @code{sort}, newlines will be correctly handled
--at all times.  Otherwise, newlines may not be correctly handled.
--
  @node File Permissions
  @chapter File Permissions
  
-@@ -3182,15 +2826,13 @@
+@@ -3203,15 +2863,13 @@
  discussed in this manual.
  
  @menu
@@ -466,7 +450,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -3404,255 +3046,7 @@
+@@ -3426,243 +3084,7 @@
  actions, and options that the expression can contain.  If the
  expression is missing, @samp{-print} is assumed.
  
@@ -693,24 +677,12 @@
 -@code{user} is @code{daemon}.  You can also use the environment variable
 -@code{NETUSER} to set this user.
 -
--@item --old-format
--Generate a @code{locate} database in the old format, for compatibility
--with versions of @code{locate} other than GNU @code{locate}.  Using
--this option means that @code{locate} will not be able to properly
--handle non-ASCII characters in file names (that is, file names
--containing characters which have the eighth bit set, such as many of
--the characters from the ISO-8859-1 character set).  @xref{Database
--Formats}, for a detailed description of the supported database
--formats.
--
 -@item --dbformat=@var{FORMAT}
 -Generate the locate database in format @code{FORMAT}.  Supported
--database formats include @code{LOCATE02} (which is the default),
--@code{old} and @code{slocate}.  The @code{old} format exists for
--compatibility with implementations of @code{locate} on other Unix
--systems.  The @code{slocate} format exists for compatibility with
--@code{slocate}.  @xref{Database Formats}, for a detailed description
--of each format.
+-database formats include @code{LOCATE02} (which is the default) and
+-@code{slocate}.  The @code{slocate} format exists for compatibility
+-with @code{slocate}. @xref{Database Formats}, for a detailed
+-description of each format.
 -
 -@item --help
 -Print a summary of the command line usage and exit.
@@ -723,7 +695,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -4953,7 +4347,6 @@
+@@ -4985,7 +4407,6 @@
  * Levels of Risk::      What is your level of exposure to security problems?
  * Security Considerations for find::  Security problems with find
  * Security Considerations for xargs:: Security problems with xargs
@@ -731,7 +703,7 @@
  * Security Summary:: That was all very complex, what does it boil down to?
  * Further Reading on Security::
  @end menu
-@@ -5360,59 +4753,6 @@
+@@ -5392,19 +4813,6 @@
  trailing whitespace is turned off by the @samp{-0} argument to
  @code{xargs}, which is another reason to use that option.
  
@@ -748,50 +720,10 @@
 -the race condition problems associated with @samp{find @dots{} -print0}.
 -There is no way to avoid these problems in the case of @code{locate}.
 -
--@subsection Long File Name Bugs with Old-Format Databases
--Old versions of @code{locate} have a bug in the way that old-format
--databases are read.  This bug affects the following versions of
--@code{locate}:
--
--@enumerate
--@item All releases prior to 4.2.31
--@item All 4.3.x releases prior to 4.3.7
--@end enumerate
--
--The affected versions of @code{locate} read file names into a
--fixed-length 1026 byte buffer, allocated on the heap.  This buffer is
--not extended if file names are too long to fit into the buffer.  No
--range checking on the length of the filename is performed.  This could
--in theory lead to a privilege escalation attack.  Findutils versions
--4.3.0 to 4.3.6 are also affected.
--
--On systems using the old database format and affected versions of
--@code{locate}, carefully-chosen long file names could in theory allow
--malicious users to run code of their choice as any user invoking
--locate.
--
--If remote users can choose the names of files stored on your system,
--and these files are indexed by @code{updatedb}, this may be a remote
--security vulnerability.  Findutils version 4.2.31 and findutils
--version 4.3.7 include fixes for this problem.  The @code{updatedb},
--@code{bigram} and @code{code} programs do no appear to be affected.
--
--If you are also using GNU coreutils, you can use the following command
--to determine the length of the longest file name on a given system:
--
--@example
--find / -print0 | tr -c '\0' 'x' | tr '\0' '\n' | wc -L
--@end example
--
--Although this problem is significant, the old database format is not
--the default, and use of the old database format is not common.  Most
--installations and most users will not be affected by this problem.
--
--
- 
  @node Security Summary
  @section Summary
-@@ -5485,8 +4825,6 @@
+ 
+@@ -5476,8 +4884,6 @@
  @menu
  * Error Messages From find::
  * Error Messages From xargs::
@@ -800,8 +732,8 @@
  @end menu
  
  @node Error Messages From find
-@@ -5631,38 +4969,6 @@
- why @code{xargs} is confused by your operating system).
+@@ -5627,38 +5033,6 @@
+ See the manual of the system call @code{dup2(2)}.
  @end table
  
 -@node Error Messages From locate

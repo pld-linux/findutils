@@ -1,21 +1,41 @@
---- findutils-4.7.0/po/pl.po.orig	2019-08-29 21:53:10.000000000 +0200
-+++ findutils-4.7.0/po/pl.po	2019-09-01 21:35:37.664174620 +0200
+--- findutils-4.8.0/po/pl.po.orig	2021-01-09 17:36:28.000000000 +0100
++++ findutils-4.8.0/po/pl.po	2021-02-28 21:00:58.568172816 +0100
+@@ -1,15 +1,15 @@
+ # Polish translation for GNU findutils.
+-# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014 Free Software Foundation, Inc.
++# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014, 2015, 2021 Free Software Foundation, Inc.
+ # This file is distributed under the same license as the findutils package.
+ # Paweł Krawczyk <kravietz@ceti.pl>, 1996.
+-# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2015.
++# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2021.
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: findutils 4.5.15\n"
++"Project-Id-Version: findutils 4.8.0\n"
+ "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
+ "POT-Creation-Date: 2021-01-09 17:36+0100\n"
+-"PO-Revision-Date: 2015-12-18 23:41+0100\n"
++"PO-Revision-Date: 2021-02-28 20:46+0100\n"
+ "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
+ "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+ "Language: pl\n"
 @@ -32,9 +32,9 @@
  msgstr "Nie można zamknąć standardowego wejścia"
  
- #: find/exec.c:271
+ #: find/exec.c:272
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to change directory%s%s"
 -msgstr "Nie udało się zmienić katalogu: %s"
 +msgstr "Nie udało się zmienić katalogu%s%s"
  
- #: find/exec.c:303 xargs/xargs.c:1275
+ #: find/exec.c:317 xargs/xargs.c:1322
  msgid "cannot fork"
 @@ -193,16 +193,16 @@
  "-depth."
  
- #: find/parser.c:609
+ #: find/parser.c:608
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -31,7 +51,7 @@
 +"pozycyjne (np. %s wpływa na testy podane przed nią jak i po niej). Proszę "
 +"podawać opcje globalne przed innymi argumentami."
  
- #: find/parser.c:912
+ #: find/parser.c:911
  #, c-format
 @@ -243,6 +243,8 @@
  "directory separator (%s), thus the expression will evaluate to false all the "
@@ -40,28 +60,28 @@
 +"uwaga: %s pasuje tylko do nazw podstawowych, ale podany wzorzec zawiera separator "
 +"katalogów (%s), więc wyrażenie będzie cały czas fałszywe. Czy nie miało być %s?"
  
- #: find/parser.c:1387
+ #: find/parser.c:1386
  #, c-format
 @@ -296,7 +298,7 @@
- #: find/parser.c:2057
+ #: find/parser.c:2056
  #, c-format
  msgid "failed to compile regular expression '%s': %s"
 -msgstr ""
 +msgstr "nie udało się skompilować wyrażenia regularnego '%s': %s"
  
- #: find/parser.c:2086
+ #: find/parser.c:2085
  msgid "invalid null argument to -size"
 @@ -344,60 +346,60 @@
  msgstr "błędne wyrażenie -context: SELinux nie jest włączony."
  
- #: find/parser.c:2648
+ #: find/parser.c:2639
 -#, fuzzy, c-format
 +#, c-format
  msgid "Arguments to %s should contain at least one letter"
 -msgstr "Argumenty dla -type powinny zawierać tylko jedną literę"
 +msgstr "Argumenty dla %s powinny zawierać przynajmniej jedną literę"
  
- #: find/parser.c:2713
+ #: find/parser.c:2704
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -72,7 +92,7 @@
 +"%s %c nie jest obsługiwane, ponieważ dowiązania symboliczne nie są "
  "obsługiwane na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2725
+ #: find/parser.c:2716
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -83,7 +103,7 @@
 +"%s %c nie jest obsługiwane, ponieważ FIFO nie są obsługiwane na "
  "platformie, dla której find został skompilowany."
  
- #: find/parser.c:2737
+ #: find/parser.c:2728
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -94,7 +114,7 @@
 +"%s %c nie jest obsługiwane, ponieważ gniazda nazwane nie są obsługiwane "
  "na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2753
+ #: find/parser.c:2744
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -105,26 +125,26 @@
 +"%s %c nie jest obsługiwane, ponieważ solarisowe \"drzwi\" nie są "
  "obsługiwane na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2761
+ #: find/parser.c:2752
 -#, fuzzy, c-format
 +#, c-format
  msgid "Unknown argument to %s: %c"
 -msgstr "Nieznany argument opcji -type: %c"
 +msgstr "Nieznany argument opcji %s: %c"
  
- #: find/parser.c:2769
+ #: find/parser.c:2760
  #, c-format
  msgid "Duplicate file type '%c' in the argument list to %s."
 -msgstr ""
 +msgstr "Powtórzony typ pliku '%c' w liście argumentów opcji %s."
  
- #: find/parser.c:2785
+ #: find/parser.c:2776
  #, c-format
  msgid "Must separate multiple arguments to %s using: ','"
 -msgstr ""
 +msgstr "Wielokrotne argumenty opcji %s muszą być rozdzielone znakiem ','"
  
- #: find/parser.c:2794
+ #: find/parser.c:2785
  #, c-format
 @@ -405,6 +407,7 @@
  "Last file type in list argument to %s is missing, i.e., list is ending on: "
@@ -132,7 +152,7 @@
  msgstr ""
 +"Brak ostatniego typu pliku na liście argumentów %s, tzn. lista kończy się znakiem ','"
  
- #: find/parser.c:2853
+ #: find/parser.c:2844
  #, c-format
 @@ -554,13 +557,13 @@
  msgstr "błędne wyrażenie; za dużo ')'"
@@ -178,7 +198,7 @@
 -msgstr "Prawidłowe argumenty to:"
 +msgstr "Prawidłowe argumenty dla -D:\n"
  
- #: find/util.c:163 locate/frcode.c:142 locate/locate.c:1363 xargs/xargs.c:1655
+ #: find/util.c:163 locate/frcode.c:142 locate/locate.c:1365 xargs/xargs.c:1702
  #, c-format
  msgid "Try '%s --help' for more information.\n"
 -msgstr ""
@@ -298,21 +318,21 @@
 -msgstr ""
 +msgstr "Plik wejściowy powinien kończyć się ogranicznikiem"
  
- #: locate/locate.c:110
+ #: locate/locate.c:112
  msgid "days"
 @@ -1102,7 +1108,7 @@
- #: locate/locate.c:1720
+ #: locate/locate.c:1722
  #, c-format
  msgid "pattern argument expected"
 -msgstr ""
 +msgstr "oczekiwano argumentu będącego wzorcem"
  
- #: locate/locate.c:1761
+ #: locate/locate.c:1763
  #, c-format
 @@ -1117,9 +1123,9 @@
  msgstr "wywołanie systemowe nie powiodło się"
  
- #: locate/locate.c:1845
+ #: locate/locate.c:1847
 -#, fuzzy, c-format
 +#, c-format
  msgid "warning: database %s is more than %u %s old (actual age is %.1f %s)"
@@ -321,19 +341,27 @@
  
  #: locate/word_io.c:77
  #, c-format
-@@ -1326,7 +1332,7 @@
+@@ -1189,6 +1195,7 @@
+ msgid ""
+ "warning: options %s and %s are mutually exclusive, ignoring previous %s value"
+ msgstr ""
++"uwaga: opcje %s i %s wykluczają się wzajemnie, ignorowanie poprzedniej wartości %s"
  
- #: xargs/xargs.c:1212
+ #: xargs/xargs.c:636
+ #, c-format
+@@ -1332,7 +1339,7 @@
+ 
+ #: xargs/xargs.c:1259
  msgid "failed to redirect standard input of the child process"
 -msgstr ""
 +msgstr "nie udało się przekierować standardowego wejścia procesu potomnego"
  
- #: xargs/xargs.c:1264
+ #: xargs/xargs.c:1311
  msgid "could not create pipe before fork"
-@@ -1342,12 +1348,12 @@
+@@ -1348,12 +1355,12 @@
  "proszę to zgłosić)"
  
- #: xargs/xargs.c:1388
+ #: xargs/xargs.c:1435
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -344,42 +372,59 @@
 +"read zwróciło nieoczekiwaną wartość %<PRIuMAX>; prawdopodobnie błąd, proszę to "
  "zgłosić"
  
- #: xargs/xargs.c:1481
-@@ -1375,19 +1381,19 @@
+ #: xargs/xargs.c:1528
+@@ -1381,19 +1388,19 @@
  msgstr "%s: zakończony sygnałem %d"
  
- #: xargs/xargs.c:1624
+ #: xargs/xargs.c:1671
 -#, fuzzy, c-format
 +#, c-format
  msgid "%s: invalid number \"%s\" for -%c option\n"
 -msgstr "%s: błędna liczba dla opcji -%c\n"
 +msgstr "%s: błędna liczba \"%s\" dla opcji -%c\n"
  
- #: xargs/xargs.c:1631
+ #: xargs/xargs.c:1678
 -#, fuzzy, c-format
 +#, c-format
  msgid "%s: value %s for -%c option should be >= %ld\n"
 -msgstr "%s: wartość dla opcji -%c powinna być >= %ld\n"
 +msgstr "%s: wartość %s dla opcji -%c powinna być >= %ld\n"
  
- #: xargs/xargs.c:1640
+ #: xargs/xargs.c:1687
 -#, fuzzy, c-format
 +#, c-format
  msgid "%s: value %s for -%c option should be <= %ld\n"
 -msgstr "%s: wartość dla opcji -%c powinna być <= %ld\n"
 +msgstr "%s: wartość %s dla opcji -%c powinna być <= %ld\n"
  
- #: xargs/xargs.c:1660
+ #: xargs/xargs.c:1707
  #, c-format
-@@ -1510,7 +1516,6 @@
+@@ -1478,14 +1485,14 @@
+ msgstr "  -I R                         to samo, co --replace=R\n"
+ 
+ #: xargs/xargs.c:1729
+-#, fuzzy
+ msgid ""
+ "  -i, --replace[=R]            replace R in INITIAL-ARGS with names read\n"
+ "                                 from standard input, split at newlines;\n"
+ "                                 if R is unspecified, assume {}\n"
+ msgstr ""
+ "  -i,--replace=[R]             podmiana R w ARGUMENTACH-POCZĄTKOWYCH przez\n"
+-"                                 nazwy czytane ze standardowego wejścia;\n"
++"                                 nazwy czytane ze standardowego wejścia,\n"
++"                                 dzielone po nowych wierszach;\n"
+ "                                 jeśli nie podano R, przyjmowane jest {}\n"
+ 
+ #: xargs/xargs.c:1732
+@@ -1517,7 +1524,6 @@
  "                               polecenia\n"
  
- #: xargs/xargs.c:1690
+ #: xargs/xargs.c:1737
 -#, fuzzy
  msgid ""
  "  -o, --open-tty               Reopen stdin as /dev/tty in the child "
  "process\n"
-@@ -1518,11 +1523,10 @@
+@@ -1525,11 +1531,10 @@
  "an\n"
  "                                 interactive application.\n"
  msgstr ""
@@ -393,19 +438,281 @@
 +"                                 uruchomieniem polecenia; przydatne przy\n"
 +"                                 uruchamianiu aplikacji interaktywnych.\n"
  
- #: xargs/xargs.c:1693
+ #: xargs/xargs.c:1740
  msgid ""
-@@ -1584,12 +1588,12 @@
+@@ -1591,275 +1596,8 @@
  msgstr "      --help                   wyświetlenie tego opisu i zakończenie\n"
  
- #: xargs/xargs.c:1705
+ #: xargs/xargs.c:1752
 -#, fuzzy
  msgid ""
  "      --version                output version information and exit\n"
  "\n"
  msgstr ""
  "      --version                wypisanie informacji o wersji i zakończenie\n"
-+"\n"
- 
- #~ msgid ""
- #~ "warning: Unix filenames usually don't contain slashes (though pathnames "
+-
+-#, c-format
+-#~ msgid ""
+-#~ "warning: Unix filenames usually don't contain slashes (though pathnames "
+-#~ "do).  That means that '%s %s' will probably evaluate to false all the "
+-#~ "time on this system.  You might find the '-wholename' test more useful, "
+-#~ "or perhaps '-samefile'.  Alternatively, if you are using GNU grep, you "
+-#~ "could use 'find ... -print0 | grep -FzZ %s'."
+-#~ msgstr ""
+-#~ "uwaga: uniksowe nazwy plików zwykle nie zawierają ukośników (ale ścieżki "
+-#~ "tak). Oznacza to, że '%s %s' będzie prawdopodobnie zawsze fałszywe na tym "
+-#~ "systemie. Przydatny może być test '-wholename' albo '-samefile'. "
+-#~ "Ewentualnie, mając GNU grepa, można użyć 'find ... -print0 | grep -FzZ "
+-#~ "%s'."
+-
+-#, c-format
+-#~ msgid "] [path...] [expression]\n"
+-#~ msgstr "] [ścieżka...] [wyrażenie]\n"
+-
+-#, c-format
+-#~ msgid "invalid argument %s for %s"
+-#~ msgstr "błędny argument %s opcji %s"
+-
+-#, c-format
+-#~ msgid "ambiguous argument %s for %s"
+-#~ msgstr "niejednoznaczny argument %s opcji %s"
+-
+-#~ msgid "error closing file"
+-#~ msgstr "błąd podczas zamykania pliku"
+-
+-#~ msgid "Unknown system error"
+-#~ msgstr "Nieznany błąd systemowy"
+-
+-#, c-format
+-#~ msgid "%s: option '%s' is ambiguous; possibilities:"
+-#~ msgstr "%s: opcja '%s' jest niejednoznaczna; możliwości:"
+-
+-#, c-format
+-#~ msgid "%s: option '--%s' doesn't allow an argument\n"
+-#~ msgstr "%s: opcja '--%s' nie może mieć argumentów\n"
+-
+-#, c-format
+-#~ msgid "%s: option '%c%s' doesn't allow an argument\n"
+-#~ msgstr "%s: opcja '%c%s' nie może mieć argumentów\n"
+-
+-#, c-format
+-#~ msgid "%s: option '--%s' requires an argument\n"
+-#~ msgstr "%s: opcja '--%s' musi mieć argument\n"
+-
+-#, c-format
+-#~ msgid "%s: unrecognized option '--%s'\n"
+-#~ msgstr "%s: nieznana opcja '--%s'\n"
+-
+-#, c-format
+-#~ msgid "%s: unrecognized option '%c%s'\n"
+-#~ msgstr "%s: nieznana opcja '%c%s'\n"
+-
+-#, c-format
+-#~ msgid "%s: invalid option -- '%c'\n"
+-#~ msgstr "%s: błędna opcja -- '%c'\n"
+-
+-#, c-format
+-#~ msgid "%s: option requires an argument -- '%c'\n"
+-#~ msgstr "%s: opcja musi mieć argument -- '%c'\n"
+-
+-#, c-format
+-#~ msgid "%s: option '-W %s' is ambiguous\n"
+-#~ msgstr "%s: opcja '-W %s' jest niejednoznaczna\n"
+-
+-#, c-format
+-#~ msgid "%s: option '-W %s' doesn't allow an argument\n"
+-#~ msgstr "%s: opcja '-W %s' nie może mieć argumentów\n"
+-
+-#, c-format
+-#~ msgid "%s: option '-W %s' requires an argument\n"
+-#~ msgstr "%s: opcja '-W %s' musi mieć argument\n"
+-
+-#, c-format
+-#~ msgid "unable to record current working directory"
+-#~ msgstr "nie udało się zapisać bieżącego katalogu roboczego"
+-
+-#, c-format
+-#~ msgid "failed to return to initial working directory"
+-#~ msgstr "nie udało się wrócić do początkowego katalogu roboczego"
+-
+-#~ msgid "`"
+-#~ msgstr "`"
+-
+-#~ msgid "'"
+-#~ msgstr "'"
+-
+-#~ msgid "^[yY]"
+-#~ msgstr "^[yYtT]"
+-
+-#~ msgid "^[nN]"
+-#~ msgstr "^[nN]"
+-
+-#, c-format
+-#~ msgid "Packaged by %s (%s)\n"
+-#~ msgstr "Pakietujący: %s (%s)\n"
+-
+-#, c-format
+-#~ msgid "Packaged by %s\n"
+-#~ msgstr "Pakietujący: %s\n"
+-
+-#~ msgid "(C)"
+-#~ msgstr "(C)"
+-
+-#~ msgid ""
+-#~ "\n"
+-#~ "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl."
+-#~ "html>.\n"
+-#~ "This is free software: you are free to change and redistribute it.\n"
+-#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+-#~ "\n"
+-#~ msgstr ""
+-#~ "\n"
+-#~ "Licencja GPLv3+: GNU GPL wersja 3 lub późniejsza:\n"
+-#~ "<http://gnu.org/licenses/gpl.html>\n"
+-#~ "To jest oprogramowanie wolnodostępne: można je modyfikować i "
+-#~ "rozpowszechniać.\n"
+-#~ "Nie ma ŻADNEJ GWARANCJI w zakresie dopuszczalnym przez prawo.\n"
+-
+-#, c-format
+-#~ msgid "Written by %s.\n"
+-#~ msgstr "Autor: %s.\n"
+-
+-#, c-format
+-#~ msgid "Written by %s and %s.\n"
+-#~ msgstr "Autorzy: %s i %s.\n"
+-
+-#, c-format
+-#~ msgid "Written by %s, %s, and %s.\n"
+-#~ msgstr "Autorzy: %s, %s i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s\n"
+-#~ "i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, %s, and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s, %s i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, %s, %s, and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s, %s, %s i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s,\n"
+-#~ "and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s\n"
+-#~ "i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s,\n"
+-#~ "%s, and %s.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s,\n"
+-#~ "%s i %s.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Written by %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s,\n"
+-#~ "%s, %s, and others.\n"
+-#~ msgstr ""
+-#~ "Autorzy: %s, %s, %s,\n"
+-#~ "%s, %s, %s, %s,\n"
+-#~ "%s, %s i inni.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "\n"
+-#~ "Report bugs to: %s\n"
+-#~ msgstr ""
+-#~ "\n"
+-#~ "Prosimy zgłaszać błędy na adres <%s>.\n"
+-#~ "Błędy w tłumaczeniu prosimy zgłaszać na adres <translation-team-pl@lists."
+-#~ "sourceforge.net>.\n"
+-
+-#, c-format
+-#~ msgid "Report %s bugs to: %s\n"
+-#~ msgstr "Błędy pakietującego (%s) prosimy zgłaszać na adres <%s>.\n"
+-
+-#, c-format
+-#~ msgid "%s home page: <%s>\n"
+-#~ msgstr "Strona domowa pakietu %s: <%s>\n"
+-
+-#, c-format
+-#~ msgid "%s home page: <http://www.gnu.org/software/%s/>\n"
+-#~ msgstr "Strona domowa pakietu %s: <http://www.gnu.org/software/%s/>.\n"
+-
+-#~ msgid "General help using GNU software: <http://www.gnu.org/gethelp/>\n"
+-#~ msgstr ""
+-#~ "Ogólna pomoc przy używaniu oprogramowania GNU: <http://www.gnu.org/"
+-#~ "gethelp/>.\n"
+-
+-#~ msgid "memory exhausted"
+-#~ msgstr "pamięć wyczerpana"
+-
+-#, c-format
+-#~ msgid "invalid %s%s argument '%s'"
+-#~ msgstr "błędny argument opcji %s%s '%s'"
+-
+-#, c-format
+-#~ msgid "invalid suffix in %s%s argument '%s'"
+-#~ msgstr "błędny przyrostek argumentu opcji %s%s '%s'"
+-
+-#, c-format
+-#~ msgid "%s%s argument '%s' too large"
+-#~ msgstr "argument opcji %s%s '%s' zbyt duży"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Usage: %s [--version | --help]\n"
+-#~ "or     %s most_common_bigrams < file-list > locate-database\n"
+-#~ msgstr ""
+-#~ "Składnia: %s [--version | --help]\n"
+-#~ "lub       %s najpopularniejsze_bigramy < lista-plików > baza-danych-"
+-#~ "locate\n"
+-
+-#~ msgid ""
+-#~ "\n"
+-#~ "Report bugs to <bug-findutils@gnu.org>.\n"
+-#~ msgstr ""
+-#~ "\n"
+-#~ "Błędy proszę zgłaszać na adres <bug-findutils@gnu.org>.\n"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "%s is an slocate database.  Support for these is new, expect problems for "
+-#~ "now."
+-#~ msgstr ""
+-#~ "%s to baza danych slocate. Jej obsługa jest nowa, można się jeszcze "
+-#~ "spodziewać problemów."
+-
+-#, c-format
+-#~ msgid "unable to allocate memory"
+-#~ msgstr "nie udało się przydzielić pamięci"

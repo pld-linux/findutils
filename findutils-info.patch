@@ -1,5 +1,5 @@
---- findutils-4.7.0/doc/find.texi.orig	2019-06-23 11:00:40.000000000 +0200
-+++ findutils-4.7.0/doc/find.texi	2019-09-01 20:37:54.009605511 +0200
+--- findutils-4.8.0/doc/find.texi.orig	2021-01-07 01:33:06.000000000 +0100
++++ findutils-4.8.0/doc/find.texi	2021-02-28 12:33:57.386167806 +0100
 @@ -13,17 +13,11 @@
  @finalout
  @end iftex
@@ -22,7 +22,7 @@
  @end direntry
  
  @copying
-@@ -72,7 +66,6 @@
+@@ -68,7 +62,6 @@
  * Introduction::                Summary of the tasks this manual describes.
  * Finding Files::               Finding files that match certain criteria.
  * Actions::                     Doing things to files you have found.
@@ -30,7 +30,7 @@
  * File Permissions::            How to control access to files.
  * Date input formats::          Specifying literal times.
  * Configuration::               Options you can select at compile time.
-@@ -91,16 +84,14 @@
+@@ -87,16 +80,14 @@
  This manual shows how to find files that meet criteria you specify,
  and how to perform various actions on the files that you find.  The
  principal programs that you use to perform these tasks are
@@ -49,7 +49,7 @@
  from Dan Bernstein.  The current maintainer of GNU findutils (and this
  manual) is James Youngman.  Many other people have contributed bug
  fixes, small improvements, and helpful suggestions.  Thanks!
-@@ -126,7 +117,7 @@
+@@ -122,7 +113,7 @@
  
  @itemize @bullet
  @item The version of the software you are running.  You can find this
@@ -58,7 +58,7 @@
  @item What you were trying to do
  @item The @emph{exact} command line you used
  @item The @emph{exact} output you got (if this is very long, try to
-@@ -225,9 +216,7 @@
+@@ -220,9 +211,7 @@
  @section Overview
  
  The principal programs used for making lists of files that match given
@@ -69,7 +69,7 @@
  
  @code{find} searches for files in a directory hierarchy and prints
  information about the files it found.  It is run like this:
-@@ -247,23 +236,6 @@
+@@ -242,23 +231,6 @@
  Notice that the wildcard must be enclosed in quotes in order to
  protect it from expansion by the shell.
  
@@ -93,7 +93,7 @@
  The name @code{xargs}, pronounced EX-args, means ``combine
  arguments.''  @code{xargs} builds and executes command lines by
  gathering together arguments it reads on the standard input.  Most
-@@ -376,7 +348,6 @@
+@@ -373,7 +345,6 @@
  @menu
  * Base Name Patterns::
  * Full Name Patterns::
@@ -101,7 +101,7 @@
  * Shell Pattern Matching::      Wildcards used by these programs.
  @end menu
  
-@@ -528,82 +499,10 @@
+@@ -525,82 +496,10 @@
  
  @end deffn
  
@@ -185,7 +185,7 @@
  names, to shell patterns.  A @dfn{shell pattern} is a string that may
  contain the following special characters, which are known as
  @dfn{wildcards} or @dfn{metacharacters}.
-@@ -2886,245 +2785,6 @@
+@@ -2950,245 +2849,6 @@
  @end example
  
  
@@ -419,8 +419,8 @@
 -used to generate the database though relies on the ability to sort the
 -list of files before they are presented to @code{frcode}.
 -
--If the system's sort command allows its input list of files to be
--separated with null characters via the @samp{-z} option, this option
+-If the system's sort command allows separating its input list of
+-files with null characters via the @samp{-z} option, this option
 -is used and therefore @code{updatedb} and @code{locate} will both
 -correctly handle file names containing newlines.  If the @code{sort}
 -command lacks support for this, the list of files is delimited with
@@ -431,7 +431,7 @@
  @node File Permissions
  @chapter File Permissions
  
-@@ -3203,15 +2863,13 @@
+@@ -3251,15 +2911,13 @@
  discussed in this manual.
  
  @menu
@@ -450,7 +450,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -3426,243 +3084,7 @@
+@@ -3474,243 +3132,7 @@
  actions, and options that the expression can contain.  If the
  expression is missing, @samp{-print} is assumed.
  
@@ -695,7 +695,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -4985,7 +4407,6 @@
+@@ -5061,7 +4483,6 @@
  * Levels of Risk::      What is your level of exposure to security problems?
  * Security Considerations for find::  Security problems with find
  * Security Considerations for xargs:: Security problems with xargs
@@ -703,7 +703,7 @@
  * Security Summary:: That was all very complex, what does it boil down to?
  * Further Reading on Security::
  @end menu
-@@ -5392,19 +4813,6 @@
+@@ -5470,19 +4891,6 @@
  trailing whitespace is turned off by the @samp{-0} argument to
  @code{xargs}, which is another reason to use that option.
  
@@ -723,7 +723,7 @@
  @node Security Summary
  @section Summary
  
-@@ -5476,8 +4884,6 @@
+@@ -5554,8 +4962,6 @@
  @menu
  * Error Messages From find::
  * Error Messages From xargs::
@@ -732,7 +732,7 @@
  @end menu
  
  @node Error Messages From find
-@@ -5627,38 +5033,6 @@
+@@ -5705,38 +5111,6 @@
  See the manual of the system call @code{dup2(2)}.
  @end table
  

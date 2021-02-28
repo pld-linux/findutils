@@ -17,7 +17,7 @@ Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
-Source0:	http://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.xz
+Source0:	https://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.xz
 # Source0-md5:	eeefe2e6380931a77dfa6d9350b43186
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2

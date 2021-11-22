@@ -12,7 +12,7 @@ Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
 Version:	4.8.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
@@ -98,6 +98,10 @@ arayabilirsiniz.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+%ifarch %{ix86}
+# 64 bit time_t on ix86 requires glibc 2.32+ built with/for kernel 5.6+
+TIME_T_32_BIT_OK=yes \
+%endif
 %configure \
 	--disable-silent-rules \
 	%{__with_without selinux}

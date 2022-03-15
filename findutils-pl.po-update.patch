@@ -1,5 +1,5 @@
---- findutils-4.8.0/po/pl.po.orig	2021-01-09 17:36:28.000000000 +0100
-+++ findutils-4.8.0/po/pl.po	2021-02-28 21:00:58.568172816 +0100
+--- findutils-4.9.0/po/pl.po.orig	2022-02-02 01:18:20.000000000 +0100
++++ findutils-4.9.0/po/pl.po	2022-03-15 13:52:39.816190379 +0100
 @@ -1,15 +1,15 @@
  # Polish translation for GNU findutils.
 -# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014 Free Software Foundation, Inc.
@@ -14,7 +14,7 @@
 -"Project-Id-Version: findutils 4.5.15\n"
 +"Project-Id-Version: findutils 4.8.0\n"
  "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
- "POT-Creation-Date: 2021-01-09 17:36+0100\n"
+ "POT-Creation-Date: 2022-02-02 01:18+0100\n"
 -"PO-Revision-Date: 2015-12-18 23:41+0100\n"
 +"PO-Revision-Date: 2021-02-28 20:46+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
@@ -32,10 +32,10 @@
  
  #: find/exec.c:317 xargs/xargs.c:1322
  msgid "cannot fork"
-@@ -193,16 +193,16 @@
+@@ -155,16 +155,16 @@
  "-depth."
  
- #: find/parser.c:608
+ #: find/parser.c:609
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -51,37 +51,37 @@
 +"pozycyjne (np. %s wpływa na testy podane przed nią jak i po niej). Proszę "
 +"podawać opcje globalne przed innymi argumentami."
  
- #: find/parser.c:911
+ #: find/parser.c:912
  #, c-format
-@@ -243,6 +243,8 @@
+@@ -205,6 +205,8 @@
  "directory separator (%s), thus the expression will evaluate to false all the "
  "time.  Did you mean %s?"
  msgstr ""
 +"uwaga: %s pasuje tylko do nazw podstawowych, ale podany wzorzec zawiera separator "
 +"katalogów (%s), więc wyrażenie będzie cały czas fałszywe. Czy nie miało być %s?"
  
- #: find/parser.c:1386
+ #: find/parser.c:1399
  #, c-format
-@@ -296,7 +298,7 @@
- #: find/parser.c:2056
+@@ -258,7 +260,7 @@
+ #: find/parser.c:2069
  #, c-format
  msgid "failed to compile regular expression '%s': %s"
 -msgstr ""
 +msgstr "nie udało się skompilować wyrażenia regularnego '%s': %s"
  
- #: find/parser.c:2085
+ #: find/parser.c:2098
  msgid "invalid null argument to -size"
-@@ -344,60 +346,60 @@
+@@ -306,60 +308,60 @@
  msgstr "błędne wyrażenie -context: SELinux nie jest włączony."
  
- #: find/parser.c:2639
+ #: find/parser.c:2652
 -#, fuzzy, c-format
 +#, c-format
  msgid "Arguments to %s should contain at least one letter"
 -msgstr "Argumenty dla -type powinny zawierać tylko jedną literę"
 +msgstr "Argumenty dla %s powinny zawierać przynajmniej jedną literę"
  
- #: find/parser.c:2704
+ #: find/parser.c:2717
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -92,7 +92,7 @@
 +"%s %c nie jest obsługiwane, ponieważ dowiązania symboliczne nie są "
  "obsługiwane na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2716
+ #: find/parser.c:2729
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -103,7 +103,7 @@
 +"%s %c nie jest obsługiwane, ponieważ FIFO nie są obsługiwane na "
  "platformie, dla której find został skompilowany."
  
- #: find/parser.c:2728
+ #: find/parser.c:2741
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -114,7 +114,7 @@
 +"%s %c nie jest obsługiwane, ponieważ gniazda nazwane nie są obsługiwane "
  "na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2744
+ #: find/parser.c:2757
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -125,39 +125,39 @@
 +"%s %c nie jest obsługiwane, ponieważ solarisowe \"drzwi\" nie są "
  "obsługiwane na platformie, dla której find został skompilowany."
  
- #: find/parser.c:2752
+ #: find/parser.c:2765
 -#, fuzzy, c-format
 +#, c-format
  msgid "Unknown argument to %s: %c"
 -msgstr "Nieznany argument opcji -type: %c"
 +msgstr "Nieznany argument opcji %s: %c"
  
- #: find/parser.c:2760
+ #: find/parser.c:2773
  #, c-format
  msgid "Duplicate file type '%c' in the argument list to %s."
 -msgstr ""
 +msgstr "Powtórzony typ pliku '%c' w liście argumentów opcji %s."
  
- #: find/parser.c:2776
+ #: find/parser.c:2789
  #, c-format
  msgid "Must separate multiple arguments to %s using: ','"
 -msgstr ""
 +msgstr "Wielokrotne argumenty opcji %s muszą być rozdzielone znakiem ','"
  
- #: find/parser.c:2785
+ #: find/parser.c:2798
  #, c-format
-@@ -405,6 +407,7 @@
+@@ -367,6 +369,7 @@
  "Last file type in list argument to %s is missing, i.e., list is ending on: "
  "','"
  msgstr ""
 +"Brak ostatniego typu pliku na liście argumentów %s, tzn. lista kończy się znakiem ','"
  
- #: find/parser.c:2844
+ #: find/parser.c:2857
  #, c-format
-@@ -554,13 +557,13 @@
+@@ -522,13 +525,13 @@
  msgstr "błędne wyrażenie; za dużo ')'"
  
- #: find/tree.c:175
+ #: find/tree.c:183
 -#, fuzzy, c-format
 +#, c-format
  msgid ""
@@ -169,27 +169,27 @@
 +"błędne wyrażenie; oczekiwano ')', ale nie znaleziono. Być może "
 +"potrzebne jest dodatkowe słowo po '%s'"
  
- #: find/tree.c:184
+ #: find/tree.c:198
  msgid "invalid expression; empty parentheses are not allowed."
-@@ -591,14 +594,14 @@
+@@ -559,14 +562,14 @@
  "zgłosić to jako błąd"
  
- #: find/tree.c:1272
+ #: find/tree.c:1286
 -#, fuzzy, c-format
 +#, c-format
  msgid "paths must precede expression: `%s'"
 -msgstr "ścieżki muszą poprzedzać wyrażenie: %s"
 +msgstr "ścieżki muszą poprzedzać wyrażenie: `%s'"
  
- #: find/tree.c:1274
+ #: find/tree.c:1288
  #, c-format
  msgid "possible unquoted pattern after predicate `%s'?"
 -msgstr ""
 +msgstr "czyżby niecytowany wzorzec po słowie `%s'?"
  
- #: find/tree.c:1284
+ #: find/tree.c:1298
  #, c-format
-@@ -638,20 +641,20 @@
+@@ -606,20 +609,20 @@
  msgstr "ojej -- błędne domyślne wstawienie and!"
  
  #: find/util.c:139
@@ -214,32 +214,24 @@
 +"Składnia: %s [-H] [-L] [-P] [-Opoziom] [-D opcje_diagn] [ścieżka...] [wyrażenie]\n"
  
  #: find/util.c:173
- msgid ""
-@@ -704,7 +707,6 @@
+ #, fuzzy
+@@ -689,7 +692,6 @@
  "      -links N -lname WZORZEC -mmin N -mtime N -name WZORZEC -newer PLIK"
- 
- #: find/util.c:190
--#, fuzzy
- msgid ""
- "\n"
- "      -nouser -nogroup -path PATTERN -perm [-/]MODE -regex PATTERN\n"
-@@ -712,6 +714,7 @@
- "      -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
- "      -used N -user NAME -xtype [bcdpfls]"
- msgstr ""
-+"\n"
- "      -nouser -nogroup -path WZORZEC -perm [-/]TRYB -regex WZORZEC\n"
- "      -readable -writable -executable\n"
- "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
-@@ -722,7 +725,6 @@
- msgstr "      -context KONTEKST\n"
  
  #: find/util.c:197
 -#, fuzzy
  msgid ""
  "\n"
- "actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print \n"
-@@ -743,16 +745,19 @@
+ "Actions:\n"
+@@ -715,7 +717,6 @@
+ msgstr "      --help                   wyświetlenie tego opisu i zakończenie\n"
+ 
+ #: find/util.c:207 xargs/xargs.c:1752
+-#, fuzzy
+ msgid ""
+ "      --version                output version information and exit\n"
+ "\n"
+@@ -728,16 +729,19 @@
  "Use '-D help' for a description of the options, or see find(1)\n"
  "\n"
  msgstr ""
@@ -247,35 +239,35 @@
 +"Opis opcji można uzyskać przy użyciu '-D help' lub w podręczniku find(1)\n"
 +"\n"
  
- #: find/util.c:491
+ #: find/util.c:475
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to save initial working directory%s%s"
 -msgstr "nie udało się zachować początkowego katalogu roboczego: %s"
 +msgstr "Nie udało się zachować początkowego katalogu roboczego%s%s"
  
- #: find/util.c:510
+ #: find/util.c:494
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to restore initial working directory%s%s"
 -msgstr "nie udało się przywrócić początkowego katalogu roboczego: %s"
 +msgstr "Nie udało się przywrócić początkowego katalogu roboczego%s%s"
  
- #: find/util.c:848
+ #: find/util.c:832
  #, c-format
-@@ -787,9 +792,9 @@
+@@ -772,9 +776,9 @@
  "można użyć GNU locate."
  
- #: find/util.c:957
+ #: find/util.c:941
 -#, fuzzy, c-format
 +#, c-format
  msgid "Missing argument after the -D option."
 -msgstr "Pusty argument dla opcji -D."
 +msgstr "Brak argumentu dla opcji -D."
  
- #: find/util.c:1060
+ #: find/util.c:1044
  msgid ""
-@@ -800,7 +805,7 @@
+@@ -785,7 +789,7 @@
  "na rozmiar bloku, to zmienna środowiskowa POSIXLY_CORRECT"
  
  #: lib/bugreports.c:28
@@ -284,7 +276,7 @@
  msgid ""
  "Please see also the documentation at %s.\n"
  "You can report (and track progress on fixing) bugs in the \"%s\"\n"
-@@ -808,10 +813,11 @@
+@@ -793,10 +797,11 @@
  "%s or, if\n"
  "you have no web access, by sending email to <%s>.\n"
  msgstr ""
@@ -299,7 +291,7 @@
  
  #: lib/buildcmd.c:144
  msgid "command too long"
-@@ -908,9 +914,9 @@
+@@ -893,9 +898,9 @@
  msgstr "Poziom bezpieczeństwa slocate %ld nie jest obsługiwany."
  
  #: locate/frcode.c:265
@@ -311,7 +303,7 @@
  
  #: locate/frcode.c:282
  msgid "Failed to write to standard output"
-@@ -919,7 +925,7 @@
+@@ -904,7 +909,7 @@
  #: locate/frcode.c:291
  #, c-format
  msgid "The input file should end with the delimiter"
@@ -320,7 +312,7 @@
  
  #: locate/locate.c:112
  msgid "days"
-@@ -1102,7 +1108,7 @@
+@@ -1087,7 +1092,7 @@
  #: locate/locate.c:1722
  #, c-format
  msgid "pattern argument expected"
@@ -329,7 +321,7 @@
  
  #: locate/locate.c:1763
  #, c-format
-@@ -1117,9 +1123,9 @@
+@@ -1102,9 +1107,9 @@
  msgstr "wywołanie systemowe nie powiodło się"
  
  #: locate/locate.c:1847
@@ -341,7 +333,7 @@
  
  #: locate/word_io.c:77
  #, c-format
-@@ -1189,6 +1195,7 @@
+@@ -1174,6 +1179,7 @@
  msgid ""
  "warning: options %s and %s are mutually exclusive, ignoring previous %s value"
  msgstr ""
@@ -349,7 +341,7 @@
  
  #: xargs/xargs.c:636
  #, c-format
-@@ -1332,7 +1339,7 @@
+@@ -1317,7 +1323,7 @@
  
  #: xargs/xargs.c:1259
  msgid "failed to redirect standard input of the child process"
@@ -358,7 +350,7 @@
  
  #: xargs/xargs.c:1311
  msgid "could not create pipe before fork"
-@@ -1348,12 +1355,12 @@
+@@ -1333,12 +1339,12 @@
  "proszę to zgłosić)"
  
  #: xargs/xargs.c:1435
@@ -373,7 +365,7 @@
  "zgłosić"
  
  #: xargs/xargs.c:1528
-@@ -1381,19 +1388,19 @@
+@@ -1366,19 +1372,19 @@
  msgstr "%s: zakończony sygnałem %d"
  
  #: xargs/xargs.c:1671
@@ -399,7 +391,7 @@
  
  #: xargs/xargs.c:1707
  #, c-format
-@@ -1478,14 +1485,14 @@
+@@ -1463,14 +1469,14 @@
  msgstr "  -I R                         to samo, co --replace=R\n"
  
  #: xargs/xargs.c:1729
@@ -416,7 +408,7 @@
  "                                 jeśli nie podano R, przyjmowane jest {}\n"
  
  #: xargs/xargs.c:1732
-@@ -1517,7 +1524,6 @@
+@@ -1502,7 +1508,6 @@
  "                               polecenia\n"
  
  #: xargs/xargs.c:1737
@@ -424,7 +416,7 @@
  msgid ""
  "  -o, --open-tty               Reopen stdin as /dev/tty in the child "
  "process\n"
-@@ -1525,11 +1531,10 @@
+@@ -1510,11 +1515,10 @@
  "an\n"
  "                                 interactive application.\n"
  msgstr ""
@@ -440,16 +432,99 @@
  
  #: xargs/xargs.c:1740
  msgid ""
-@@ -1591,275 +1596,8 @@
- msgstr "      --help                   wyświetlenie tego opisu i zakończenie\n"
- 
- #: xargs/xargs.c:1752
--#, fuzzy
- msgid ""
- "      --version                output version information and exit\n"
- "\n"
+@@ -1570,358 +1574,3 @@
  msgstr ""
- "      --version                wypisanie informacji o wersji i zakończenie\n"
+ "  -x, --exit                   zakończenie w wypadku przekroczenia rozmiaru "
+ "(-s)\n"
+-
+-#, c-format
+-#~ msgid "cannot stat current directory"
+-#~ msgstr "nie można wykonać stat na bieżącym katalogu"
+-
+-#, c-format
+-#~ msgid "Cannot read list of mounted devices."
+-#~ msgstr "Nie można odczytać listy podmontowanych urządzeń."
+-
+-#, c-format
+-#~ msgid "WARNING: file system %s has recently been unmounted."
+-#~ msgstr "UWAGA: system plików %s został niedawno odmontowany."
+-
+-#, c-format
+-#~ msgid "WARNING: file system %s has recently been mounted."
+-#~ msgstr "UWAGA: system plików %s został niedawno zamontowany."
+-
+-#, c-format
+-#~ msgid ""
+-#~ "%s%s changed during execution of %s (old device number %ld, new device "
+-#~ "number %ld, file system type is %s) [ref %ld]"
+-#~ msgstr ""
+-#~ "%s%s zmienił się podczas wykonywania %s (stary numer urządzenia %ld, nowy "
+-#~ "numer urządzenia %ld, typ systemu plików to %s) [ref %ld]"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "%s%s changed during execution of %s (old inode number %<PRIuMAX>, new "
+-#~ "inode number %<PRIuMAX>, file system type is %s) [ref %ld]"
+-#~ msgstr ""
+-#~ "%s%s zmienił się podczas wykonywania %s (stary numer i-węzła %<PRIuMAX>, "
+-#~ "nowy numer i-węzła %<PRIuMAX>, typ systemu plików %s) [ref %ld]"
+-
+-#, c-format
+-#~ msgid "failed to return to parent directory"
+-#~ msgstr "nie udało się wrócić do katalogu nadrzędnego"
+-
+-#, c-format
+-#~ msgid "Failed to safely change directory into %s"
+-#~ msgstr "Nie udało się bezpiecznie zmienić katalogu na %s"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "Filesystem loop detected; %s has the same device number and inode as a "
+-#~ "directory which is %d level higher in the file system hierarchy"
+-#~ msgid_plural ""
+-#~ "Filesystem loop detected; %s has the same device number and inode as a "
+-#~ "directory which is %d levels higher in the file system hierarchy"
+-#~ msgstr[0] ""
+-#~ "Wykryto pętlę w systemie plików; %s ma ten sam numer urządzenia i i-węzeł "
+-#~ "co katalog %d poziom wyżej w hierarchii systemu plików."
+-#~ msgstr[1] ""
+-#~ "Wykryto pętlę w systemie plików; %s ma ten sam numer urządzenia i i-węzeł "
+-#~ "co katalog %d poziomy wyżej w hierarchii systemu plików."
+-#~ msgstr[2] ""
+-#~ "Wykryto pętlę w systemie plików; %s ma ten sam numer urządzenia i i-węzeł "
+-#~ "co katalog %d poziomów wyżej w hierarchii systemu plików."
+-
+-#, c-format
+-#~ msgid "warning: not following the symbolic link %s"
+-#~ msgstr "uwaga: nie podążanie za dowiązaniem symbolicznym %s"
+-
+-#, c-format
+-#~ msgid ""
+-#~ "WARNING: Hard link count is wrong for %s (saw only st_nlink=%<PRIuMAX> "
+-#~ "but we already saw %<PRIuMAX> subdirectories): this may be a bug in your "
+-#~ "file system driver.  Automatically turning on find's -noleaf option.  "
+-#~ "Earlier results may have failed to include directories that should have "
+-#~ "been searched."
+-#~ msgstr ""
+-#~ "UWAGA: zła liczba twardych dowiązań dla %s (widziano tylko st_nlink="
+-#~ "%<PRIuMAX>, ale już znaleziono %<PRIuMAX> podkatalogów): to może być błąd "
+-#~ "w sterowniku systemu plików. Automatyczne włączenie opcji -noleaf finda. "
+-#~ "Wcześniejsze wyniki mogły nie zawierać katalogów, które powinny być "
+-#~ "przeszukane."
+-
+-#~ msgid ""
+-#~ "      -nouser -nogroup -path PATTERN -perm [-/]MODE -regex PATTERN\n"
+-#~ "      -readable -writable -executable\n"
+-#~ "      -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+-#~ "      -used N -user NAME -xtype [bcdpfls]"
+-#~ msgstr ""
+-#~ "      -nouser -nogroup -path WZORZEC -perm [-/]TRYB -regex WZORZEC\n"
+-#~ "      -readable -writable -executable\n"
+-#~ "      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+-#~ "      -used N -user NAZWA -xtype [bcdpfls]"
+-
+-#~ msgid "      -context CONTEXT\n"
+-#~ msgstr "      -context KONTEKST\n"
 -
 -#, c-format
 -#~ msgid ""

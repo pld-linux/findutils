@@ -1,5 +1,5 @@
---- findutils-4.8.0/doc/find.texi.orig	2021-01-07 01:33:06.000000000 +0100
-+++ findutils-4.8.0/doc/find.texi	2021-02-28 12:33:57.386167806 +0100
+--- findutils-4.9.0/doc/find.texi.orig	2022-02-02 01:14:41.000000000 +0100
++++ findutils-4.9.0/doc/find.texi	2022-03-15 13:06:22.318347936 +0100
 @@ -13,17 +13,11 @@
  @finalout
  @end iftex
@@ -93,7 +93,7 @@
  The name @code{xargs}, pronounced EX-args, means ``combine
  arguments.''  @code{xargs} builds and executes command lines by
  gathering together arguments it reads on the standard input.  Most
-@@ -373,7 +345,6 @@
+@@ -462,7 +434,6 @@
  @menu
  * Base Name Patterns::
  * Full Name Patterns::
@@ -101,7 +101,7 @@
  * Shell Pattern Matching::      Wildcards used by these programs.
  @end menu
  
-@@ -525,82 +496,10 @@
+@@ -614,82 +585,10 @@
  
  @end deffn
  
@@ -161,7 +161,7 @@
 -Instead of searching the default file name database, search the file
 -name databases in @var{path}, which is a colon-separated list of
 -database file names.  You can also use the environment variable
--@code{LOCATE_PATH} to set the list of database files to search.  The
+-@env{LOCATE_PATH} to set the list of database files to search.  The
 -option overrides the environment variable if both are used.
 -@end table
 -
@@ -181,11 +181,11 @@
  @subsection Shell Pattern Matching
  
 -@code{find} and @code{locate} can compare file names, or parts of file
-+@code{find} can compare file names, or parts of file
++@code{find} and can compare file names, or parts of file
  names, to shell patterns.  A @dfn{shell pattern} is a string that may
  contain the following special characters, which are known as
  @dfn{wildcards} or @dfn{metacharacters}.
-@@ -2950,245 +2849,6 @@
+@@ -3069,245 +2968,6 @@
  @end example
  
  
@@ -214,7 +214,7 @@
 -@section Database Locations
 -
 -There can be multiple file name databases.  Users can select which
--databases @code{locate} searches using the @code{LOCATE_PATH}
+-databases @code{locate} searches using the @env{LOCATE_PATH}
 -environment variable or a command line option.  The system
 -administrator can choose the file name of the default database, the
 -frequency with which the databases are updated, and the directories
@@ -237,7 +237,7 @@
 -
 -If no database exists at @file{@value{LOCATE_DB}} but the user did not
 -specify where to look (by using @samp{-d} or setting
--@code{LOCATE_PATH}), then @code{locate} will also check for a
+-@env{LOCATE_PATH}), then @code{locate} will also check for a
 -``secure'' database in @file{/var/lib/slocate/slocate.db}.
 -
 -@node Database Formats
@@ -431,7 +431,7 @@
  @node File Permissions
  @chapter File Permissions
  
-@@ -3251,15 +2911,13 @@
+@@ -3370,15 +3030,13 @@
  discussed in this manual.
  
  @menu
@@ -450,7 +450,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -3474,243 +3132,7 @@
+@@ -3593,243 +3251,7 @@
  actions, and options that the expression can contain.  If the
  expression is missing, @samp{-print} is assumed.
  
@@ -492,7 +492,7 @@
 -@file{@value{LOCATE_DB}}, @code{locate} searches the file
 -name databases in @var{path}, which is a colon-separated list of
 -database file names.  You can also use the environment variable
--@code{LOCATE_PATH} to set the list of database files to search.  The
+-@env{LOCATE_PATH} to set the list of database files to search.  The
 -option overrides the environment variable if both are used.  Empty
 -elements in @var{path} (that is, a leading or trailing colon, or two
 -colons in a row) are taken to stand for the default database.
@@ -635,7 +635,7 @@
 -@table @code
 -@item --findoptions='@var{OPTION}@dots{}'
 -Global options to pass on to @code{find}.
--The environment variable @code{FINDOPTIONS} also sets this value.
+-The environment variable @env{FINDOPTIONS} also sets this value.
 -Default is none.
 -
 -@item --localpaths='@var{path}@dots{}'
@@ -644,12 +644,12 @@
 -
 -@item --netpaths='@var{path}@dots{}'
 -Network (NFS, AFS, RFS, etc.) directories to put in the database.
--The environment variable @code{NETPATHS} also sets this value.
+-The environment variable @env{NETPATHS} also sets this value.
 -Default is none.
 -
 -@item --prunepaths='@var{path}@dots{}'
 -Directories to omit from the database, which would otherwise be
--included.  The environment variable @code{PRUNEPATHS} also sets this
+-included.  The environment variable @env{PRUNEPATHS} also sets this
 -value.  Default is @file{/tmp /usr/tmp /var/tmp /afs}.  The paths are
 -used as regular expressions (with @code{find ... -regex}, so you need
 -to specify these paths in the same way that @code{find} will encounter
@@ -660,7 +660,7 @@
 -Filesystems to omit from the database, which would otherwise be
 -included.  Note that files are pruned when a filesystem is reached;
 -Any filesystem mounted under an undesired filesystem will be ignored.
--The environment variable @code{PRUNEFS} also sets this value.  Default
+-The environment variable @env{PRUNEFS} also sets this value.  Default
 -is @file{nfs NFS proc}.
 -
 -@item --output=@var{dbfile}
@@ -670,12 +670,12 @@
 -@item --localuser=@var{user}
 -The user to search the non-network directories as, using @code{su}.
 -Default is to search the non-network directories as the current user.
--You can also use the environment variable @code{LOCALUSER} to set this user.
+-You can also use the environment variable @env{LOCALUSER} to set this user.
 -
 -@item --netuser=@var{user}
 -The user to search network directories as, using @code{su}.  Default
 -@code{user} is @code{daemon}.  You can also use the environment variable
--@code{NETUSER} to set this user.
+-@env{NETUSER} to set this user.
 -
 -@item --dbformat=@var{FORMAT}
 -Generate the locate database in format @code{FORMAT}.  Supported
@@ -695,7 +695,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -5061,7 +4483,6 @@
+@@ -5180,7 +4602,6 @@
  * Levels of Risk::      What is your level of exposure to security problems?
  * Security Considerations for find::  Security problems with find
  * Security Considerations for xargs:: Security problems with xargs
@@ -703,7 +703,7 @@
  * Security Summary:: That was all very complex, what does it boil down to?
  * Further Reading on Security::
  @end menu
-@@ -5470,19 +4891,6 @@
+@@ -5589,19 +5010,6 @@
  trailing whitespace is turned off by the @samp{-0} argument to
  @code{xargs}, which is another reason to use that option.
  
@@ -723,7 +723,7 @@
  @node Security Summary
  @section Summary
  
-@@ -5554,8 +4962,6 @@
+@@ -5673,8 +5081,6 @@
  @menu
  * Error Messages From find::
  * Error Messages From xargs::
@@ -732,7 +732,7 @@
  @end menu
  
  @node Error Messages From find
-@@ -5705,38 +5111,6 @@
+@@ -5824,38 +5230,6 @@
  See the manual of the system call @code{dup2(2)}.
  @end table
  
@@ -752,7 +752,7 @@
 -This should not happen.  Re-run @code{updatedb}.  If that works, but
 -@code{locate} still produces this error, run @code{locate --version}
 -and @code{updatedb --version}.  These should produce the same output.
--If not, you are using a mixed toolset; check your @samp{$PATH}
+-If not, you are using a mixed toolset; check your @env{PATH}
 -environment variable and your shell aliases (if you have any).  If
 -both programs claim to be GNU versions, this is a bug; all versions of
 -these programs should interoperate without problem.  Ask for help on

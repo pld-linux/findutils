@@ -1,26 +1,26 @@
 --- findutils-4.9.0/po/pl.po.orig	2022-02-02 01:18:20.000000000 +0100
-+++ findutils-4.9.0/po/pl.po	2022-03-15 13:52:39.816190379 +0100
++++ findutils-4.9.0/po/pl.po	2022-03-15 20:52:18.694345535 +0100
 @@ -1,15 +1,15 @@
  # Polish translation for GNU findutils.
 -# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014 Free Software Foundation, Inc.
-+# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014, 2015, 2021 Free Software Foundation, Inc.
++# Copyright (C) 1996, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2013, 2014, 2015, 2021, 2022 Free Software Foundation, Inc.
  # This file is distributed under the same license as the findutils package.
  # Paweł Krawczyk <kravietz@ceti.pl>, 1996.
 -# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2015.
-+# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2021.
++# Jakub Bogusz <qboosh@pld-linux.org>, 2003-2022.
  #
  msgid ""
  msgstr ""
 -"Project-Id-Version: findutils 4.5.15\n"
-+"Project-Id-Version: findutils 4.8.0\n"
++"Project-Id-Version: findutils 4.9.0\n"
  "Report-Msgid-Bugs-To: bug-findutils@gnu.org\n"
  "POT-Creation-Date: 2022-02-02 01:18+0100\n"
 -"PO-Revision-Date: 2015-12-18 23:41+0100\n"
-+"PO-Revision-Date: 2021-02-28 20:46+0100\n"
++"PO-Revision-Date: 2022-03-15 19:02+0100\n"
  "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
  "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
  "Language: pl\n"
-@@ -32,9 +32,9 @@
+@@ -32,9 +32,9 @@ msgid "Cannot close standard input"
  msgstr "Nie można zamknąć standardowego wejścia"
  
  #: find/exec.c:272
@@ -32,7 +32,67 @@
  
  #: find/exec.c:317 xargs/xargs.c:1322
  msgid "cannot fork"
-@@ -155,16 +155,16 @@
+@@ -93,47 +93,47 @@ msgstr "nie udało się przywrócić kat
+ #: find/ftsfind.c:582
+ #, c-format
+ msgid "extra operand %s"
+-msgstr ""
++msgstr "nadmiarowy argument %s"
+ 
+ #: find/ftsfind.c:584
+ msgid "file operands cannot be combined with -files0-from"
+-msgstr ""
++msgstr "argumenty plikowe nie mogą być łączone z -files0-from"
+ 
+ #: find/ftsfind.c:595
+ msgid ""
+ "option -files0-from reading from standard input cannot be combined with -ok, "
+ "-okdir"
+-msgstr ""
++msgstr "opcji -files0-from czytającej ze standardowego wejścia nie można łączyć z -ok, -okdir"
+ 
+ #: find/ftsfind.c:598
+-#, fuzzy
+ msgid "(standard input)"
+-msgstr "standardowe wyjście"
++msgstr "(standardowe wejście)"
+ 
+ #: find/ftsfind.c:606
+-#, fuzzy, c-format
++#, c-format
+ msgid "cannot open %s for reading"
+-msgstr "nie udało się otworzyć /dev/tty do odczytu"
++msgstr "nie udało się otworzyć %s do odczytu"
+ 
+ #: find/ftsfind.c:625
+ msgid ""
+ "option -files0-from: standard input must not refer to the same file when "
+ "combined with -ok, -okdir"
+ msgstr ""
++"opcja -files0-from: standardowe wejście nie może odnosić się do tego samego pliku przy połączeniu z -ok, -okdir"
+ 
+ #: find/ftsfind.c:668
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s: read error"
+-msgstr "standardowe wyjście diagnostyczne"
++msgstr "%s: błąd odczytu"
+ 
+ #: find/ftsfind.c:695
+ msgid "invalid zero-length file name"
+-msgstr ""
++msgstr "błędna nazwa pliku zerowej długości"
+ 
+ #: find/ftsfind.c:719
+-#, fuzzy, c-format
++#, c-format
+ msgid "error reading %s"
+-msgstr "błąd podczas odczytu słowa z %s"
++msgstr "błąd podczas odczytu z %s"
+ 
+ #: find/ftsfind.c:754
+ msgid "Failed to initialize shared-file hash table"
+@@ -155,16 +155,16 @@ msgstr ""
  "-depth."
  
  #: find/parser.c:609
@@ -53,7 +113,7 @@
  
  #: find/parser.c:912
  #, c-format
-@@ -205,6 +205,8 @@
+@@ -205,6 +205,8 @@ msgid ""
  "directory separator (%s), thus the expression will evaluate to false all the "
  "time.  Did you mean %s?"
  msgstr ""
@@ -62,7 +122,7 @@
  
  #: find/parser.c:1399
  #, c-format
-@@ -258,7 +260,7 @@
+@@ -258,7 +260,7 @@ msgstr ""
  #: find/parser.c:2069
  #, c-format
  msgid "failed to compile regular expression '%s': %s"
@@ -71,7 +131,7 @@
  
  #: find/parser.c:2098
  msgid "invalid null argument to -size"
-@@ -306,60 +308,60 @@
+@@ -306,60 +308,60 @@ msgid "invalid predicate -context: SELin
  msgstr "błędne wyrażenie -context: SELinux nie jest włączony."
  
  #: find/parser.c:2652
@@ -146,7 +206,7 @@
  
  #: find/parser.c:2798
  #, c-format
-@@ -367,6 +369,7 @@
+@@ -367,6 +369,7 @@ msgid ""
  "Last file type in list argument to %s is missing, i.e., list is ending on: "
  "','"
  msgstr ""
@@ -154,7 +214,20 @@
  
  #: find/parser.c:2857
  #, c-format
-@@ -522,13 +525,13 @@
+@@ -502,10 +505,10 @@ msgid ""
+ msgstr "błędne wyrażenie; podano operator binarny '%s' bez niczego przed nim."
+ 
+ #: find/tree.c:135 find/tree.c:194
+-#, fuzzy, c-format
++#, c-format
+ msgid ""
+ "invalid expression: expected expression before closing parentheses '%s'."
+-msgstr "błędne wyrażenie; puste nawiasy nie są dozwolone."
++msgstr "błędne wyrażenie; oczekiwano wyrażenia przed nawiasami zamykającymi '%s'."
+ 
+ #: find/tree.c:145
+ #, c-format
+@@ -522,13 +525,13 @@ msgid "invalid expression; you have too
  msgstr "błędne wyrażenie; za dużo ')'"
  
  #: find/tree.c:183
@@ -171,7 +244,7 @@
  
  #: find/tree.c:198
  msgid "invalid expression; empty parentheses are not allowed."
-@@ -559,14 +562,14 @@
+@@ -559,14 +562,14 @@ msgstr ""
  "zgłosić to jako błąd"
  
  #: find/tree.c:1286
@@ -189,7 +262,7 @@
  
  #: find/tree.c:1298
  #, c-format
-@@ -606,20 +609,20 @@
+@@ -606,34 +609,32 @@ msgid "oops -- invalid default insertion
  msgstr "ojej -- błędne domyślne wstawienie and!"
  
  #: find/util.c:139
@@ -214,16 +287,106 @@
 +"Składnia: %s [-H] [-L] [-P] [-Opoziom] [-D opcje_diagn] [ścieżka...] [wyrażenie]\n"
  
  #: find/util.c:173
- #, fuzzy
-@@ -689,7 +692,6 @@
+-#, fuzzy
+ msgid ""
+ "\n"
+ "Default path is the current directory; default expression is -print.\n"
+ "Expression may consist of: operators, options, tests, and actions.\n"
+ msgstr ""
+ "\n"
+-"domyślna ścieżka to aktualny katalog; domyślne wyrażenie to -print\n"
+-"wyrażenie może składać się z: operatorów, opcji, testów i akcji:\n"
++"Domyślna ścieżka to bieżący katalog; domyślne wyrażenie to -print.\n"
++"Wyrażenie może składać się z: operatorów, opcji, testów i akcji.\n"
+ 
+ #: find/util.c:176
+-#, fuzzy
+ msgid ""
+ "\n"
+ "Operators (decreasing precedence; -and is implicit where no others are "
+@@ -641,7 +642,8 @@ msgid ""
+ "      ( EXPR )   ! EXPR   -not EXPR   EXPR1 -a EXPR2   EXPR1 -and EXPR2\n"
+ "      EXPR1 -o EXPR2   EXPR1 -or EXPR2   EXPR1 , EXPR2\n"
+ msgstr ""
+-"operatory (malejący priorytet; jeśli nie ma żadnego, przyjmuje się -and):\n"
++"\n"
++"Operatory (malejący priorytet; jeśli nie ma żadnego, przyjmuje się -and):\n"
+ "      ( WYR )    ! WYR    -not WYR    WYR1 -a WYR2     WYR1 -and WYR2\n"
+ "      WYR1 -o WYR2     WYR1 -or WYR2     WYR1 , WYR2\n"
+ 
+@@ -651,23 +653,23 @@ msgid ""
+ "Positional options (always true):\n"
+ "      -daystart -follow -nowarn -regextype -warn\n"
+ msgstr ""
++"\n"
++"Opcje pozycyjne (zawsze prawdziwe):\n"
++"      -daystart -follow -nowarn -regextype -warn\n"
+ 
+ #: find/util.c:183
+-#, fuzzy
+ msgid ""
+ "\n"
+ "Normal options (always true, specified before other expressions):\n"
+ "      -depth -files0-from FILE -maxdepth LEVELS -mindepth LEVELS\n"
+ "       -mount -noleaf -xdev -ignore_readdir_race -noignore_readdir_race\n"
+ msgstr ""
+-"opcje pozycyjne (zawsze prawdziwe): -daystart -follow -regextype\n"
+ "\n"
+-"opcje zwykłe (zawsze prawdziwe, podawane przed innymi wyrażeniami):\n"
+-"      -depth --help -maxdepth POZIOMY -mindepth POZIOMY -mount -noleaf\n"
+-"      --version -xdev -ignore_readdir_race -noignore_readdir_race\n"
++"Opcje zwykłe (zawsze prawdziwe, podawane przed innymi wyrażeniami):\n"
++"      -depth -files0-from PLIK -maxdepth POZIOMY -mindepth POZIOMY\n"
++"      -mount -noleaf -xdev -ignore_readdir_race -noignore_readdir_race\n"
+ 
+ #: find/util.c:187
+-#, fuzzy
+ msgid ""
+ "\n"
+ "Tests (N can be +N or -N or N):\n"
+@@ -681,15 +683,17 @@ msgid ""
+ "      -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
+ "      -used N -user NAME -xtype [bcdpfls]\n"
+ msgstr ""
+-"testy (N jest postaci +N lub -N lub N): -amin N -anewer PLIK -atime N -cmin "
+-"N\n"
+-"      -cnewer PLIK -ctime N -empty -false -fstype TYP -gid N -group NAZWA\n"
+-"      -ilname WZORZEC -iname WZORZEC -inum N -iwholename WZORZEC -iregex "
+-"WZORZEC\n"
++"\n"
++"Testy (N jest postaci +N, -N lub N):\n"
++"      -amin N -anewer PLIK -atime N -cmin N -cnewer PLIK -context KONTEKST\n"
++"      -ctime N -empty -false -fstype TYP -gid N -group NAZWA -ilname WZORZEC\n"
++"      -iname WZORZEC -inum N -iwholename WZORZEC -iregex WZORZEC\n"
  "      -links N -lname WZORZEC -mmin N -mtime N -name WZORZEC -newer PLIK"
++"      -readable -writable -executable\n"
++"      -wholename WZORZEC -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n"
++"      -used N -user NAZWA -xtype [bcdpfls]\n"
  
  #: find/util.c:197
 -#, fuzzy
  msgid ""
  "\n"
  "Actions:\n"
-@@ -715,7 +717,6 @@
+@@ -699,7 +703,8 @@ msgid ""
+ "      -execdir COMMAND ; -execdir COMMAND {} + -okdir COMMAND ;\n"
+ msgstr ""
+ "\n"
+-"akcje: -delete -print0 -printf FORMAT -fprintf PLIK FORMAT -print \n"
++"Akcje:\n"
++"      -delete -print0 -printf FORMAT -fprintf PLIK FORMAT -print\n"
+ "      -fprint0 PLIK -fprint PLIK -ls -fls PLIK -prune -quit\n"
+ "      -exec POLECENIE ; -exec POLECENIE {} + -ok POLECENIE ;\n"
+ "      -execdir POLECENIE ; -execdir POLECENIE {} + -okdir POLECENIE ;\n"
+@@ -709,13 +714,14 @@ msgid ""
+ "\n"
+ "Other common options:\n"
+ msgstr ""
++"\n"
++"Inne wspólne opcje:\n"
+ 
+ #: find/util.c:206 xargs/xargs.c:1751
+ msgid "      --help                   display this help and exit\n"
  msgstr "      --help                   wyświetlenie tego opisu i zakończenie\n"
  
  #: find/util.c:207 xargs/xargs.c:1752
@@ -231,7 +394,7 @@
  msgid ""
  "      --version                output version information and exit\n"
  "\n"
-@@ -728,16 +729,19 @@
+@@ -728,16 +734,19 @@ msgid ""
  "Use '-D help' for a description of the options, or see find(1)\n"
  "\n"
  msgstr ""
@@ -255,7 +418,7 @@
  
  #: find/util.c:832
  #, c-format
-@@ -772,9 +776,9 @@
+@@ -772,9 +781,9 @@ msgstr ""
  "można użyć GNU locate."
  
  #: find/util.c:941
@@ -267,7 +430,7 @@
  
  #: find/util.c:1044
  msgid ""
-@@ -785,7 +789,7 @@
+@@ -785,7 +794,7 @@ msgstr ""
  "na rozmiar bloku, to zmienna środowiskowa POSIXLY_CORRECT"
  
  #: lib/bugreports.c:28
@@ -276,7 +439,7 @@
  msgid ""
  "Please see also the documentation at %s.\n"
  "You can report (and track progress on fixing) bugs in the \"%s\"\n"
-@@ -793,10 +797,11 @@
+@@ -793,10 +802,11 @@ msgid ""
  "%s or, if\n"
  "you have no web access, by sending email to <%s>.\n"
  msgstr ""
@@ -291,7 +454,7 @@
  
  #: lib/buildcmd.c:144
  msgid "command too long"
-@@ -893,9 +898,9 @@
+@@ -893,9 +903,9 @@ msgid "slocate security level %ld is uns
  msgstr "Poziom bezpieczeństwa slocate %ld nie jest obsługiwany."
  
  #: locate/frcode.c:265
@@ -303,7 +466,7 @@
  
  #: locate/frcode.c:282
  msgid "Failed to write to standard output"
-@@ -904,7 +909,7 @@
+@@ -904,7 +914,7 @@ msgstr "Nie udało się zapisać na stan
  #: locate/frcode.c:291
  #, c-format
  msgid "The input file should end with the delimiter"
@@ -312,7 +475,7 @@
  
  #: locate/locate.c:112
  msgid "days"
-@@ -1087,7 +1092,7 @@
+@@ -1087,7 +1097,7 @@ msgstr "nie udało się porzucić uprawn
  #: locate/locate.c:1722
  #, c-format
  msgid "pattern argument expected"
@@ -321,7 +484,7 @@
  
  #: locate/locate.c:1763
  #, c-format
-@@ -1102,9 +1107,9 @@
+@@ -1102,9 +1112,9 @@ msgid "time system call failed"
  msgstr "wywołanie systemowe nie powiodło się"
  
  #: locate/locate.c:1847
@@ -333,7 +496,7 @@
  
  #: locate/word_io.c:77
  #, c-format
-@@ -1174,6 +1179,7 @@
+@@ -1174,6 +1184,7 @@ msgstr "środowisko jest zbyt duże, aby
  msgid ""
  "warning: options %s and %s are mutually exclusive, ignoring previous %s value"
  msgstr ""
@@ -341,7 +504,7 @@
  
  #: xargs/xargs.c:636
  #, c-format
-@@ -1317,7 +1323,7 @@
+@@ -1317,7 +1328,7 @@ msgstr "nie udało się ustawić zmienne
  
  #: xargs/xargs.c:1259
  msgid "failed to redirect standard input of the child process"
@@ -350,7 +513,7 @@
  
  #: xargs/xargs.c:1311
  msgid "could not create pipe before fork"
-@@ -1333,12 +1339,12 @@
+@@ -1333,12 +1344,12 @@ msgstr ""
  "proszę to zgłosić)"
  
  #: xargs/xargs.c:1435
@@ -365,7 +528,7 @@
  "zgłosić"
  
  #: xargs/xargs.c:1528
-@@ -1366,19 +1372,19 @@
+@@ -1366,19 +1377,19 @@ msgid "%s: terminated by signal %d"
  msgstr "%s: zakończony sygnałem %d"
  
  #: xargs/xargs.c:1671
@@ -391,7 +554,7 @@
  
  #: xargs/xargs.c:1707
  #, c-format
-@@ -1463,14 +1469,14 @@
+@@ -1463,14 +1474,14 @@ msgid "  -I R                         sa
  msgstr "  -I R                         to samo, co --replace=R\n"
  
  #: xargs/xargs.c:1729
@@ -408,7 +571,7 @@
  "                                 jeśli nie podano R, przyjmowane jest {}\n"
  
  #: xargs/xargs.c:1732
-@@ -1502,7 +1508,6 @@
+@@ -1502,7 +1513,6 @@ msgstr ""
  "                               polecenia\n"
  
  #: xargs/xargs.c:1737
@@ -416,7 +579,7 @@
  msgid ""
  "  -o, --open-tty               Reopen stdin as /dev/tty in the child "
  "process\n"
-@@ -1510,11 +1515,10 @@
+@@ -1510,11 +1520,10 @@ msgid ""
  "an\n"
  "                                 interactive application.\n"
  msgstr ""
@@ -432,7 +595,7 @@
  
  #: xargs/xargs.c:1740
  msgid ""
-@@ -1570,358 +1574,3 @@
+@@ -1570,358 +1579,3 @@ msgid "  -x, --exit                   ex
  msgstr ""
  "  -x, --exit                   zakończenie w wypadku przekroczenia rozmiaru "
  "(-s)\n"

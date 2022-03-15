@@ -771,3 +771,17 @@
  @node GNU Free Documentation License
  @appendix GNU Free Documentation License
  @include fdl.texi
+--- findutils-4.9.0/doc/find-maint.texi.orig	2022-02-02 00:27:31.000000000 +0100
++++ findutils-4.9.0/doc/find-maint.texi	2022-03-15 18:57:59.228173120 +0100
+@@ -12,9 +12,9 @@
+ @finalout
+ @end iftex
+ 
+-@dircategory GNU organization
++@dircategory GNU organization:
+ @direntry
+-* Maintaining Findutils: (find-maint).        Maintaining GNU findutils
++* Maintaining Findutils: (find-maint).	Maintaining GNU findutils
+ @end direntry
+ 
+ @copying

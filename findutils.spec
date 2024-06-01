@@ -11,14 +11,14 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.9.0
+Version:	4.10.0
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	https://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.xz
-# Source0-md5:	4a4a547e888a944b2f3af31d789a1137
+# Source0-md5:	870cfd71c07d37ebe56f9f4aaf4ad872
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515

@@ -1,5 +1,5 @@
---- findutils-4.9.0/doc/find.texi.orig	2022-02-02 01:14:41.000000000 +0100
-+++ findutils-4.9.0/doc/find.texi	2022-03-15 13:06:22.318347936 +0100
+--- findutils-4.10.0/doc/find.texi.orig	2024-05-27 22:20:21.000000000 +0200
++++ findutils-4.10.0/doc/find.texi	2024-06-05 20:45:38.910140536 +0200
 @@ -13,17 +13,11 @@
  @finalout
  @end iftex
@@ -12,17 +12,17 @@
 -
 -@dircategory Individual utilities
 -@direntry
--* find: (find)Invoking find.                    Finding and acting on files.
+-* find: (find)Finding Files.                    Finding and acting on files.
 -* locate: (find)Invoking locate.                Finding files in a database.
 -* updatedb: (find)Invoking updatedb.            Building the locate database.
 -* xargs: (find)Invoking xargs.                  Operating on many files.
 +* Finding files: (find).		Operating on files matching certain criteria
-+* find: (find)find.			Finding and acting on files
++* find: (find)Finding Files.		Finding and acting on files
 +* xargs: (find)xargs.			Operating on many files
  @end direntry
  
  @copying
-@@ -68,7 +62,6 @@
+@@ -68,7 +62,6 @@ A copy of the license is included in the
  * Introduction::                Summary of the tasks this manual describes.
  * Finding Files::               Finding files that match certain criteria.
  * Actions::                     Doing things to files you have found.
@@ -30,26 +30,30 @@
  * File Permissions::            How to control access to files.
  * Date input formats::          Specifying literal times.
  * Configuration::               Options you can select at compile time.
-@@ -87,16 +80,14 @@
+@@ -77,7 +70,7 @@ A copy of the license is included in the
+ * Worked Examples::             Examples demonstrating more complex points.
+ * Security Considerations::     Security issues relating to findutils.
+ * Error Messages::              Explanations of some messages you might see.
+-* History::                     History of find, xargs and locate.
++* History::                     History of find and xargs.
+ * GNU Free Documentation License::  Copying and sharing this manual.
+ * Primary Index::               The components of @code{find} expressions.
+ @end menu
+@@ -88,11 +81,11 @@ A copy of the license is included in the
  This manual shows how to find files that meet criteria you specify,
  and how to perform various actions on the files that you find.  The
  principal programs that you use to perform these tasks are
 -@code{find}, @code{locate}, and @code{xargs}.  Some of the examples in
-+@code{find} and @code{xargs}.  Some of the examples in
++@code{find}, and @code{xargs}.  Some of the examples in
  this manual use capabilities specific to the GNU versions of those
  programs.
  
- GNU @code{find} was originally written by Eric Decker, with
- enhancements by David MacKenzie, Jay Plett, and Tim Wood.  GNU
- @code{xargs} was originally written by Mike Rendell, with enhancements
--by David MacKenzie.  GNU @code{locate} and its associated utilities
--were originally written by James Woods, with enhancements by David
--MacKenzie.  The idea for @samp{find -print0} and @samp{xargs -0} came
-+by David MacKenzie.  The idea for @samp{find -print0} and @samp{xargs -0} came
- from Dan Bernstein.  The current maintainer of GNU findutils (and this
- manual) is James Youngman.  Many other people have contributed bug
- fixes, small improvements, and helpful suggestions.  Thanks!
-@@ -122,7 +113,7 @@
+-See @ref{History} for a history of @code{find}, @code{locate} and
++See @ref{History} for a history of @code{find} and
+ @code{xargs}.  The current maintainers of GNU findutils (and this
+ manual) are Bernhard Voelker and James Youngman.  Many other people
+ have contributed bug fixes, small improvements, and helpful
+@@ -120,7 +113,7 @@ you much more effectively if you include
  
  @itemize @bullet
  @item The version of the software you are running.  You can find this
@@ -58,7 +62,7 @@
  @item What you were trying to do
  @item The @emph{exact} command line you used
  @item The @emph{exact} output you got (if this is very long, try to
-@@ -220,9 +211,7 @@
+@@ -218,9 +211,7 @@ This manual describes how to perform eac
  @section Overview
  
  The principal programs used for making lists of files that match given
@@ -69,7 +73,7 @@
  
  @code{find} searches for files in a directory hierarchy and prints
  information about the files it found.  It is run like this:
-@@ -242,23 +231,6 @@
+@@ -240,23 +231,6 @@ find /usr/src -name '*.c' -size +100k -p
  Notice that the wildcard must be enclosed in quotes in order to
  protect it from expansion by the shell.
  
@@ -93,7 +97,7 @@
  The name @code{xargs}, pronounced EX-args, means ``combine
  arguments.''  @code{xargs} builds and executes command lines by
  gathering together arguments it reads on the standard input.  Most
-@@ -462,7 +434,6 @@
+@@ -459,7 +433,6 @@ etc.
  @menu
  * Base Name Patterns::
  * Full Name Patterns::
@@ -101,7 +105,7 @@
  * Shell Pattern Matching::      Wildcards used by these programs.
  @end menu
  
-@@ -614,82 +585,10 @@
+@@ -609,78 +582,6 @@ expression dialects understood by GNU fi
  
  @end deffn
  
@@ -141,9 +145,9 @@
 -
 -where @var{directories} are the directories for which the file name
 -databases contain information.  The differences are that the
--@code{locate} information might be out of date, and that @code{locate}
--handles wildcards in the pattern slightly differently than @code{find}
--(@pxref{Shell Pattern Matching}).
+-@code{locate} information might be out of date, and that by default
+-@code{locate} matches wildcards against the whole file name (not just
+-its base name) (@pxref{Shell Pattern Matching}).
 -
 -The file name databases contain lists of files that were on the system
 -when the databases were last updated.  The system administrator can
@@ -180,12 +184,7 @@
  @node Shell Pattern Matching
  @subsection Shell Pattern Matching
  
--@code{find} and @code{locate} can compare file names, or parts of file
-+@code{find} and can compare file names, or parts of file
- names, to shell patterns.  A @dfn{shell pattern} is a string that may
- contain the following special characters, which are known as
- @dfn{wildcards} or @dfn{metacharacters}.
-@@ -3069,245 +2968,6 @@
+@@ -3081,245 +2982,6 @@ find /usr/local -type f -perm /a=x \
  @end example
  
  
@@ -431,7 +430,7 @@
  @node File Permissions
  @chapter File Permissions
  
-@@ -3370,15 +3030,13 @@
+@@ -3382,15 +3044,13 @@ Below are summaries of the command line
  discussed in this manual.
  
  @menu
@@ -450,7 +449,7 @@
  @section Invoking @code{find}
  
  @example
-@@ -3593,243 +3251,7 @@
+@@ -3613,243 +3273,7 @@ expressions.  @xref{Primary Index}, for
  actions, and options that the expression can contain.  If the
  expression is missing, @samp{-print} is assumed.
  
@@ -695,7 +694,7 @@
  @section Invoking @code{xargs}
  
  @example
-@@ -5180,7 +4602,6 @@
+@@ -5209,7 +4633,6 @@ on what the system is going to do with t
  * Levels of Risk::      What is your level of exposure to security problems?
  * Security Considerations for find::  Security problems with find
  * Security Considerations for xargs:: Security problems with xargs
@@ -703,7 +702,7 @@
  * Security Summary:: That was all very complex, what does it boil down to?
  * Further Reading on Security::
  @end menu
-@@ -5589,19 +5010,6 @@
+@@ -5610,19 +5033,6 @@ the list printed by @code{find}.   The i
  trailing whitespace is turned off by the @samp{-0} argument to
  @code{xargs}, which is another reason to use that option.
  
@@ -723,7 +722,16 @@
  @node Security Summary
  @section Summary
  
-@@ -5673,8 +5081,6 @@
+@@ -5678,7 +5088,7 @@ A humorous and pithy summary of the broa
+ @chapter Error Messages
+ 
+ This section describes some of the error messages sometimes made by
+-@code{find}, @code{xargs}, or @code{locate}, explains them and in some
++@code{find} or @code{xargs} explains them and in some
+ cases provides advice as to what you should do about this.
+ 
+ This manual is written in English.  The GNU findutils software
+@@ -5694,8 +5104,6 @@ listed.
  @menu
  * Error Messages From find::
  * Error Messages From xargs::
@@ -732,7 +740,7 @@
  @end menu
  
  @node Error Messages From find
-@@ -5824,38 +5230,6 @@
+@@ -5845,39 +5253,6 @@ why @code{xargs} is confused by your ope
  See the manual of the system call @code{dup2(2)}.
  @end table
  
@@ -767,6 +775,33 @@
 -error messages, but none seem to be candidates for guidance.  If
 -you are having a problem understanding one of these, ask for help on
 -@email{bug-findutils@@gnu.org}.
+-
+-
+ @node History
+ @chapter History
+ 
+@@ -5934,25 +5309,6 @@ GNU @code{xargs} isn't derived from the
+ It was originally written by Mike Rendell, with enhancements by David
+ MacKenzie.
+ 
+-@section History of @code{locate}
+-
+-4.3-BSD introduced the @dfn{fast-find} feature, in which the command
+-@code{find needle} would look for a file named @samp{needle}.  This
+-took advantage of the fact that, at the time, there was no valid
+-two-argument @code{find} invocation.  The implementation was much
+-faster than searching the whole file system in real time, because it
+-used a pre-built file name database.  This functionality is described
+-in more detail in @cite{Finding Files Fast} by James Woods (Usenix
+-;login, Volume 8 Issue 1, pages. 8-10, 1983).
+-
+-Standardisation of @code{find} led to this functionality being moved
+-into the @code{locate} program in 4.4-BSD.   The command @code{find
+-needle} now unambiguously means ``start searching at the file
+-@code{needle} and print the names of the files you encounter''.
+-
+-GNU @code{locate} and its associated utilities were originally written
+-by James Woods, with enhancements by David MacKenzie.
 -
  @node GNU Free Documentation License
  @appendix GNU Free Documentation License

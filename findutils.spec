@@ -88,8 +88,8 @@ arayabilirsiniz.
 %prep
 %setup -q
 # patch0 is applied in install stage
-%patch1 -p1
-%patch2 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 %{__rm} po/stamp-po
 

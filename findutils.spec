@@ -11,21 +11,19 @@ Summary(pl.UTF-8):	Narzędzia GNU do odnajdywania plików (find, xargs)
 Summary(pt_BR.UTF-8):	Utilitários de procura da GNU
 Summary(tr.UTF-8):	GNU dosya arama araçları
 Name:		findutils
-Version:	4.10.0
+Version:	4.11.0
 Release:	1
 Epoch:		1
 License:	GPL v3+
 Group:		Applications/File
 # development versions at ftp://alpha.gnu.org/gnu/findutils/
 Source0:	https://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.xz
-# Source0-md5:	870cfd71c07d37ebe56f9f4aaf4ad872
+# Source0-md5:	512c6875ed84034dca240c4bc9380b96
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	e76388b0c3218eec3557d05ccd6d6515
 Patch0:		%{name}-man-selinux.patch
 Patch1:		%{name}-info.patch
-# (will be again after tp update) http://translationproject.org/latest/findutils/pl.po
-Patch2:		%{name}-pl.po-update.patch
 URL:		http://www.gnu.org/software/findutils/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -89,7 +87,6 @@ arayabilirsiniz.
 %setup -q
 # patch0 is applied in install stage
 %patch -P1 -p1
-%patch -P2 -p1
 
 %{__rm} po/stamp-po
 
